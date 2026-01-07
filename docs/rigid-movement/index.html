@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="三维空间中刚体运动的描述# 刚体运动由旋转与平移组成, 与旋转类似, 可以用矩阵来表示: $$ T = \begin{pmatrix} R &amp; \mathbf{\rho} \\ &amp; 1 \end{pmatrix} $$ 其中 \(R\) 是旋转矩阵, \(\mathbf{v}\) 是表征平移的向量. 刚体运动矩阵作用于三维向量的齐次坐标上.
+同样与旋转类似, 所有刚体运动矩阵构成一个群, 称为 特殊欧氏群 \(SE(3)\).
+\(SE(3)\) 也是一个 李群, 它的 李代数 \(\mathfrak{se} (3)\) 中的元素为如下形式: $$\begin{pmatrix} \theta [\hat{\mathbf{\omega}}]_\times &amp; \mathbf{v} \\ &amp; 0 \end{pmatrix}$$ 这里 \([\hat{\mathbf{\omega}}]_\times\) 表示单位向量的外积矩阵.
+本篇文章的工作是推导 \(SE(3)\), \(\mathfrak{se}(3)\) 与 \(\mathbb{R}^6\) 中元素的互相转换. \(\mathbb{R}^6\) 中的元素也被称为 运动旋量.
+引理# $$\boxed{ \begin{pmatrix} \theta [\hat{\mathbf{\omega}}]_\times &amp; \mathbf{v} \\ &amp; 0 \end{pmatrix}^n = \begin{pmatrix} \theta^n [\hat{\mathbf{\omega}}]_\times^n &amp; \theta^{n-1} [\hat{\mathbf{\omega}}]_\times^{n-1} \mathbf{v} \\ &amp; 0 \end{pmatrix} }$$直接计算便可得到.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://example.org/docs/rigid-movement/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="三维空间中刚体运动的描述">
+  <meta property="og:description" content="三维空间中刚体运动的描述# 刚体运动由旋转与平移组成, 与旋转类似, 可以用矩阵来表示: $$ T = \begin{pmatrix} R &amp; \mathbf{\rho} \\ &amp; 1 \end{pmatrix} $$ 其中 \(R\) 是旋转矩阵, \(\mathbf{v}\) 是表征平移的向量. 刚体运动矩阵作用于三维向量的齐次坐标上.
+同样与旋转类似, 所有刚体运动矩阵构成一个群, 称为 特殊欧氏群 \(SE(3)\).
+\(SE(3)\) 也是一个 李群, 它的 李代数 \(\mathfrak{se} (3)\) 中的元素为如下形式: $$\begin{pmatrix} \theta [\hat{\mathbf{\omega}}]_\times &amp; \mathbf{v} \\ &amp; 0 \end{pmatrix}$$ 这里 \([\hat{\mathbf{\omega}}]_\times\) 表示单位向量的外积矩阵.
+本篇文章的工作是推导 \(SE(3)\), \(\mathfrak{se}(3)\) 与 \(\mathbb{R}^6\) 中元素的互相转换. \(\mathbb{R}^6\) 中的元素也被称为 运动旋量.
+引理# $$\boxed{ \begin{pmatrix} \theta [\hat{\mathbf{\omega}}]_\times &amp; \mathbf{v} \\ &amp; 0 \end{pmatrix}^n = \begin{pmatrix} \theta^n [\hat{\mathbf{\omega}}]_\times^n &amp; \theta^{n-1} [\hat{\mathbf{\omega}}]_\times^{n-1} \mathbf{v} \\ &amp; 0 \end{pmatrix} }$$直接计算便可得到.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2025-03-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-03-05T00:00:00+00:00">
+    <meta property="article:tag" content="数学">
+    <meta property="article:tag" content="Julia">
+
+
+  <meta itemprop="name" content="三维空间中刚体运动的描述">
+  <meta itemprop="description" content="三维空间中刚体运动的描述# 刚体运动由旋转与平移组成, 与旋转类似, 可以用矩阵来表示: $$ T = \begin{pmatrix} R &amp; \mathbf{\rho} \\ &amp; 1 \end{pmatrix} $$ 其中 \(R\) 是旋转矩阵, \(\mathbf{v}\) 是表征平移的向量. 刚体运动矩阵作用于三维向量的齐次坐标上.
+同样与旋转类似, 所有刚体运动矩阵构成一个群, 称为 特殊欧氏群 \(SE(3)\).
+\(SE(3)\) 也是一个 李群, 它的 李代数 \(\mathfrak{se} (3)\) 中的元素为如下形式: $$\begin{pmatrix} \theta [\hat{\mathbf{\omega}}]_\times &amp; \mathbf{v} \\ &amp; 0 \end{pmatrix}$$ 这里 \([\hat{\mathbf{\omega}}]_\times\) 表示单位向量的外积矩阵.
+本篇文章的工作是推导 \(SE(3)\), \(\mathfrak{se}(3)\) 与 \(\mathbb{R}^6\) 中元素的互相转换. \(\mathbb{R}^6\) 中的元素也被称为 运动旋量.
+引理# $$\boxed{ \begin{pmatrix} \theta [\hat{\mathbf{\omega}}]_\times &amp; \mathbf{v} \\ &amp; 0 \end{pmatrix}^n = \begin{pmatrix} \theta^n [\hat{\mathbf{\omega}}]_\times^n &amp; \theta^{n-1} [\hat{\mathbf{\omega}}]_\times^{n-1} \mathbf{v} \\ &amp; 0 \end{pmatrix} }$$直接计算便可得到.">
+  <meta itemprop="datePublished" content="2025-03-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-03-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="526">
+  <meta itemprop="keywords" content="数学,Julia">
+
+<title>三维空间中刚体运动的描述 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://example.org/docs/rigid-movement/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.30b7b0668b72639b1346296ecb2a68cee88550ebed2ff54b104d665e1e658fd5.js" integrity="sha256-MLewZotyY5sTRiluyypozuiFUOvtL/VLEE1mXh5lj9U=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="active">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>三维空间中刚体运动的描述</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#引理">引理</a></li>
+    <li><a href="#正文">正文</a></li>
+    <li><a href="#资源">资源</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="三维空间中刚体运动的描述">三维空间中刚体运动的描述<a class="anchor" href="#%e4%b8%89%e7%bb%b4%e7%a9%ba%e9%97%b4%e4%b8%ad%e5%88%9a%e4%bd%93%e8%bf%90%e5%8a%a8%e7%9a%84%e6%8f%8f%e8%bf%b0">#</a></h1>
+<p>刚体运动由旋转与平移组成, 与旋转类似, 可以用矩阵来表示:
+</p>
+$$
+T =
+\begin{pmatrix}
+R & \mathbf{\rho} \\
+  & 1
+\end{pmatrix}
+$$<p>
+其中 \(R\) 是旋转矩阵, \(\mathbf{v}\) 是表征平移的向量.
+刚体运动矩阵作用于三维向量的齐次坐标上.</p>
+<p>同样与旋转类似, 所有刚体运动矩阵构成一个群, 称为 <em>特殊欧氏群</em> \(SE(3)\).</p>
+<p>\(SE(3)\) 也是一个 <em>李群</em>, 它的 <em>李代数</em> \(\mathfrak{se} (3)\) 中的元素为如下形式:
+</p>
+$$\begin{pmatrix}
+\theta [\hat{\mathbf{\omega}}]_\times & \mathbf{v} \\
+                                      & 0
+\end{pmatrix}$$<p>
+这里 \([\hat{\mathbf{\omega}}]_\times\) 表示单位向量的外积矩阵.</p>
+<p>本篇文章的工作是推导 \(SE(3)\), \(\mathfrak{se}(3)\) 与 \(\mathbb{R}^6\) 中元素的互相转换.
+\(\mathbb{R}^6\) 中的元素也被称为 <em>运动旋量</em>.</p>
+<h2 id="引理">引理<a class="anchor" href="#%e5%bc%95%e7%90%86">#</a></h2>
+$$\boxed{
+\begin{pmatrix}
+\theta [\hat{\mathbf{\omega}}]_\times & \mathbf{v} \\
+                                      & 0
+\end{pmatrix}^n =
+\begin{pmatrix}
+\theta^n [\hat{\mathbf{\omega}}]_\times^n &
+\theta^{n-1} [\hat{\mathbf{\omega}}]_\times^{n-1} \mathbf{v} \\
+                                          & 0
+\end{pmatrix}
+}$$<p>直接计算便可得到.</p>
+<hr>
+<blockquote class='book-hint '>
+<p>对于多项式 \(f(x)\) 与矩阵 \(A\), \(f(A)\) 可逆当且仅当 \(A\) 的所有特征值都不是 \(f(x)\) 的根,
+且此时 \(f(A)^{-1}\) 也是关于 \(A\) 的多项式.</p>
+</blockquote><p>若 \(\forall \lambda; f(\lambda) \neq 0\), 此时 \(f(x)\) 与 \(g(x)\) 互质, 其中 \(g(\lambda) := \det{(\lambda I - A)}\) 是 \(A\) 的特征多项式.
+于是有 \(f(x) ~ u(x) + g(x) ~ v(x) = 1\). 不定元用 \(A\) 代入,
+可知 \(f(A) ~ u(A) + g(A) ~ v(A) = I\).
+由 <a href="https://zh.wikipedia.org/wiki/%e5%87%b1%e8%90%8a%e2%80%93%e5%93%88%e5%af%86%e9%a0%93%e5%ae%9a%e7%90%86">凯莱-哈密顿定理</a>,
+\(g(A) = 0\). 进而 \(f(A) ~ u(A) = I\).
+因此 \(f(A)\) 可逆, 且它的逆是 \(A\) 的多项式形式.</p>
+<hr>
+<h2 id="正文">正文<a class="anchor" href="#%e6%ad%a3%e6%96%87">#</a></h2>
+$$\boxed{\begin{align}
+\wedge: \mathbb{R}^6 &\rightarrow \mathfrak{se}(3) \\
+        \mathbf{\xi} &\mapsto     \mathbf{\xi}^\wedge
+\end{align}}$$<p>对于 \(\mathbf{\xi} = (\theta \hat{\mathbf{\omega}}, \mathbf{v})^T\),
+直接可以得到
+</p>
+$$
+\mathbf{\xi}^\wedge =
+\begin{pmatrix}
+\theta [\hat{\mathbf{\omega}}]_\times & \mathbf{v} \\
+                                      & 0
+\end{pmatrix}
+$$<p>
+式中 \([\cdot]_\times\) 记号与 <a href="/docs/rigid-rotation/#%e6%ad%a3%e6%96%87">旋转</a> 一文一致.</p>
+<hr>
+$$\boxed{\begin{align*}
+\mathrm{exp}: \mathfrak{se}(3)    &\rightarrow  SE(3) \\
+              \mathbf{\xi}^\wedge &\mapsto      T
+\end{align*}}$$<p>按 \(\mathrm{exp}\) 的级数定义:</p>
+$$\begin{align*}
+\exp{\mathbf{\xi}^\wedge} &= \sum_{i=0} \frac{1}{i!} (\mathbf{\xi}^\wedge)^i \\
+&= I + \sum_{i=1} \frac{1}{i!} \begin{pmatrix}
+    \theta^i [\hat{\mathbf{\omega}}]_\times^i &
+    \theta^{i-1} [\hat{\mathbf{\omega}}]_\times^{i-1} \mathbf{v} \\
+                                              & 0
+    \end{pmatrix} \\
+&= I + \begin{pmatrix}
+    \sum_{i=1} \frac{\theta^i}{i!} [\hat{\mathbf{\omega}}]_\times^i &
+    (\sum_{i=1} \frac{\theta^{i-1}}{i!} [\hat{\mathbf{\omega}}]_\times^{i-1}) \mathbf{v} \\
+    & 0
+    \end{pmatrix} \\
+&= \begin{pmatrix}
+    \sum_{i=0} \frac{\theta^i}{i!} [\hat{\mathbf{\omega}}]_\times^i &
+    (\sum_{i=0} \frac{\theta^i}{(i+1)!} [\hat{\mathbf{\omega}}]_\times^i) \mathbf{v} \\
+    & 1
+    \end{pmatrix} \\
+&= \begin{pmatrix}
+    \exp{\theta [\hat{\mathbf{\omega}}]_\times} & J \mathbf{v} \\
+    & 1
+    \end{pmatrix}
+\end{align*}$$<p>其中</p>
+$$\begin{align*}
+J &= \sum_{i=0} \frac{\theta^i}{(i+1)!} [\hat{\mathbf{\omega}}]_\times^i \\
+&= \frac{1}{\theta} \sum_{i=1} \frac{\theta^i}{i!} [\hat{\mathbf{\omega}}]_\times^{i-1} \\
+&= \frac{1}{\theta} (\theta I
+    + \frac{\theta^2}{2!} [\hat{\mathbf{\omega}}]_\times
+    + \frac{\theta^3}{3!} [\hat{\mathbf{\omega}}]_\times^2
+    + \cdots) \\
+&= \frac{1}{\theta} (\theta I
+    + (\frac{\theta^2}{2!} - \frac{\theta^4}{4!} + \cdots) [\hat{\mathbf{\omega}}]_\times
+    - (\frac{\theta^3}{3!} - \frac{\theta^5}{5!} + \cdots) [\hat{\mathbf{\omega}}]_\times^2) \\
+&= I + \theta^{-1} (1-\cos{\theta}) [\hat{\mathbf{\omega}}]_\times
+    + (1-\theta^{-1} \sin{\theta}) [\hat{\mathbf{\omega}}]_\times^2
+\end{align*}$$<p>关于如何从反对称矩阵直接获取 \(\theta\), 可以参考 <a href="/docs/rigid-rotation/#%e6%ad%a3%e6%96%87">旋转</a> 中 \(\mathrm{exp}\) 一节.</p>
+<hr>
+$$\boxed{\begin{align*}
+\mathrm{log}: SE(3) &\rightarrow  \mathfrak{se}(3) \\
+              T     &\mapsto      \mathbf{\xi}^\wedge
+\end{align*}}$$<p>因为有</p>
+$$\begin{align*}
+\mathrm{exp} \begin{pmatrix}
+\theta [\hat{\mathbf{\omega}}]_\times & \mathbf{v} \\
+& 0
+\end{pmatrix}
+&= \begin{pmatrix}
+    \exp{\theta [\hat{\mathbf{\omega}}]_\times} & J \mathbf{v} \\
+    & 1
+    \end{pmatrix} \\
+&= \begin{pmatrix}
+    R & \mathbf{\rho} \\
+    & 1
+    \end{pmatrix}
+\end{align*}$$<p>直接得到</p>
+$$
+\mathrm{log} \begin{pmatrix}
+    R & \mathbf{\rho} \\
+    & 1
+    \end{pmatrix} =
+\begin{pmatrix}
+\mathrm{log} ~ R & J^{-1} \mathbf{\rho} \\
+& 0
+\end{pmatrix}
+$$<p>其中 \(\mathrm{log} ~ R\) 我们已经得到, 它是李群 \(SO(3)\) 到李代数 \(\mathfrak{so}(3)\) 的对数映射, 在 <a href="/docs/rigid-rotation/#%e6%ad%a3%e6%96%87">这里</a> 可以找到.</p>
+<p>接下来的工作是寻找矩阵 \(J\) 的逆. 容易发现 \(J\) 恰是 \([\hat{\mathbf{\omega}}]_\times\) 的多项式, 不妨令 \(J = f([\hat{\mathbf{\omega}}]_\times)\).</p>
+<p>令 \([\hat{\mathbf{\omega}}]_\times\) 的特征值为 \(0\) 与 \(\lambda_i \mathrm{i}\), 显然 \(f(0) = 1\);
+因为 \(\mathrm{Im} ~ f(\lambda_i \mathrm{i}) = \theta^{-1} (1-\cos{\theta}) \lambda_i \neq 0\), 所以 \(f(\lambda_i \mathrm{i}) \neq 0\).
+于是 \(J\) 可逆, 且 \(J^{-1}\) 是 \([\hat{\mathbf{\omega}}]_\times\) 的多项式.</p>
+<p>注意到 \([\hat{\mathbf{\omega}}]_\times^3 = -[\hat{\mathbf{\omega}}]_\times\), 这提示我们 \([\hat{\mathbf{\omega}}]_\times\) 的高次幂可以用 \(1\) 到 \(2\) 次幂来表示.
+不妨使用待定系数法, 令 \(J^{-1} = a ~ I + b ~ [\hat{\mathbf{\omega}}]_\times + c ~ [\hat{\mathbf{\omega}}]_\times^2\), 由 \(J^{-1} J = I\) 求出系数 \(a\), \(b\) 与 \(c\).</p>
+<p>不难求出, \(a = 1\), \(b = -\frac{1}{2} \theta\), \(c = 1 - \frac{\theta}{2} \cot{\frac{\theta}{2}}\). 于是
+</p>
+$$J^{-1} = I - \frac
+{1}{2} \theta [\hat{\mathbf{\omega}}]_\times + (1 - \frac{\theta}{2} \cot{\frac{\theta}{2}}) [\hat{\mathbf{\omega}}]_\times^2$$<hr>
+<h2 id="资源">资源<a class="anchor" href="#%e8%b5%84%e6%ba%90">#</a></h2>
+<p>根据本文编写的代码可以在此处找到 [<a href="https://github.com/EiEddie-s-Mind/julia/blob/master/movement.jl">Web</a>].</p>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: March 5, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/async-serial/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>异步非阻塞串口数据接收</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/rigid-rotation/" class="flex align-center">
+        <span>三维空间中旋转的描述</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#引理">引理</a></li>
+    <li><a href="#正文">正文</a></li>
+    <li><a href="#资源">资源</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

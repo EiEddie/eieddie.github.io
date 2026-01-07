@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="带有单位的物理计算# Mathematica# Mathematica 中可以带单位计算; 同样, 可以获取任意物理常数, 并以任意精度进行计算.
+要使用物理常数, 首先使用 Quantity 函数获取它并保存在变量里, 接着就可以在运算中使用这一常数的带有单位的精确值. 例如
+h = Quantity[&#34;PlanckConstant&#34;]获取了普朗克常量的值并保存在变量 h 中.
+如果想要知道该常数在国际单位制下的准确值, 可以使用函数 UnitConvert. 例如
+UnitConvert@Quantity[&#34;PlanckConstant&#34;]将给出结果 $$\frac{132521403}{200000000000000000000000000000000000000000} \mathrm{kg ~ m^2 / s}$$要定义带有单位的变量, 依旧使用 Quantity, 只需如下所示
+Quantity[600*^6, &#34;Hz&#34;] (* 给出 600000000 Hz *) Quantity[1, &#34;kg m/s^2&#34;] (* 给出 1 kg m/s^2 *)软件在解析单位时较慢, 但识别较为精确.
+还可以使用语法 Ctrl&#43;= 输入, 这其实是自然语言输入, 可以替换函数 Quantity, 只需按下 Ctrl&#43;= 后输入想要的常数或带单位量即可. 例如 600*^6Hz, 1 kg m/s^2, Planck Constant 等等, 都可被正常识别.
+要将带单位的运算结果约化为最简单的国际单位, 或是转化为想要的其他单位, 依旧使用 UnitConvert. 具体操作可以查看该函数的文档.
+在处理常数时, 其实软件也会将所需常数也视为一个单位来处理, 这样可以将两者通过同一套自然的方式统一起来.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/tmp/af2d30/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="带有单位的物理计算">
+  <meta property="og:description" content="带有单位的物理计算# Mathematica# Mathematica 中可以带单位计算; 同样, 可以获取任意物理常数, 并以任意精度进行计算.
+要使用物理常数, 首先使用 Quantity 函数获取它并保存在变量里, 接着就可以在运算中使用这一常数的带有单位的精确值. 例如
+h = Quantity[&#34;PlanckConstant&#34;]获取了普朗克常量的值并保存在变量 h 中.
+如果想要知道该常数在国际单位制下的准确值, 可以使用函数 UnitConvert. 例如
+UnitConvert@Quantity[&#34;PlanckConstant&#34;]将给出结果 $$\frac{132521403}{200000000000000000000000000000000000000000} \mathrm{kg ~ m^2 / s}$$要定义带有单位的变量, 依旧使用 Quantity, 只需如下所示
+Quantity[600*^6, &#34;Hz&#34;] (* 给出 600000000 Hz *) Quantity[1, &#34;kg m/s^2&#34;] (* 给出 1 kg m/s^2 *)软件在解析单位时较慢, 但识别较为精确.
+还可以使用语法 Ctrl&#43;= 输入, 这其实是自然语言输入, 可以替换函数 Quantity, 只需按下 Ctrl&#43;= 后输入想要的常数或带单位量即可. 例如 600*^6Hz, 1 kg m/s^2, Planck Constant 等等, 都可被正常识别.
+要将带单位的运算结果约化为最简单的国际单位, 或是转化为想要的其他单位, 依旧使用 UnitConvert. 具体操作可以查看该函数的文档.
+在处理常数时, 其实软件也会将所需常数也视为一个单位来处理, 这样可以将两者通过同一套自然的方式统一起来.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tmp">
+    <meta property="article:published_time" content="2026-01-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-01-03T00:00:00+00:00">
+    <meta property="article:tag" content="折腾">
+    <meta property="article:tag" content="物理">
+
+
+  <meta itemprop="name" content="带有单位的物理计算">
+  <meta itemprop="description" content="带有单位的物理计算# Mathematica# Mathematica 中可以带单位计算; 同样, 可以获取任意物理常数, 并以任意精度进行计算.
+要使用物理常数, 首先使用 Quantity 函数获取它并保存在变量里, 接着就可以在运算中使用这一常数的带有单位的精确值. 例如
+h = Quantity[&#34;PlanckConstant&#34;]获取了普朗克常量的值并保存在变量 h 中.
+如果想要知道该常数在国际单位制下的准确值, 可以使用函数 UnitConvert. 例如
+UnitConvert@Quantity[&#34;PlanckConstant&#34;]将给出结果 $$\frac{132521403}{200000000000000000000000000000000000000000} \mathrm{kg ~ m^2 / s}$$要定义带有单位的变量, 依旧使用 Quantity, 只需如下所示
+Quantity[600*^6, &#34;Hz&#34;] (* 给出 600000000 Hz *) Quantity[1, &#34;kg m/s^2&#34;] (* 给出 1 kg m/s^2 *)软件在解析单位时较慢, 但识别较为精确.
+还可以使用语法 Ctrl&#43;= 输入, 这其实是自然语言输入, 可以替换函数 Quantity, 只需按下 Ctrl&#43;= 后输入想要的常数或带单位量即可. 例如 600*^6Hz, 1 kg m/s^2, Planck Constant 等等, 都可被正常识别.
+要将带单位的运算结果约化为最简单的国际单位, 或是转化为想要的其他单位, 依旧使用 UnitConvert. 具体操作可以查看该函数的文档.
+在处理常数时, 其实软件也会将所需常数也视为一个单位来处理, 这样可以将两者通过同一套自然的方式统一起来.">
+  <meta itemprop="datePublished" content="2026-01-03T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-01-03T00:00:00+00:00">
+  <meta itemprop="wordCount" content="137">
+  <meta itemprop="keywords" content="折腾,物理">
+
+<title>带有单位的物理计算 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/tmp/af2d30/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.21d1ebbc72a59a8b382d695863231a987f94357587d503914fa3d410640407bc.js" integrity="sha256-IdHrvHKlmos4LWlYYyMamH&#43;UNXWH1QORT6PUEGQEB7w=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-tmp">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c8b164/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ce801b/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/af2d30/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/414ecc/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/d6a126/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/cb7535/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/7e6d58/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/5ff52f/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c3e9f1/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/0db9ab/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/243281/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e89ba/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/b9a0d6/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/66247c/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/4da923/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/8cbed4/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e7eba/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>带有单位的物理计算</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#mathematica">Mathematica</a></li>
+    <li><a href="#julia">Julia</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="带有单位的物理计算">带有单位的物理计算<a class="anchor" href="#%e5%b8%a6%e6%9c%89%e5%8d%95%e4%bd%8d%e7%9a%84%e7%89%a9%e7%90%86%e8%ae%a1%e7%ae%97">#</a></h1>
+<h2 id="mathematica">Mathematica<a class="anchor" href="#mathematica">#</a></h2>
+<p><strong>Mathematica</strong> 中可以带单位计算; 同样, 可以获取任意物理常数, 并以任意精度进行计算.</p>
+<p>要使用物理常数, 首先使用 <code>Quantity</code> 函数获取它并保存在变量里, 接着就可以在运算中使用这一常数的带有单位的精确值. 例如</p>
+<pre tabindex="0"><code>h = Quantity[&#34;PlanckConstant&#34;]</code></pre><p>获取了<em>普朗克常量</em>的值并保存在变量 <code>h</code> 中.</p>
+<p>如果想要知道该常数在国际单位制下的准确值, 可以使用函数 <code>UnitConvert</code>. 例如</p>
+<pre tabindex="0"><code>UnitConvert@Quantity[&#34;PlanckConstant&#34;]</code></pre><p>将给出结果
+</p>
+$$\frac{132521403}{200000000000000000000000000000000000000000} \mathrm{kg ~ m^2 / s}$$<p>要定义带有单位的变量, 依旧使用 <code>Quantity</code>, 只需如下所示</p>
+<pre tabindex="0"><code>Quantity[600*^6, &#34;Hz&#34;] (* 给出 600000000 Hz *)
+
+Quantity[1, &#34;kg m/s^2&#34;] (* 给出 1 kg m/s^2 *)</code></pre><p>软件在解析单位时较慢, 但识别较为精确.</p>
+<p>还可以使用语法 <code>Ctrl+=</code> 输入, 这其实是<em>自然语言输入</em>, 可以替换函数 <code>Quantity</code>, 只需按下 <code>Ctrl+=</code> 后输入想要的常数或带单位量即可. 例如 <code>600*^6Hz</code>, <code>1 kg m/s^2</code>, <code>Planck Constant</code> 等等, 都可被正常识别.</p>
+<p>要将带单位的运算结果约化为最简单的国际单位, 或是转化为想要的其他单位, 依旧使用 <code>UnitConvert</code>. 具体操作可以查看该函数的文档.</p>
+<p>在处理常数时, 其实软件也会将所需常数也视为一个单位来处理, 这样可以将两者通过同一套自然的方式统一起来.</p>
+<h2 id="julia">Julia<a class="anchor" href="#julia">#</a></h2>
+<p>一些简单的物理计算可以在 <strong>Julia</strong> 中完成, 物理常数与带单位的量通过包 <code>Unitful</code> 提供支持. 需要注意的是 Julia 只能完成数值计算, 无法进行符号计算.</p>
+<p>使用 <code>using Unitful.DefaultSymbols</code> 激活单位功能, 此时就可以为数值添加单位, 例如 <code>1kg*m/s^2</code> 给出结果 <code>1 kg m s^-2</code> 等等. 对于没有以变量形式给出的单位, 可以使用单位字符串 <code>u&quot;&quot;</code> 指定, 例如 <code>1u&quot;eV&quot;</code> 给出 1 <em>电子伏特</em>. 阅读 <a href="https://juliaphysics.github.io/Unitful.jl/stable">文档</a> 以获取更多信息.</p>
+<p>单位同样也被注册为函数, 作为转换器, 使用目标单位可以将物理量转换为以该单位表示, 例如 <code>J(1u&quot;eV&quot;)</code> 与 <code>1u&quot;eV&quot; |&gt; J</code> 都会将能量单位电子伏特的值转为按焦耳为单位 <code>1.602176634e-19 J</code>. 同样支持语法 <code>u&quot;eV&quot;(1J)</code> 或 <code>1J |&gt; u&quot;eV&quot;</code>.</p>
+<p><code>Unitful</code> 内置了许多带单位物理常量, 但是无法全部一次性加载到环境中, 必须显式 <code>include</code>. 可供使用的物理常数列举在 <a href="https://juliaphysics.github.io/Unitful.jl/stable/defaultunits/#Physical-constants">文档</a> 中,</p>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: January 3, 2026</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#mathematica">Mathematica</a></li>
+    <li><a href="#julia">Julia</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

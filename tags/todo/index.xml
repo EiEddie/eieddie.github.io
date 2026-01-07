@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Todo on EiEddie&#39;s Mind</title>
+    <link>https://example.org/tags/todo/</link>
+    <description>Recent content in Todo on EiEddie&#39;s Mind</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/todo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>若尔当标准型</title>
+      <link>https://example.org/docs/jordan-normal-form/</link>
+      <pubDate>Fri, 05 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/jordan-normal-form/</guid>
+      <description>&lt;h1 id=&#34;若尔当标准型&#34;&gt;若尔当标准型&lt;a class=&#34;anchor&#34; href=&#34;#%e8%8b%a5%e5%b0%94%e5%bd%93%e6%a0%87%e5%87%86%e5%9e%8b&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;我们对若尔当标准型的讨论始于两个最基本与最常用的问题:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;如何将线性空间 \(V\) 分解为线性变换 \(A\) 的不变子空间 \(V_i\) 的直和?&lt;/li&gt;&#xA;&lt;li&gt;如何使线性变换 \(A\) 在 \(V\) 的一组基上具有最简洁的矩阵形式?&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可.&#xA;问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.&lt;/p&gt;&#xA;&lt;p&gt;对于这两个问题, 我们首先想到的应该是线性变化的对角化.&#xA;对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\).&#xA;并且我们知道这一变换在其特征向量组成的基下是对角矩阵.&#xA;这样两个问题就都得到解决.&#xA;遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>可交换的线性变换</title>
+      <link>https://example.org/docs/commutative-lt/</link>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/commutative-lt/</guid>
+      <description>&lt;h1 id=&#34;可交换的线性变换&#34;&gt;可交换的线性变换&lt;a class=&#34;anchor&#34; href=&#34;#%e5%8f%af%e4%ba%a4%e6%8d%a2%e7%9a%84%e7%ba%bf%e6%80%a7%e5%8f%98%e6%8d%a2&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;这篇文章讨论可交换的线性变换, 即对于线性变换 \(A\), \(B\), 有 \(AB = BA\).&lt;/p&gt;&#xA;&lt;h2 id=&#34;引理&#34;&gt;引理&lt;a class=&#34;anchor&#34; href=&#34;#%e5%bc%95%e7%90%86&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;blockquote class=&#39;book-hint &#39;&gt;&#xA;&lt;p&gt;\(f(A)\) 与 \(B\) 可交换的充要条件是 \(A\), \(B\) 可交换.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&lt;h2 id=&#34;充要条件&#34;&gt;充要条件&lt;a class=&#34;anchor&#34; href=&#34;#%e5%85%85%e8%a6%81%e6%9d%a1%e4%bb%b6&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;复数域上线性变换 \(A\), \(B\) 可交换的充要条件是:&lt;/p&gt;&#xA;&lt;blockquote class=&#39;book-hint &#39;&gt;&#xA;&lt;p&gt;\(A\) 的每个广义特征空间 \(E_{\lambda}\) 都是 \(B\) 的不变子空间.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&lt;p&gt;其中&lt;em&gt;广义特征空间&lt;/em&gt; \(E_{\lambda} = \{\mathbf{v} ~ | ~ (A - \lambda I)^m \; \mathbf{v} = \mathbf{0}, m \in \mathbb{N}_+\}\).&#xA;线性空间 \(V\) 总是可以分解为其上某一线性变换的广义特征空间的直和.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;证明&lt;/strong&gt;:&lt;br&gt;&#xA;&lt;strong&gt;充分性&lt;/strong&gt;:&#xA;任取 \(A\) 在重数 \(m\) 的广义特征空间 \(E_{\lambda}\), \(\forall \mathbf{v} \in E_{\lambda}; B \mathbf{v} \in E_{\lambda}\).&#xA;于是 \(B (A - \lambda I)^m \mathbf{v} = B \; \mathbf{0} = \mathbf{0}\), \((A - \lambda I)^m B \mathbf{v} = (A - \lambda I)^m (B \mathbf{v}) = \mathbf{0}\).&#xA;注意到 \((A - \lambda I)^m\) 是关于 \(A\) 的多项式, 由此可得 \(E_{\lambda}\) 上 \(A\) 与 \(B\) 可交换.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

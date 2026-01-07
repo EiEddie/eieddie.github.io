@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机图形学 on EiEddie&#39;s Mind</title>
+    <link>https://example.org/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</link>
+    <description>Recent content in 计算机图形学 on EiEddie&#39;s Mind</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 26 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>密度流体的动态模拟</title>
+      <link>https://example.org/docs/dynamic-simulation-of-density-fluids/</link>
+      <pubDate>Sun, 26 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/dynamic-simulation-of-density-fluids/</guid>
+      <description>&lt;h1 id=&#34;密度流体的动态模拟&#34;&gt;密度流体的动态模拟&lt;a class=&#34;anchor&#34; href=&#34;#%e5%af%86%e5%ba%a6%e6%b5%81%e4%bd%93%e7%9a%84%e5%8a%a8%e6%80%81%e6%a8%a1%e6%8b%9f&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;我们将不可压缩流体的模拟分为两类, 一类聚焦于流体本身, 另一类则聚焦依托于流场的标量场.&#xA;前者称为&lt;strong&gt;体积流体&lt;/strong&gt;, 如水与空气二相的模拟, 我们更关心流体本身的运动;&#xA;后者称为&lt;strong&gt;密度流体&lt;/strong&gt;, 如充斥于密闭容器中的浊液的模拟, 我们关注的是溶质的物质的量密度这一标量.&#xA;需要注意的是这两个词仅为本篇文章的约定, 而非正式的学术用语.&lt;/p&gt;&#xA;&lt;p&gt;本文讲述了不可压缩密度流体的运动学模拟.&#xA;纵览符合这一条件的流场, 如附加温度场, 容质的密度场等, 其标量场都耦合于流体的速度场.&#xA;这是指标量会被流体输运, 例如温度的对流;&#xA;标量场同时可以反过来影响速度场, 例如渗透压导致的流体运动, 但我们一般不认为它会破坏流体的不可压缩性, 否则这将导致被求解方程的形式变得极端复杂.&lt;/p&gt;&#xA;&lt;p&gt;写出不可压缩流体的&lt;em&gt;纳维 - 斯托克斯方程&lt;/em&gt;:&#xA;&lt;/p&gt;&#xA;$$\nabla \cdot \mathbf{u} = 0$$&lt;p&gt;&#xA;&lt;/p&gt;&#xA;$$\frac{\mathrm{D} \mathbf{u}}{\mathrm{D} t} = -\nabla \frac{p}{\rho} + \nu \nabla^2 \mathbf{u} + \mathbf{a}$$&lt;p&gt;&#xA;前者是质量守恒定律对应的连续性方程在不可压缩, 即 \(\rho \equiv \mathrm{const}\) 时的推论;&#xA;后者是牛顿第二定律.&#xA;其中 \(\nu\) 是&lt;em&gt;运动粘度&lt;/em&gt;, \(\nu := \mu/\rho\), \(\mu\) 是&lt;em&gt;动力粘度&lt;/em&gt;.&#xA;流体力学中, 我们一般用 \(\mathbf{u}\) 代表速度.&lt;/p&gt;&#xA;&lt;p&gt;后式中出现的&lt;em&gt;随质导数&lt;/em&gt;, 或称&lt;em&gt;物质导数&lt;/em&gt; \(\frac{\mathrm{D}}{\mathrm{D} t} := \frac{\partial}{\partial t} + (\mathbf{u} \cdot \nabla)\).&#xA;这一式中前者表示欧拉导数; 后者表示拉格朗日导数, 即由于流体的运动带来的变化, 这个效应称为移流.&#xA;将其拆开可以写为&#xA;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

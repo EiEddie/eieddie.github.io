@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="使用泰勒展开的运动预测# 在 \(n\) 维空间运动的物体, 其运动方程总可以写成 \(n\) 个关于时间 \(t\) 的参数方程.
+进一步地, 将关于 \(t\) 的参数方程泰勒展开为关于 \(t\) 的多项式函数, 可以显式得到其表达式, 并且可以计算出超过当前时刻, 也就是未来时刻的位置. 当超出当前时刻的时间不长, 运动轨迹是平滑的且分辨率足够高时, 可以认为此级数收敛于实际的位置.
+泰勒展开所需的各阶导数可以通过数值计算获得.
+参数获取# 假如我们已经获得位置关于时间的一系列数据 \(\{r_n\}\), 其中 \(r_n\) 是当前时刻的数据. 它也可以被记作 \(r_n^{(0)}\). 对应的时刻记为 \(t_n\), 或 \(t_n^{(0)}\).
+根据函数导数的公式, 自然地我们想到当前时刻位置的一阶导数为 \(r_n^{(1)} = \frac{r_n - r_{n-1}}{\Delta t_n}\), 其中 \(\Delta t_n := t_n - t_{n-1}\), 以及过去时刻的导数同理.
+于是, 我们获得了 \(n-1\) 个一阶导数组成的序列 \(\{r_n^{(1)}\}\). 进一步可以计算二阶乃至 \(n-1\) 阶导数:
+$$r_n^{(m)} = \frac{r_n^{(m-1)} - r_{n-1}^{(m-1)}}{\Delta t_n^{(m-1)}}$$$$\Delta t_n^{(m)} = \frac{\Delta t_n^{(m-1)} &#43; \Delta t_{n-1}^{(m-1)}}{2}$$另外 \(\Delta t_n^{(0)} := \Delta t_n\).
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://example.org/docs/time-series-forecasting-using-taylor/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="使用泰勒展开的运动预测">
+  <meta property="og:description" content="使用泰勒展开的运动预测# 在 \(n\) 维空间运动的物体, 其运动方程总可以写成 \(n\) 个关于时间 \(t\) 的参数方程.
+进一步地, 将关于 \(t\) 的参数方程泰勒展开为关于 \(t\) 的多项式函数, 可以显式得到其表达式, 并且可以计算出超过当前时刻, 也就是未来时刻的位置. 当超出当前时刻的时间不长, 运动轨迹是平滑的且分辨率足够高时, 可以认为此级数收敛于实际的位置.
+泰勒展开所需的各阶导数可以通过数值计算获得.
+参数获取# 假如我们已经获得位置关于时间的一系列数据 \(\{r_n\}\), 其中 \(r_n\) 是当前时刻的数据. 它也可以被记作 \(r_n^{(0)}\). 对应的时刻记为 \(t_n\), 或 \(t_n^{(0)}\).
+根据函数导数的公式, 自然地我们想到当前时刻位置的一阶导数为 \(r_n^{(1)} = \frac{r_n - r_{n-1}}{\Delta t_n}\), 其中 \(\Delta t_n := t_n - t_{n-1}\), 以及过去时刻的导数同理.
+于是, 我们获得了 \(n-1\) 个一阶导数组成的序列 \(\{r_n^{(1)}\}\). 进一步可以计算二阶乃至 \(n-1\) 阶导数:
+$$r_n^{(m)} = \frac{r_n^{(m-1)} - r_{n-1}^{(m-1)}}{\Delta t_n^{(m-1)}}$$$$\Delta t_n^{(m)} = \frac{\Delta t_n^{(m-1)} &#43; \Delta t_{n-1}^{(m-1)}}{2}$$另外 \(\Delta t_n^{(0)} := \Delta t_n\).">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2025-01-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-01-28T00:00:00+00:00">
+    <meta property="article:tag" content="物理">
+    <meta property="article:tag" content="数学">
+    <meta property="article:tag" content="Julia">
+
+
+  <meta itemprop="name" content="使用泰勒展开的运动预测">
+  <meta itemprop="description" content="使用泰勒展开的运动预测# 在 \(n\) 维空间运动的物体, 其运动方程总可以写成 \(n\) 个关于时间 \(t\) 的参数方程.
+进一步地, 将关于 \(t\) 的参数方程泰勒展开为关于 \(t\) 的多项式函数, 可以显式得到其表达式, 并且可以计算出超过当前时刻, 也就是未来时刻的位置. 当超出当前时刻的时间不长, 运动轨迹是平滑的且分辨率足够高时, 可以认为此级数收敛于实际的位置.
+泰勒展开所需的各阶导数可以通过数值计算获得.
+参数获取# 假如我们已经获得位置关于时间的一系列数据 \(\{r_n\}\), 其中 \(r_n\) 是当前时刻的数据. 它也可以被记作 \(r_n^{(0)}\). 对应的时刻记为 \(t_n\), 或 \(t_n^{(0)}\).
+根据函数导数的公式, 自然地我们想到当前时刻位置的一阶导数为 \(r_n^{(1)} = \frac{r_n - r_{n-1}}{\Delta t_n}\), 其中 \(\Delta t_n := t_n - t_{n-1}\), 以及过去时刻的导数同理.
+于是, 我们获得了 \(n-1\) 个一阶导数组成的序列 \(\{r_n^{(1)}\}\). 进一步可以计算二阶乃至 \(n-1\) 阶导数:
+$$r_n^{(m)} = \frac{r_n^{(m-1)} - r_{n-1}^{(m-1)}}{\Delta t_n^{(m-1)}}$$$$\Delta t_n^{(m)} = \frac{\Delta t_n^{(m-1)} &#43; \Delta t_{n-1}^{(m-1)}}{2}$$另外 \(\Delta t_n^{(0)} := \Delta t_n\).">
+  <meta itemprop="datePublished" content="2025-01-28T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-01-28T00:00:00+00:00">
+  <meta itemprop="wordCount" content="224">
+  <meta itemprop="keywords" content="物理,数学,Julia">
+
+<title>使用泰勒展开的运动预测 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://example.org/docs/time-series-forecasting-using-taylor/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.30b7b0668b72639b1346296ecb2a68cee88550ebed2ff54b104d665e1e658fd5.js" integrity="sha256-MLewZotyY5sTRiluyypozuiFUOvtL/VLEE1mXh5lj9U=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="active">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>使用泰勒展开的运动预测</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#参数获取">参数获取</a></li>
+    <li><a href="#增量更新">增量更新</a></li>
+    <li><a href="#误差分析">误差分析</a></li>
+    <li><a href="#资源">资源</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="使用泰勒展开的运动预测">使用泰勒展开的运动预测<a class="anchor" href="#%e4%bd%bf%e7%94%a8%e6%b3%b0%e5%8b%92%e5%b1%95%e5%bc%80%e7%9a%84%e8%bf%90%e5%8a%a8%e9%a2%84%e6%b5%8b">#</a></h1>
+<p>在 \(n\) 维空间运动的物体, 其运动方程总可以写成 \(n\) 个关于时间 \(t\) 的参数方程.</p>
+<p>进一步地, 将关于 \(t\) 的参数方程泰勒展开为关于 \(t\) 的多项式函数, 可以显式得到其表达式,
+并且可以计算出超过当前时刻, 也就是未来时刻的位置.
+当超出当前时刻的时间不长, 运动轨迹是平滑的且分辨率足够高时, 可以认为此级数收敛于实际的位置.</p>
+<p>泰勒展开所需的各阶导数可以通过数值计算获得.</p>
+<h2 id="参数获取">参数获取<a class="anchor" href="#%e5%8f%82%e6%95%b0%e8%8e%b7%e5%8f%96">#</a></h2>
+<p>假如我们已经获得位置关于时间的一系列数据 \(\{r_n\}\), 其中 \(r_n\) 是当前时刻的数据.
+它也可以被记作 \(r_n^{(0)}\). 对应的时刻记为 \(t_n\), 或 \(t_n^{(0)}\).</p>
+<p>根据函数导数的公式, 自然地我们想到当前时刻位置的一阶导数为 \(r_n^{(1)} = \frac{r_n - r_{n-1}}{\Delta t_n}\),
+其中 \(\Delta t_n := t_n - t_{n-1}\),
+以及过去时刻的导数同理.</p>
+<p>于是, 我们获得了 \(n-1\) 个一阶导数组成的序列 \(\{r_n^{(1)}\}\). 进一步可以计算二阶乃至 \(n-1\) 阶导数:</p>
+$$r_n^{(m)} = \frac{r_n^{(m-1)} - r_{n-1}^{(m-1)}}{\Delta t_n^{(m-1)}}$$$$\Delta t_n^{(m)} = \frac{\Delta t_n^{(m-1)} + \Delta t_{n-1}^{(m-1)}}{2}$$<p>另外 \(\Delta t_n^{(0)} := \Delta t_n\).</p>
+<p>这样便可递归地求出一阶直到 \(n-1\) 阶导数, 如下方的倒金字塔形图:</p>
+<pre><code>1^0   2^0   3^0   4^0   5^0   6^0
+   2^1   3^1   4^1   5^1   6^1
+      3^2   4^2   5^2   6^2
+         4^3   5^3   6^3
+            5^4   6^4
+               6^5
+</code></pre>
+<p>如此一来, 末位置的 \(0\) 至 \(n-1\) 阶导数已经得到. 据此构建泰勒展开便可预测未来时刻的位置.</p>
+<p>需要注意的是, 可以看到 \(r_6^{(5)}\) 实际计算的是整个序列中点时刻的导数, 于是序列持续时间越短, 计算越精确.</p>
+<h2 id="增量更新">增量更新<a class="anchor" href="#%e5%a2%9e%e9%87%8f%e6%9b%b4%e6%96%b0">#</a></h2>
+<p>我们已经得到末位置 \(r_n\) 的 \(0\) 至 \(n-1\) 阶导数与 \(\Delta t_n^{(0)} \sim \Delta t_n^{(n-1)}\),
+若又获取到下一时刻的位置 \(r_{n+1}\) 与时间差 \(\Delta t_{n+1}\),
+如何利用现有数据计算 \(r_{n+1}\) 的各阶导数?</p>
+<p>注意到 \(r_{n+1}^{(1)}\) 由 \(r_{n+1}^{(0)}\) \(r_{n}^{(0)}\) 计算而来, 而这些数据我们已经知道.
+进一步, \(r_{n+1}^{(2)}\) 由 \(r_{n+1}^{(1)}\) \(r_{n}^{(1)}\) 计算得出.
+于是我们有 \(r_{n+1}^{(m)} = \frac{r_{n+1}^{(m-1)} - r_{n}^{(m-1)}}{\Delta t_{n+1}^{(m-1)}}\). 如下:</p>
+<pre><code>               6^0   7^0
+            6^1   7^1
+         6^2   7^2
+      6^3   7^3
+   6^4   7^4
+6^5   7^5
+   7^6
+</code></pre>
+<h2 id="误差分析">误差分析<a class="anchor" href="#%e8%af%af%e5%b7%ae%e5%88%86%e6%9e%90">#</a></h2>
+<p>编程计算时, 因为浮点数所能表示的精度有限, 因此求导多次后误差便会逐步累积变大,
+直到不可忽略的程度.</p>
+<p>例如, <em>IEEE 754</em> 标准下双精度浮点数 <code>double</code> 表示某一实数, 其误差最大为 \(\epsilon = 2^{-52}\). 这被称为 <em>机器精度</em>.</p>
+<p>因此, 若原始数据因为浮点舍入造成的误差为 \(\epsilon\), 计算 \(n\) 阶导数的误差即为 \(\frac{\epsilon}{\Delta t^n}\). 给定能接受的最大误差 \(\delta\), 即有</p>
+$$\delta \ge \frac{\epsilon}{\Delta t^n}$$<p>两边取对数有 \(\ln{\delta} \ge \ln{\epsilon} - n \ln{\Delta t}\),
+进而 \(n \ge \frac{\ln{\epsilon / \delta}}{\ln{\Delta t}}\).
+若 \(\Delta t > 1\), 则不等号取反.</p>
+<h2 id="资源">资源<a class="anchor" href="#%e8%b5%84%e6%ba%90">#</a></h2>
+<p>根据本文编写的代码可以在此处找到 [<a href="https://github.com/EiEddie-s-Mind/julia/blob/master/series.jl">Web</a>].</p>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: January 28, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/rigid-rotation/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>三维空间中旋转的描述</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ballistics/" class="flex align-center">
+        <span>抛体运动弹道解算</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#参数获取">参数获取</a></li>
+    <li><a href="#增量更新">增量更新</a></li>
+    <li><a href="#误差分析">误差分析</a></li>
+    <li><a href="#资源">资源</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

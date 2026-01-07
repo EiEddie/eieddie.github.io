@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="若尔当标准型# 我们对若尔当标准型的讨论始于两个最基本与最常用的问题:
+如何将线性空间 $V$ 分解为线性变换 $A$ 的不变子空间 $V_i$ 的直和? 如何使线性变换 $A$ 在 $V$ 的一组基上具有最简洁的矩阵形式? 对于问题一, 一个合理的附加条件是 $A$ 在这些不变子空间 $V_i$ 上具有良好的性质, 这样要研究 $A$, 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 $V$ 即可. 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.
+对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 $V$ 可以被分解为特征子空间的直和 $V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}$. 并且我们知道这一变换在其特征向量组成的基下是对角矩阵. 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/tmp/d6a126/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="若尔当标准型">
+  <meta property="og:description" content="若尔当标准型# 我们对若尔当标准型的讨论始于两个最基本与最常用的问题:
+如何将线性空间 $V$ 分解为线性变换 $A$ 的不变子空间 $V_i$ 的直和? 如何使线性变换 $A$ 在 $V$ 的一组基上具有最简洁的矩阵形式? 对于问题一, 一个合理的附加条件是 $A$ 在这些不变子空间 $V_i$ 上具有良好的性质, 这样要研究 $A$, 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 $V$ 即可. 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.
+对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 $V$ 可以被分解为特征子空间的直和 $V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}$. 并且我们知道这一变换在其特征向量组成的基下是对角矩阵. 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tmp">
+    <meta property="article:published_time" content="2025-12-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-05T00:00:00+00:00">
+    <meta property="article:tag" content="数学">
+    <meta property="article:tag" content="Undone">
+    <meta property="article:tag" content="Todo">
+
+
+  <meta itemprop="name" content="若尔当标准型">
+  <meta itemprop="description" content="若尔当标准型# 我们对若尔当标准型的讨论始于两个最基本与最常用的问题:
+如何将线性空间 $V$ 分解为线性变换 $A$ 的不变子空间 $V_i$ 的直和? 如何使线性变换 $A$ 在 $V$ 的一组基上具有最简洁的矩阵形式? 对于问题一, 一个合理的附加条件是 $A$ 在这些不变子空间 $V_i$ 上具有良好的性质, 这样要研究 $A$, 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 $V$ 即可. 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.
+对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 $V$ 可以被分解为特征子空间的直和 $V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}$. 并且我们知道这一变换在其特征向量组成的基下是对角矩阵. 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.">
+  <meta itemprop="datePublished" content="2025-12-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="51">
+  <meta itemprop="keywords" content="数学,Undone,Todo">
+
+<title>若尔当标准型 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/tmp/d6a126/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.21d1ebbc72a59a8b382d695863231a987f94357587d503914fa3d410640407bc.js" integrity="sha256-IdHrvHKlmos4LWlYYyMamH&#43;UNXWH1QORT6PUEGQEB7w=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-tmp">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c8b164/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ce801b/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/af2d30/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/414ecc/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/d6a126/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/cb7535/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/7e6d58/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/5ff52f/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c3e9f1/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/0db9ab/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/243281/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e89ba/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/b9a0d6/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/66247c/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/4da923/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/8cbed4/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e7eba/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>若尔当标准型</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="若尔当标准型">若尔当标准型<a class="anchor" href="#%e8%8b%a5%e5%b0%94%e5%bd%93%e6%a0%87%e5%87%86%e5%9e%8b">#</a></h1>
+<p>我们对若尔当标准型的讨论始于两个最基本与最常用的问题:</p>
+<ul>
+<li>如何将线性空间 $V$ 分解为线性变换 $A$ 的不变子空间 $V_i$ 的直和?</li>
+<li>如何使线性变换 $A$ 在 $V$ 的一组基上具有最简洁的矩阵形式?</li>
+</ul>
+<p>对于问题一, 一个合理的附加条件是 $A$ 在这些不变子空间 $V_i$ 上具有良好的性质, 这样要研究 $A$, 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 $V$ 即可.
+问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.</p>
+<p>对于这两个问题, 我们首先想到的应该是线性变化的对角化.
+对于可对角化的线性变换, 充要条件之一便是线性空间 $V$ 可以被分解为特征子空间的直和 $V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}$.
+并且我们知道这一变换在其特征向量组成的基下是对角矩阵.
+这样两个问题就都得到解决.
+遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.</p>
+<!-- 广义特征空间, 幂零变换, 若尔当标准型 -->
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: December 5, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

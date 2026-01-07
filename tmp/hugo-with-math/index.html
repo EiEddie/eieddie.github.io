@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="为 Hugo 添加数学支持# 本文将聚焦于为 hugo 生成的静态站点添加数学公式渲染支持, 我们将使用 MathJax, 因为相比 KaTeX, 它支持更多 $\LaTeX$ 语法, 例如 align 对齐环境等.
+关于 hugo 的 联合文件系统 与 注入点 相关内容, 请看 这篇文章.
+首先在 layouts/partials 中新建 mathjax.html, 用于作为组件被调用.
+&lt;!-- layouts/partials/mathjax.html --&gt; {{ if or .Params.math .Site.Params.math }} &lt;script&gt; window.MathJax = { tex: { inlineMath: [[&#39;\\(&#39;, &#39;\\)&#39;]], displayMath: [[&#39;$$&#39;, &#39;$$&#39;]] }, options: { skipHtmlTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;] } }; &lt;/script&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&#34; async&gt; &lt;/script&gt; {{ end }}这段代码引入了 MathJax, 并配置渲染块标识符, 内联公式为 \(...\), 行间公式为 $$...$$. 不使用 $...$ 与 \[...\] 的理由将在后文叙述.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/tmp/hugo-with-math/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="为 Hugo 添加数学支持">
+  <meta property="og:description" content="为 Hugo 添加数学支持# 本文将聚焦于为 hugo 生成的静态站点添加数学公式渲染支持, 我们将使用 MathJax, 因为相比 KaTeX, 它支持更多 $\LaTeX$ 语法, 例如 align 对齐环境等.
+关于 hugo 的 联合文件系统 与 注入点 相关内容, 请看 这篇文章.
+首先在 layouts/partials 中新建 mathjax.html, 用于作为组件被调用.
+&lt;!-- layouts/partials/mathjax.html --&gt; {{ if or .Params.math .Site.Params.math }} &lt;script&gt; window.MathJax = { tex: { inlineMath: [[&#39;\\(&#39;, &#39;\\)&#39;]], displayMath: [[&#39;$$&#39;, &#39;$$&#39;]] }, options: { skipHtmlTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;] } }; &lt;/script&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&#34; async&gt; &lt;/script&gt; {{ end }}这段代码引入了 MathJax, 并配置渲染块标识符, 内联公式为 \(...\), 行间公式为 $$...$$. 不使用 $...$ 与 \[...\] 的理由将在后文叙述.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tmp">
+    <meta property="article:published_time" content="2026-01-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-01-04T00:00:00+00:00">
+    <meta property="article:tag" content="折腾">
+
+
+  <meta itemprop="name" content="为 Hugo 添加数学支持">
+  <meta itemprop="description" content="为 Hugo 添加数学支持# 本文将聚焦于为 hugo 生成的静态站点添加数学公式渲染支持, 我们将使用 MathJax, 因为相比 KaTeX, 它支持更多 $\LaTeX$ 语法, 例如 align 对齐环境等.
+关于 hugo 的 联合文件系统 与 注入点 相关内容, 请看 这篇文章.
+首先在 layouts/partials 中新建 mathjax.html, 用于作为组件被调用.
+&lt;!-- layouts/partials/mathjax.html --&gt; {{ if or .Params.math .Site.Params.math }} &lt;script&gt; window.MathJax = { tex: { inlineMath: [[&#39;\\(&#39;, &#39;\\)&#39;]], displayMath: [[&#39;$$&#39;, &#39;$$&#39;]] }, options: { skipHtmlTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;] } }; &lt;/script&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&#34; async&gt; &lt;/script&gt; {{ end }}这段代码引入了 MathJax, 并配置渲染块标识符, 内联公式为 \(...\), 行间公式为 $$...$$. 不使用 $...$ 与 \[...\] 的理由将在后文叙述.">
+  <meta itemprop="datePublished" content="2026-01-04T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-01-04T00:00:00+00:00">
+  <meta itemprop="wordCount" content="334">
+  <meta itemprop="keywords" content="折腾">
+
+<title>为 Hugo 添加数学支持 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/tmp/hugo-with-math/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.4ea3fbba8498761285eb263df6e9023f3d3ec7ccb25fe5089d03b25103174257.js" integrity="sha256-TqP7uoSYdhKF6yY99ukCPz0&#43;x8yyX&#43;UInQOyUQMXQlc=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-tmp">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>为 Hugo 添加数学支持</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="为-hugo-添加数学支持">为 Hugo 添加数学支持<a class="anchor" href="#%e4%b8%ba-hugo-%e6%b7%bb%e5%8a%a0%e6%95%b0%e5%ad%a6%e6%94%af%e6%8c%81">#</a></h1>
+<p>本文将聚焦于为 hugo 生成的静态站点添加数学公式渲染支持, 我们将使用 MathJax, 因为相比 KaTeX, 它支持更多 $\LaTeX$ 语法, 例如 <code>align</code> 对齐环境等.</p>
+<p>关于 hugo 的 <em>联合文件系统</em> 与 <em>注入点</em> 相关内容, 请看 <a href="Static%20Site%20with%20Hugo.md">这篇文章</a>.</p>
+<p>首先在 <code>layouts/partials</code> 中新建 <code>mathjax.html</code>, 用于作为组件被调用.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- layouts/partials/mathjax.html --&gt;</span>
+</span></span><span style="display:flex;"><span>{{ if or .Params.math .Site.Params.math }}
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  window.<span style="color:#a6e22e">MathJax</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">inlineMath</span><span style="color:#f92672">:</span> [[<span style="color:#e6db74">&#39;\\(&#39;</span>, <span style="color:#e6db74">&#39;\\)&#39;</span>]],
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">displayMath</span><span style="color:#f92672">:</span> [[<span style="color:#e6db74">&#39;$$&#39;</span>, <span style="color:#e6db74">&#39;$$&#39;</span>]]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">skipHtmlTags</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;script&#39;</span>, <span style="color:#e6db74">&#39;noscript&#39;</span>, <span style="color:#e6db74">&#39;style&#39;</span>, <span style="color:#e6db74">&#39;textarea&#39;</span>, <span style="color:#e6db74">&#39;pre&#39;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">async</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>{{ end }}</span></span></code></pre></div><p>这段代码引入了 MathJax, 并配置渲染块标识符, 内联公式为 <code>\(...\)</code>, 行间公式为 <code>$$...$$</code>.
+不使用 <code>$...$</code> 与 <code>\[...\]</code> 的理由将在后文叙述.</p>
+<p>被 <code>{{ }}</code> 括起来的部分为 <em>模板</em>, 它将作为占位符被解析器用正文替换, 也可作为判断语句.
+文件中的模板是一个判断, 意味<strong>仅当文章元数据启用了 <code>math</code> 或站点配置中启用了 <code>math</code>, 才会引入 MathJax 渲染</strong>.
+为了全局启用, 可以在站点配置文件 <code>hugo.toml</code> 中声明</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">math</span> = <span style="color:#66d9ef">true</span></span></span></code></pre></div><p>接下来需要将上述文件引入主题, 我们使用 book 主题提供的 <strong><code>&lt;head&gt;</code> 末尾处</strong>的注入点 <code>layouts/partials/docs/inject/head.html</code>.
+将下面的内容放入此文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- layouts/partials/docs/inject/head.html --&gt;</span>
+</span></span><span style="display:flex;"><span>{{ partial &#34;mathjax.html&#34; . }}</span></span></code></pre></div><p>这段模板会把上面编写的 <code>partial/mathjax.html</code> 引入.
+于是最终 MathJax 相关代码将会出现在页面 html <code>&lt;head&gt;</code> 标签结尾处.</p>
+<p>此时理论上就可以使用了, 但是会出现一些 bug, 例如公式块内如果出现 Markdown 语法, 例如 <code>$$A_n*B_m$$</code> 中出现了一个 Markdown 强调块 <code>_..._</code>, 此时 hugo 将会先按 Markdown 解析, 将 <code>_..._</code> 替换成特定的样式, 如此一来公式就不能被正确渲染了.
+为了避免这种问题, 我们启用 Markdown 解析时的 <em>透传</em> 功能<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, 在 <code>hugo.toml</code> 中配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">goldmark</span>.<span style="color:#a6e22e">extensions</span>.<span style="color:#a6e22e">passthrough</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">enable</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">delimiters</span> = { <span style="color:#a6e22e">block</span> = [[<span style="color:#e6db74">&#39;$$&#39;</span>, <span style="color:#e6db74">&#39;$$&#39;</span>]], <span style="color:#a6e22e">inline</span> = [[<span style="color:#e6db74">&#39;\(&#39;</span>, <span style="color:#e6db74">&#39;\)&#39;</span>]] }</span></span></code></pre></div><p>这会要求 Markdown 解析器将上述标识符中包裹的内容不做任何处理, 直接移交渲染流水线的下一层, 即 MathJax 处理, 于是公式便可正常渲染.</p>
+<hr>
+<p>但事情没有这么简单.
+我们习惯使用 <code>$...$</code> 来编写行内公式, 为何这里不启用对 <code>$</code> 的支持呢?
+因为日常行文中 <code>$</code> 是一个常见的符号, 而且在很多编程语言中作为关键符号存在.
+如果我们启用了 <code>$...$</code> 支持, 由于 Hugo 的透传机制是先于 Markdown 解析运作的, 即使是包裹在 <code>`</code> 内的 $ 块也会被渲染为公式.
+另外, 在 hugo 中转义 $ 需要双转义 <code>\\$</code>, 因为渲染流水线有 Goldmark, 即 hugo 的 Markdown 解析器, 和 MathJax 两层, <code>\\$</code> 经过 Goldmark 后变为 <code>\$</code>, 而后 MathJax 才知道这不是公式定界符, 从而将其格式化为正常的美元符号 <code>$</code>.</p>
+<p>综合各方面考虑, 我们将额外添加一个环节, 先使用 pandoc 将 $ 定界的内联公式块 <code>$...$</code> 转为 <code>\(...\)</code>, 这样既能在平时使用更熟悉的语法写作, 又避免了纠缠不清的 $.
+另外, 还有一些补全 Goldmark 漏洞的规则, 例如 <code>$$...$$</code> 会被识别为行间公式, 于是我们在编写 pandoc 过滤器时将内联代码块内的双美元符号 <code>$$</code> 进行转义 <code>\$\$</code>;
+内联代码块中如果出现这种模式 <code>\\$</code> 就会被识别为一个转义的反斜杠与一个美元符号 <code>\$</code>, 因此干脆将所有的 <code>\</code> 都转义.</p>
+<p>下面是能够达成我们目标的 lua 过滤器, 用于被 pandoc 使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#75715e">-- math-delimiter.lua</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Math</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> el.mathtype <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;InlineMath&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">-- $...$ -&gt; \(...\)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> pandoc.RawInline(<span style="color:#e6db74">&#34;markdown&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">(&#34;</span> <span style="color:#f92672">..</span> el.text <span style="color:#f92672">..</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">)&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Code</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> s <span style="color:#f92672">=</span> el.text
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- \ -&gt; \\</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- $$ -&gt; \$\$</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;%$%$&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">$</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">$&#34;</span>)
+</span></span><span style="display:flex;"><span>  el.text <span style="color:#f92672">=</span> s
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> el
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div><p>并且应当以下面的方式使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pandoc -s in.md -t markdown --lua-filter<span style="color:#f92672">=</span>math-delimiter.lua -o out.md</span></span></code></pre></div><p>不要忘记 <code>-s</code>/<code>--standalone=true</code> 参数, 否则你的元数据将被吞掉.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.windtunnel.cn/posts/hugo/hugo-mathjax/">Hugo+Mathjax的正确姿势</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: January 4, 2026</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

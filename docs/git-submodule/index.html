@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="git 子模块# git 子模块 (submodule) 是挂于某 git 仓库下的子仓库. 当父仓库想使用第三方或者是与主业务分离的模块时, 可以通过将其注册为子模块来增加灵活性.
+添加子模块# 通过在父仓库使用
+git submodule add &lt;url&gt; &lt;path&gt; 可以在 &lt;path&gt; 地址处添加一个子模块.
+其中, url 可以为远程仓库地址, 也可以是本地仓库地址. 例如, 要把下面的 new_repo 仓库添加为 repo 的子模块, 可以使用命令:
+git submodule add ./3rd/new_repo 3rd/new_repo
+其中 ./3rd/new_repo 即为本地仓库的 url. 需要注意的是本地 url 前面的 ./ 或 ../ 是必须的, &lt;path&gt; 也不能省略.
+repo ├─ .git └─ 3rd └─ new_repo └─ .git 另外一个远程仓库的例子. 若想把 github.com/user/new_repo.git 仓库添加为 repo 的子模块, 并要求 new_repo 放置在 3rd 文件夹内, 可以使用命令:
+git submodule add github.com/user/new_repo 3rd
+如果不指定后面的路径 3rd, 则会直接把 new_repo 克隆到父仓库目录下.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://example.org/docs/git-submodule/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="`git` 子模块">
+  <meta property="og:description" content="git 子模块# git 子模块 (submodule) 是挂于某 git 仓库下的子仓库. 当父仓库想使用第三方或者是与主业务分离的模块时, 可以通过将其注册为子模块来增加灵活性.
+添加子模块# 通过在父仓库使用
+git submodule add &lt;url&gt; &lt;path&gt; 可以在 &lt;path&gt; 地址处添加一个子模块.
+其中, url 可以为远程仓库地址, 也可以是本地仓库地址. 例如, 要把下面的 new_repo 仓库添加为 repo 的子模块, 可以使用命令:
+git submodule add ./3rd/new_repo 3rd/new_repo
+其中 ./3rd/new_repo 即为本地仓库的 url. 需要注意的是本地 url 前面的 ./ 或 ../ 是必须的, &lt;path&gt; 也不能省略.
+repo ├─ .git └─ 3rd └─ new_repo └─ .git 另外一个远程仓库的例子. 若想把 github.com/user/new_repo.git 仓库添加为 repo 的子模块, 并要求 new_repo 放置在 3rd 文件夹内, 可以使用命令:
+git submodule add github.com/user/new_repo 3rd
+如果不指定后面的路径 3rd, 则会直接把 new_repo 克隆到父仓库目录下.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2025-01-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-01-25T00:00:00+00:00">
+    <meta property="article:tag" content="Git">
+
+
+  <meta itemprop="name" content="`git` 子模块">
+  <meta itemprop="description" content="git 子模块# git 子模块 (submodule) 是挂于某 git 仓库下的子仓库. 当父仓库想使用第三方或者是与主业务分离的模块时, 可以通过将其注册为子模块来增加灵活性.
+添加子模块# 通过在父仓库使用
+git submodule add &lt;url&gt; &lt;path&gt; 可以在 &lt;path&gt; 地址处添加一个子模块.
+其中, url 可以为远程仓库地址, 也可以是本地仓库地址. 例如, 要把下面的 new_repo 仓库添加为 repo 的子模块, 可以使用命令:
+git submodule add ./3rd/new_repo 3rd/new_repo
+其中 ./3rd/new_repo 即为本地仓库的 url. 需要注意的是本地 url 前面的 ./ 或 ../ 是必须的, &lt;path&gt; 也不能省略.
+repo ├─ .git └─ 3rd └─ new_repo └─ .git 另外一个远程仓库的例子. 若想把 github.com/user/new_repo.git 仓库添加为 repo 的子模块, 并要求 new_repo 放置在 3rd 文件夹内, 可以使用命令:
+git submodule add github.com/user/new_repo 3rd
+如果不指定后面的路径 3rd, 则会直接把 new_repo 克隆到父仓库目录下.">
+  <meta itemprop="datePublished" content="2025-01-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-01-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="145">
+  <meta itemprop="keywords" content="Git">
+
+<title>`git` 子模块 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://example.org/docs/git-submodule/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.30b7b0668b72639b1346296ecb2a68cee88550ebed2ff54b104d665e1e658fd5.js" integrity="sha256-MLewZotyY5sTRiluyypozuiFUOvtL/VLEE1mXh5lj9U=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="active">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>`git` 子模块</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#添加子模块">添加子模块</a></li>
+    <li><a href="#修改子模块">修改子模块</a></li>
+    <li><a href="#删除子模块">删除子模块</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="git-子模块"><code>git</code> 子模块<a class="anchor" href="#git-%e5%ad%90%e6%a8%a1%e5%9d%97">#</a></h1>
+<p><code>git</code> <em>子模块 (submodule)</em> 是挂于某 <code>git</code> 仓库下的子仓库. 当父仓库想使用第三方或者是与主业务分离的模块时, 可以通过将其注册为子模块来增加灵活性.</p>
+<h2 id="添加子模块">添加子模块<a class="anchor" href="#%e6%b7%bb%e5%8a%a0%e5%ad%90%e6%a8%a1%e5%9d%97">#</a></h2>
+<p>通过在父仓库使用</p>
+<pre><code>git submodule add &lt;url&gt; &lt;path&gt;
+</code></pre>
+<p>可以在 <code>&lt;path&gt;</code> 地址处添加一个子模块.</p>
+<p>其中, <code>url</code> 可以为远程仓库地址, 也可以是本地仓库地址. 例如, 要把下面的 <code>new_repo</code> 仓库添加为 <code>repo</code> 的子模块, 可以使用命令:<br>
+<code>git submodule add ./3rd/new_repo 3rd/new_repo</code><br>
+其中 <code>./3rd/new_repo</code> 即为本地仓库的 <code>url</code>. 需要注意的是本地 <code>url</code> 前面的 <code>./</code> 或 <code>../</code> 是必须的, <code>&lt;path&gt;</code> 也不能省略.</p>
+<pre><code>repo
+├─ .git
+└─ 3rd
+    └─ new_repo
+        └─ .git
+</code></pre>
+<p>另外一个远程仓库的例子. 若想把 <code>github.com/user/new_repo.git</code> 仓库添加为 <code>repo</code> 的子模块, 并要求 <code>new_repo</code> 放置在 <code>3rd</code> 文件夹内, 可以使用命令:<br>
+<code>git submodule add github.com/user/new_repo 3rd</code><br>
+如果不指定后面的路径 <code>3rd</code>, 则会直接把 <code>new_repo</code> 克隆到父仓库目录下.</p>
+<p>添加子模块后会在父目录下新建一个 <code>.gitmodule</code> 文件, 里面储存了所有子模块的信息.</p>
+<h2 id="修改子模块">修改子模块<a class="anchor" href="#%e4%bf%ae%e6%94%b9%e5%ad%90%e6%a8%a1%e5%9d%97">#</a></h2>
+<p>可以对子模块内的文件进行修改.</p>
+<p>前面提到子模块同样是一个完备的 <code>git</code> 仓库, 在子模块内进行的修改会同时反映在子模块本身与父仓库上. 对于子模块, 就是普通的 <code>git</code> 修改; 但是对于父仓库, 提示的是子模块整体发生了修改, 如下在父仓库进行的 <code>git status</code> 结果:</p>
+<pre><code>Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        modified:   3rd/new_repo
+</code></pre>
+<p>因此一次修改需要提交两遍. 一遍是子模块内的提交, 就像普通的提交一样. 第二遍是在父仓库内, 将子模块作为整体暂存并提交.</p>
+<h2 id="删除子模块">删除子模块<a class="anchor" href="#%e5%88%a0%e9%99%a4%e5%ad%90%e6%a8%a1%e5%9d%97">#</a></h2>
+<p>要删除一个子模块, 遵循以下三步走原则:</p>
+<ol>
+<li><em>卸载 (deinit)</em> 子模块<br>
+使用 <code>git submodule deinit &lt;path&gt;</code> 卸载子模块.
+如果子模块包含修改, 需要加上 <code>--force</code> (<code>-f</code>) 来强制卸载.
+卸载后目录里的文件仍然还会被保留.</li>
+<li>删除子模块目录<br>
+使用 <code>git rm &lt;path&gt;</code> 来删除子模块所在的目录.</li>
+<li>提交修改<br>
+最后在父仓库提交上述修改 (在父仓库看来删除子模块同样是一个修改).</li>
+</ol>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: January 25, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/conventional-commits/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>约定式提交</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/repo-struct/" class="flex align-center">
+        <span>关于知识库框架结构的一些想法</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#添加子模块">添加子模块</a></li>
+    <li><a href="#修改子模块">修改子模块</a></li>
+    <li><a href="#删除子模块">删除子模块</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

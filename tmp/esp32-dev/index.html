@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ESP32 环境配置与开发# 我必须承认, esp idf 是我配置过最困难的开发环境.
+本篇文章的开发环境选择是 Visual Studio Code 与 esp idf. 以 微雪电子 ESP32-S3-Nano 开发板 为例; 这款开发板理论上与 Arduino Nano esp32 开发板完全兼容. 在 这里 可以找到 Arduino 开发板的引脚定义.
+esp idf 安装与配置# esp idf 有两种安装途径: 通过官方安装器; 或是通过 VSCode 插件安装.
+上述两种方式安装的 esp idf 互不兼容.
+鉴于我们将在 VSCode 中进行开发, 所以最好选择第二种: 通过插件安装.
+具体的安装过程可以在 官方教程 找到.
+安装 USB 设备驱动# 安装 Zadig. 启动它, 选择 Options &gt; List All Devices. 此时应该能在下拉菜单中找到两个 USB JTAG/serial debug unit, 分别以 Interface 0 与 Interface 2 区分. 下面分别设置这两个的驱动.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/tmp/esp32-dev/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="ESP32 环境配置与开发">
+  <meta property="og:description" content="ESP32 环境配置与开发# 我必须承认, esp idf 是我配置过最困难的开发环境.
+本篇文章的开发环境选择是 Visual Studio Code 与 esp idf. 以 微雪电子 ESP32-S3-Nano 开发板 为例; 这款开发板理论上与 Arduino Nano esp32 开发板完全兼容. 在 这里 可以找到 Arduino 开发板的引脚定义.
+esp idf 安装与配置# esp idf 有两种安装途径: 通过官方安装器; 或是通过 VSCode 插件安装.
+上述两种方式安装的 esp idf 互不兼容.
+鉴于我们将在 VSCode 中进行开发, 所以最好选择第二种: 通过插件安装.
+具体的安装过程可以在 官方教程 找到.
+安装 USB 设备驱动# 安装 Zadig. 启动它, 选择 Options &gt; List All Devices. 此时应该能在下拉菜单中找到两个 USB JTAG/serial debug unit, 分别以 Interface 0 与 Interface 2 区分. 下面分别设置这两个的驱动.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tmp">
+    <meta property="article:published_time" content="2025-07-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-05T00:00:00+00:00">
+    <meta property="article:tag" content="折腾">
+    <meta property="article:tag" content="编程">
+    <meta property="article:tag" content="开发环境">
+
+
+  <meta itemprop="name" content="ESP32 环境配置与开发">
+  <meta itemprop="description" content="ESP32 环境配置与开发# 我必须承认, esp idf 是我配置过最困难的开发环境.
+本篇文章的开发环境选择是 Visual Studio Code 与 esp idf. 以 微雪电子 ESP32-S3-Nano 开发板 为例; 这款开发板理论上与 Arduino Nano esp32 开发板完全兼容. 在 这里 可以找到 Arduino 开发板的引脚定义.
+esp idf 安装与配置# esp idf 有两种安装途径: 通过官方安装器; 或是通过 VSCode 插件安装.
+上述两种方式安装的 esp idf 互不兼容.
+鉴于我们将在 VSCode 中进行开发, 所以最好选择第二种: 通过插件安装.
+具体的安装过程可以在 官方教程 找到.
+安装 USB 设备驱动# 安装 Zadig. 启动它, 选择 Options &gt; List All Devices. 此时应该能在下拉菜单中找到两个 USB JTAG/serial debug unit, 分别以 Interface 0 与 Interface 2 区分. 下面分别设置这两个的驱动.">
+  <meta itemprop="datePublished" content="2025-07-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="302">
+  <meta itemprop="keywords" content="折腾,编程,开发环境">
+
+<title>ESP32 环境配置与开发 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/tmp/esp32-dev/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.4ea3fbba8498761285eb263df6e9023f3d3ec7ccb25fe5089d03b25103174257.js" integrity="sha256-TqP7uoSYdhKF6yY99ukCPz0&#43;x8yyX&#43;UInQOyUQMXQlc=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-tmp">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>ESP32 环境配置与开发</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#esp-idf-安装与配置">esp idf 安装与配置</a></li>
+    <li><a href="#安装-usb-设备驱动">安装 USB 设备驱动</a></li>
+    <li><a href="#调试">调试</a></li>
+    <li><a href="#疑难杂症">疑难杂症</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="esp32-环境配置与开发">ESP32 环境配置与开发<a class="anchor" href="#esp32-%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae%e4%b8%8e%e5%bc%80%e5%8f%91">#</a></h1>
+<p><em>我必须承认, esp idf 是我配置过最困难的开发环境.</em></p>
+<p>本篇文章的开发环境选择是 <strong>Visual Studio Code</strong> 与 <strong>esp idf</strong>.
+以 <a href="https://www.waveshare.net/wiki/ESP32-S3-Nano"><strong>微雪电子 ESP32-S3-Nano</strong> 开发板</a> 为例; 这款开发板理论上与 <strong>Arduino Nano esp32</strong> 开发板完全兼容.
+在 <a href="https://docs.arduino.cc/resources/pinouts/ABX00083-full-pinout.pdf">这里</a> 可以找到 Arduino 开发板的引脚定义.</p>
+<h2 id="esp-idf-安装与配置">esp idf 安装与配置<a class="anchor" href="#esp-idf-%e5%ae%89%e8%a3%85%e4%b8%8e%e9%85%8d%e7%bd%ae">#</a></h2>
+<p>esp idf 有两种安装途径: 通过官方安装器; 或是通过 VSCode 插件安装.</p>
+<blockquote class='book-hint warning'>
+<p>上述两种方式安装的 esp idf 互不兼容.</p></blockquote><p>鉴于我们将在 VSCode 中进行开发, 所以最好选择第二种: 通过插件安装.</p>
+<p>具体的安装过程可以在 <a href="https://docs.espressif.com/projects/vscode-esp-idf-extension/zh_CN/latest/installation.html">官方教程</a> 找到.</p>
+<h2 id="安装-usb-设备驱动">安装 USB 设备驱动<a class="anchor" href="#%e5%ae%89%e8%a3%85-usb-%e8%ae%be%e5%a4%87%e9%a9%b1%e5%8a%a8">#</a></h2>
+<p>安装 <a href="https://zadig.akeo.ie">Zadig</a>. 启动它, 选择 <em>Options &gt; List All Devices</em>.
+此时应该能在下拉菜单中找到两个 <code>USB JTAG/serial debug unit</code>, 分别以 <code>Interface 0</code> 与 <code>Interface 2</code> 区分. 下面分别设置这两个的驱动.</p>
+<p>首先选择 <code>USB JTAG/serial debug unit (Interface 0)</code>, 将驱动替换为 <code>USB Serial (CDC)</code>.<br>
+然后选择 <code>USB JTAG/serial debug unit (Interface 2)</code>, 将驱动替换为 <code>WinUSB (v6.x)</code>.</p>
+<blockquote class='book-hint note'>
+<p>如果你的驱动与上面所写的不一致 (<code>USB Serial (CDC)</code> 也显示为 <code>usbser</code>), 你这时应该点击 <em>Replace Driver</em>. 如果按钮为 <em>Install WCID Driver</em>, 你应当在下拉菜单中仔细寻找一番.</p></blockquote><blockquote class='book-hint note'>
+<p>对于 <code>Interface 2</code>, 驱动版本也要严格对应于 <code>v6.x</code>. 更高的版本可能导致问题.</p></blockquote><p>全部完成后, 可以打开设备管理器, 查看下面两个字段:
+<em>端口 (COM 和 LPT)</em>, 应该包含一个 <em>USB 串行设备 (COMx)</em>, <em>x</em> 表示数字不确定;
+<em>通用串行总线设备</em>, 应该包含一个 <em>USB JTAG/serial debug unit</em>.</p>
+<p>经过上面的配置, 能够得到一个串口和一个 JTAG. 其中串口用于通讯, JTAG 用于调试, 两者都可以用于烧录程序. 所以两者缺一不可.</p>
+<blockquote class='book-hint note'>
+<p>如果上面驱动设置过程中出现错误, 以至于更换驱动出错, 可以考虑重置所有驱动, 而后重新来过.
+彻底重置这两个 Interface 的驱动按下面的步骤进行:</p>
+<ol>
+<li>打开设备管理器, 分别定位到这两个 Interface.<br>
+它们应该只会在 <em>端口 (COM 和 LPT)</em> 和 <em>通用串行总线设备</em> 这两个字段中.</li>
+<li>右键, <em>卸载设备</em>, 勾选上 <em>删除此设备的驱动程序软件</em>, 点击 <em>卸载</em>.</li>
+<li>拔掉开发板.</li>
+<li>重启计算机.</li>
+<li>插入开发板, 此时驱动应该已经被重置. 重新配置驱动.</li>
+</ol></blockquote><h2 id="调试">调试<a class="anchor" href="#%e8%b0%83%e8%af%95">#</a></h2>
+<p>在进行下面的操作之前, 请检查驱动是否配置正确.</p>
+<p>在 VSCode 中, 按 <code>Ctrl+Shift+P</code> 打开命令面板, 输入 <code>ESP-IDF: Add VS Code Configuration Folder</code>, 获取预设的运行与调试文件.</p>
+<p>检查设置: 打开 <code>.vscode/settings.json</code>, 检查 <code>idf</code> 相关字段. 两个字段的值应该如下所示.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#e6db74">&#34;idf.openOcdConfigs&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> [
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;board/esp32s3-builtin.cfg&#34;</span>
+</span></span><span style="display:flex;"><span>]<span style="color:#960050;background-color:#1e0010">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;idf.customExtraVars&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;IDF_TARGET&#34;</span>: <span style="color:#e6db74">&#34;esp32s3&#34;</span>
+</span></span><span style="display:flex;"><span>}<span style="color:#960050;background-color:#1e0010">,</span></span></span></code></pre></div><p>上述都配置好后, 直接在调试菜单里点击 <code>Eclipse CDT GDB Adapter</code> 即可开始调试.</p>
+<h2 id="疑难杂症">疑难杂症<a class="anchor" href="#%e7%96%91%e9%9a%be%e6%9d%82%e7%97%87">#</a></h2>
+<ol>
+<li><em>库头文件 (如 <code>stdio.h</code>) 无法被导入.</em><br>
+打开 <code>.vscode/settings.json</code>, 找到 clangd 相关的字段 <code>clangd.path</code> <code>clangd.arguments</code>. 如果里面的绝对路径以小写的磁盘标识符开头, 如 <code>d:\\opt\\...</code>, 将其改为大写: <code>D:\\opt\\...</code>; 而后重启 VSCode (或重新加载窗口).</li>
+<li><em>C 库头文件可以被导入, 但是 C++ 库头文件无法导入.</em><br>
+在 <code>.vscode/settings.json</code> 的 <code>clangd.arguments</code> 中找到标志 <code>--query-driver</code>, 添加上 C++ 的编译器.<br>
+如果你原来形如 <code>--query-driver=...\\xtensa-esp32s3-elf-gcc.exe</code>, 添加后应该类似 <code>--query-driver=...\\xtensa-esp32s3-elf-gcc.exe,...\\xtensa-esp32s3-elf-g++.exe</code>. 一般上面两个编译器在同一目录下.</li>
+<li><em>烧录时出现 <code>PermissionError(13, '连到系统上的设备没有发挥作用。', None, 31)</code> 报错.</em><br>
+检查端口, 是否是串口烧录. 若都无误, 你应该将引脚 <code>B1</code>, 也就是 <code>GPIO0</code> 置为低电平, 重置开发板后再次烧录.</li>
+<li><em>运行 monitor 时出现 <code>waiting for download</code>.</em><br>
+如果 <code>B1</code> 仍被置低, 将它归位为高电平. 只需取消 <code>B1</code> 与 <code>GND</code> 的短接即可.</li>
+<li><em>调试时出现 <code>LIBUSB_ERROR_NOT_FOUND</code>.</em><br>
+检查驱动配置情况. 尤其着重检查 <code>Interface 2</code> 的 <code>WinUSB</code> 驱动版本是否为 <code>v6.x</code>. 若更高, 将其替换为此版本.</li>
+<li><em>我想使用硬件 JTAG 进行调试.</em><br>
+可以, 但是我不知道具体怎么做. 我唯一可以给你的提示是:<br>
+此开发板的硬件 JTAG 接口在背面尾部的空焊盘上, 可以检查引脚定义表来获取具体信息.</li>
+</ol>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: July 5, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#esp-idf-安装与配置">esp idf 安装与配置</a></li>
+    <li><a href="#安装-usb-设备驱动">安装 USB 设备驱动</a></li>
+    <li><a href="#调试">调试</a></li>
+    <li><a href="#疑难杂症">疑难杂症</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Undone on EiEddie&#39;s Mind</title>
+    <link>https://example.org/tags/undone/</link>
+    <description>Recent content in Undone on EiEddie&#39;s Mind</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/undone/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>若尔当标准型</title>
+      <link>https://example.org/docs/jordan-normal-form/</link>
+      <pubDate>Fri, 05 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/jordan-normal-form/</guid>
+      <description>&lt;h1 id=&#34;若尔当标准型&#34;&gt;若尔当标准型&lt;a class=&#34;anchor&#34; href=&#34;#%e8%8b%a5%e5%b0%94%e5%bd%93%e6%a0%87%e5%87%86%e5%9e%8b&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;我们对若尔当标准型的讨论始于两个最基本与最常用的问题:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;如何将线性空间 \(V\) 分解为线性变换 \(A\) 的不变子空间 \(V_i\) 的直和?&lt;/li&gt;&#xA;&lt;li&gt;如何使线性变换 \(A\) 在 \(V\) 的一组基上具有最简洁的矩阵形式?&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可.&#xA;问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.&lt;/p&gt;&#xA;&lt;p&gt;对于这两个问题, 我们首先想到的应该是线性变化的对角化.&#xA;对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\).&#xA;并且我们知道这一变换在其特征向量组成的基下是对角矩阵.&#xA;这样两个问题就都得到解决.&#xA;遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>可交换的线性变换</title>
+      <link>https://example.org/docs/commutative-lt/</link>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/commutative-lt/</guid>
+      <description>&lt;h1 id=&#34;可交换的线性变换&#34;&gt;可交换的线性变换&lt;a class=&#34;anchor&#34; href=&#34;#%e5%8f%af%e4%ba%a4%e6%8d%a2%e7%9a%84%e7%ba%bf%e6%80%a7%e5%8f%98%e6%8d%a2&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;这篇文章讨论可交换的线性变换, 即对于线性变换 \(A\), \(B\), 有 \(AB = BA\).&lt;/p&gt;&#xA;&lt;h2 id=&#34;引理&#34;&gt;引理&lt;a class=&#34;anchor&#34; href=&#34;#%e5%bc%95%e7%90%86&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;blockquote class=&#39;book-hint &#39;&gt;&#xA;&lt;p&gt;\(f(A)\) 与 \(B\) 可交换的充要条件是 \(A\), \(B\) 可交换.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&lt;h2 id=&#34;充要条件&#34;&gt;充要条件&lt;a class=&#34;anchor&#34; href=&#34;#%e5%85%85%e8%a6%81%e6%9d%a1%e4%bb%b6&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;复数域上线性变换 \(A\), \(B\) 可交换的充要条件是:&lt;/p&gt;&#xA;&lt;blockquote class=&#39;book-hint &#39;&gt;&#xA;&lt;p&gt;\(A\) 的每个广义特征空间 \(E_{\lambda}\) 都是 \(B\) 的不变子空间.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&lt;p&gt;其中&lt;em&gt;广义特征空间&lt;/em&gt; \(E_{\lambda} = \{\mathbf{v} ~ | ~ (A - \lambda I)^m \; \mathbf{v} = \mathbf{0}, m \in \mathbb{N}_+\}\).&#xA;线性空间 \(V\) 总是可以分解为其上某一线性变换的广义特征空间的直和.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;证明&lt;/strong&gt;:&lt;br&gt;&#xA;&lt;strong&gt;充分性&lt;/strong&gt;:&#xA;任取 \(A\) 在重数 \(m\) 的广义特征空间 \(E_{\lambda}\), \(\forall \mathbf{v} \in E_{\lambda}; B \mathbf{v} \in E_{\lambda}\).&#xA;于是 \(B (A - \lambda I)^m \mathbf{v} = B \; \mathbf{0} = \mathbf{0}\), \((A - \lambda I)^m B \mathbf{v} = (A - \lambda I)^m (B \mathbf{v}) = \mathbf{0}\).&#xA;注意到 \((A - \lambda I)^m\) 是关于 \(A\) 的多项式, 由此可得 \(E_{\lambda}\) 上 \(A\) 与 \(B\) 可交换.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>异步非阻塞串口数据接收</title>
+      <link>https://example.org/docs/async-serial/</link>
+      <pubDate>Fri, 18 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/async-serial/</guid>
+      <description>&lt;h1 id=&#34;异步非阻塞串口数据接收&#34;&gt;异步非阻塞串口数据接收&lt;a class=&#34;anchor&#34; href=&#34;#%e5%bc%82%e6%ad%a5%e9%9d%9e%e9%98%bb%e5%a1%9e%e4%b8%b2%e5%8f%a3%e6%95%b0%e6%8d%ae%e6%8e%a5%e6%94%b6&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;h2 id=&#34;异步&#34;&gt;异步?&lt;a class=&#34;anchor&#34; href=&#34;#%e5%bc%82%e6%ad%a5&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;异步 (asynchronous)&lt;/em&gt; 编程是一种并发的编程模式, 可以有效节省 CPU 阻塞等待 I/O 事件造成的时间浪费, 借以提高性能.&lt;/p&gt;&#xA;&lt;p&gt;在这里也简单介绍一下 &lt;em&gt;并行 (parallel)&lt;/em&gt; 与 &lt;em&gt;并发 (concurrent)&lt;/em&gt; 的区别. 并发是指多个任务可以被同时运行的现象; 但需要注意的是, 并发在某一时刻可能并不一定有多个任务在运行. 但是并行是严格的多线程工作模式, 在某一时刻有多个任务在同时工作. 于是很容易看出, 并行也被包含在并发之中.&lt;/p&gt;&#xA;&lt;p&gt;异步的核心在于一个字 &amp;ldquo;&lt;strong&gt;等&lt;/strong&gt;&amp;rdquo;. 简而言之, 异步编程好似去食堂窗口买饭, 当你告诉他你要点的餐以后, 不是一定要在窗口前等着, 而是可以去做点别的事情, 比如买瓶饮料什么的, 直到老板通知你取餐, 这就是一次异步事件. 在编程时我们调用一个异步 API, 若它不能立刻返回结果, 那么也不会阻塞等待, 而是立刻向后执行; 直到获取到结果再通知我们进行处理.&lt;/p&gt;&#xA;&lt;p&gt;不同的语言有各色的异步支持, &lt;code&gt;JavaScript&lt;/code&gt; 和 &lt;code&gt;Rust&lt;/code&gt; 的异步模型都很有代表性. &lt;code&gt;JavaScript&lt;/code&gt; 中, 异步函数可以返回一个 &lt;code&gt;Promise&lt;/code&gt; 对象, 其名字形象地说明了它的功能: 我承诺完成你要的操作; 潜台词则是我保证 &lt;strong&gt;将来&lt;/strong&gt; 会完成你要的操作, 不一定是立刻做到. &lt;code&gt;Rust&lt;/code&gt; 的 &lt;code&gt;Future&lt;/code&gt; 机制则更为直白: 你的任务我将来会完成的.&lt;/p&gt;&#xA;&lt;p&gt;非多线程的异步程序的本质是 CPU 的 &lt;strong&gt;时分复用&lt;/strong&gt;, 它用划分时间片交替运行各项任务来模拟同时运行每项任务. 必须指出, 有些语言实际上使用多线程实现的异步, 在这种情况下可以实现真正的并行, 即每个时刻多项任务同时被运行. 于是很容易推断, 若 CPU 本来就没有空闲时间, 那么非多线程的异步也并不能提高效率. 这也是为什么异步大多都被用于 I/O 操作, 因为可以有效利用好 I/O 事件中因为等待而空闲的 CPU 时间. 若是 CPU 密集型的工作, 例如科学计算等, 使用异步模型反而会因为时间片切换而损失性能. 这种情况更适合用多线程的方法提高效率.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>在移动介质中安装操作系统</title>
+      <link>https://example.org/docs/linux-to-go/</link>
+      <pubDate>Tue, 12 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/linux-to-go/</guid>
+      <description>&lt;h1 id=&#34;在移动介质中安装操作系统&#34;&gt;在移动介质中安装操作系统&lt;a class=&#34;anchor&#34; href=&#34;#%e5%9c%a8%e7%a7%bb%e5%8a%a8%e4%bb%8b%e8%b4%a8%e4%b8%ad%e5%ae%89%e8%a3%85%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;blockquote class=&#39;book-hint &#39;&gt;&#xA;&lt;p&gt;所需工具:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;安装了任意 linux 发行版的电脑&lt;/li&gt;&#xA;&lt;li&gt;此处使用安装了 debian 的 VMware 虚拟机&lt;/li&gt;&#xA;&lt;li&gt;系统安装光盘文件 (&lt;code&gt;.iso&lt;/code&gt; 文件)&lt;/li&gt;&#xA;&lt;li&gt;我选择的发行版是 debian&lt;/li&gt;&#xA;&lt;li&gt;容量足够的移动介质 (如 U 盘)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;&lt;h2 id=&#34;1-检查移动介质-如-u-盘-的分区表类型&#34;&gt;1. 检查移动介质 (如 U 盘) 的分区表类型&lt;a class=&#34;anchor&#34; href=&#34;#1-%e6%a3%80%e6%9f%a5%e7%a7%bb%e5%8a%a8%e4%bb%8b%e8%b4%a8-%e5%a6%82-u-%e7%9b%98-%e7%9a%84%e5%88%86%e5%8c%ba%e8%a1%a8%e7%b1%bb%e5%9e%8b&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;我们计划使用更现代的 &lt;code&gt;UEFI&lt;/code&gt; 引导操作系统启动,&#xA;为了具有更好的兼容性, 移动介质的分区表类型应为 &lt;code&gt;GPT&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;因此第一步是将 &lt;code&gt;MBR&lt;/code&gt; 类型的移动介质转换为 &lt;code&gt;GPT&lt;/code&gt; 分区表类型.&#xA;假如你的介质已为 &lt;code&gt;GPT&lt;/code&gt;, 可以跳过此章.&lt;/p&gt;&#xA;&lt;h3 id=&#34;11-检查分区表类型&#34;&gt;1.1. 检查分区表类型&lt;a class=&#34;anchor&#34; href=&#34;#11-%e6%a3%80%e6%9f%a5%e5%88%86%e5%8c%ba%e8%a1%a8%e7%b1%bb%e5%9e%8b&#34;&gt;#&lt;/a&gt;&lt;/h3&gt;&#xA;&lt;p&gt;使用 &lt;code&gt;fdisk&lt;/code&gt; 命令检查介质:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;# fdisk -l&#xA;Disk /dev/sdb: 15.24 GiB, 16358834176 bytes, 31950848 sectors&#xA;Disk model: SD/MMC&#xA;Units: sectors of 1 * 512 = 512 bytes&#xA;Sector size (logical/physical): 512 bytes / 512 bytes&#xA;I/O size (minimum/optimal): 512 bytes / 512 bytes&#xA;Disklabel type: dos&#xA;Disk identifier: 0x00109879&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;上面显示了在我的机器上返回的信息, 其中:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

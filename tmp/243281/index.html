@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="异步非阻塞串口数据接收# 异步?# 异步 (asynchronous) 编程是一种并发的编程模式, 可以有效节省 CPU 阻塞等待 I/O 事件造成的时间浪费, 借以提高性能.
+在这里也简单介绍一下 并行 (parallel) 与 并发 (concurrent) 的区别. 并发是指多个任务可以被同时运行的现象; 但需要注意的是, 并发在某一时刻可能并不一定有多个任务在运行. 但是并行是严格的多线程工作模式, 在某一时刻有多个任务在同时工作. 于是很容易看出, 并行也被包含在并发之中.
+异步的核心在于一个字 “等”. 简而言之, 异步编程好似去食堂窗口买饭, 当你告诉他你要点的餐以后, 不是一定要在窗口前等着, 而是可以去做点别的事情, 比如买瓶饮料什么的, 直到老板通知你取餐, 这就是一次异步事件. 在编程时我们调用一个异步 API, 若它不能立刻返回结果, 那么也不会阻塞等待, 而是立刻向后执行; 直到获取到结果再通知我们进行处理.
+不同的语言有各色的异步支持, JavaScript 和 Rust 的异步模型都很有代表性. JavaScript 中, 异步函数可以返回一个 Promise 对象, 其名字形象地说明了它的功能: 我承诺完成你要的操作; 潜台词则是我保证 将来 会完成你要的操作, 不一定是立刻做到. Rust 的 Future 机制则更为直白: 你的任务我将来会完成的.
+非多线程的异步程序的本质是 CPU 的 时分复用, 它用划分时间片交替运行各项任务来模拟同时运行每项任务. 必须指出, 有些语言实际上使用多线程实现的异步, 在这种情况下可以实现真正的并行, 即每个时刻多项任务同时被运行. 于是很容易推断, 若 CPU 本来就没有空闲时间, 那么非多线程的异步也并不能提高效率. 这也是为什么异步大多都被用于 I/O 操作, 因为可以有效利用好 I/O 事件中因为等待而空闲的 CPU 时间. 若是 CPU 密集型的工作, 例如科学计算等, 使用异步模型反而会因为时间片切换而损失性能. 这种情况更适合用多线程的方法提高效率.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/tmp/243281/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="异步非阻塞串口数据接收">
+  <meta property="og:description" content="异步非阻塞串口数据接收# 异步?# 异步 (asynchronous) 编程是一种并发的编程模式, 可以有效节省 CPU 阻塞等待 I/O 事件造成的时间浪费, 借以提高性能.
+在这里也简单介绍一下 并行 (parallel) 与 并发 (concurrent) 的区别. 并发是指多个任务可以被同时运行的现象; 但需要注意的是, 并发在某一时刻可能并不一定有多个任务在运行. 但是并行是严格的多线程工作模式, 在某一时刻有多个任务在同时工作. 于是很容易看出, 并行也被包含在并发之中.
+异步的核心在于一个字 “等”. 简而言之, 异步编程好似去食堂窗口买饭, 当你告诉他你要点的餐以后, 不是一定要在窗口前等着, 而是可以去做点别的事情, 比如买瓶饮料什么的, 直到老板通知你取餐, 这就是一次异步事件. 在编程时我们调用一个异步 API, 若它不能立刻返回结果, 那么也不会阻塞等待, 而是立刻向后执行; 直到获取到结果再通知我们进行处理.
+不同的语言有各色的异步支持, JavaScript 和 Rust 的异步模型都很有代表性. JavaScript 中, 异步函数可以返回一个 Promise 对象, 其名字形象地说明了它的功能: 我承诺完成你要的操作; 潜台词则是我保证 将来 会完成你要的操作, 不一定是立刻做到. Rust 的 Future 机制则更为直白: 你的任务我将来会完成的.
+非多线程的异步程序的本质是 CPU 的 时分复用, 它用划分时间片交替运行各项任务来模拟同时运行每项任务. 必须指出, 有些语言实际上使用多线程实现的异步, 在这种情况下可以实现真正的并行, 即每个时刻多项任务同时被运行. 于是很容易推断, 若 CPU 本来就没有空闲时间, 那么非多线程的异步也并不能提高效率. 这也是为什么异步大多都被用于 I/O 操作, 因为可以有效利用好 I/O 事件中因为等待而空闲的 CPU 时间. 若是 CPU 密集型的工作, 例如科学计算等, 使用异步模型反而会因为时间片切换而损失性能. 这种情况更适合用多线程的方法提高效率.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tmp">
+    <meta property="article:published_time" content="2025-04-18T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-04-18T00:00:00+00:00">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="编程">
+    <meta property="article:tag" content="Undone">
+
+
+  <meta itemprop="name" content="异步非阻塞串口数据接收">
+  <meta itemprop="description" content="异步非阻塞串口数据接收# 异步?# 异步 (asynchronous) 编程是一种并发的编程模式, 可以有效节省 CPU 阻塞等待 I/O 事件造成的时间浪费, 借以提高性能.
+在这里也简单介绍一下 并行 (parallel) 与 并发 (concurrent) 的区别. 并发是指多个任务可以被同时运行的现象; 但需要注意的是, 并发在某一时刻可能并不一定有多个任务在运行. 但是并行是严格的多线程工作模式, 在某一时刻有多个任务在同时工作. 于是很容易看出, 并行也被包含在并发之中.
+异步的核心在于一个字 “等”. 简而言之, 异步编程好似去食堂窗口买饭, 当你告诉他你要点的餐以后, 不是一定要在窗口前等着, 而是可以去做点别的事情, 比如买瓶饮料什么的, 直到老板通知你取餐, 这就是一次异步事件. 在编程时我们调用一个异步 API, 若它不能立刻返回结果, 那么也不会阻塞等待, 而是立刻向后执行; 直到获取到结果再通知我们进行处理.
+不同的语言有各色的异步支持, JavaScript 和 Rust 的异步模型都很有代表性. JavaScript 中, 异步函数可以返回一个 Promise 对象, 其名字形象地说明了它的功能: 我承诺完成你要的操作; 潜台词则是我保证 将来 会完成你要的操作, 不一定是立刻做到. Rust 的 Future 机制则更为直白: 你的任务我将来会完成的.
+非多线程的异步程序的本质是 CPU 的 时分复用, 它用划分时间片交替运行各项任务来模拟同时运行每项任务. 必须指出, 有些语言实际上使用多线程实现的异步, 在这种情况下可以实现真正的并行, 即每个时刻多项任务同时被运行. 于是很容易推断, 若 CPU 本来就没有空闲时间, 那么非多线程的异步也并不能提高效率. 这也是为什么异步大多都被用于 I/O 操作, 因为可以有效利用好 I/O 事件中因为等待而空闲的 CPU 时间. 若是 CPU 密集型的工作, 例如科学计算等, 使用异步模型反而会因为时间片切换而损失性能. 这种情况更适合用多线程的方法提高效率.">
+  <meta itemprop="datePublished" content="2025-04-18T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-04-18T00:00:00+00:00">
+  <meta itemprop="wordCount" content="147">
+  <meta itemprop="keywords" content="Linux,编程,Undone">
+
+<title>异步非阻塞串口数据接收 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/tmp/243281/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.21d1ebbc72a59a8b382d695863231a987f94357587d503914fa3d410640407bc.js" integrity="sha256-IdHrvHKlmos4LWlYYyMamH&#43;UNXWH1QORT6PUEGQEB7w=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-tmp">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c8b164/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ce801b/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/af2d30/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/414ecc/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/d6a126/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/cb7535/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/7e6d58/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/5ff52f/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c3e9f1/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/0db9ab/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/243281/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e89ba/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/b9a0d6/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/66247c/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/4da923/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/8cbed4/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e7eba/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>异步非阻塞串口数据接收</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#异步">异步?</a></li>
+    <li><a href="#libuv-使用"><code>libuv</code> 使用</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="异步非阻塞串口数据接收">异步非阻塞串口数据接收<a class="anchor" href="#%e5%bc%82%e6%ad%a5%e9%9d%9e%e9%98%bb%e5%a1%9e%e4%b8%b2%e5%8f%a3%e6%95%b0%e6%8d%ae%e6%8e%a5%e6%94%b6">#</a></h1>
+<h2 id="异步">异步?<a class="anchor" href="#%e5%bc%82%e6%ad%a5">#</a></h2>
+<p><em>异步 (asynchronous)</em> 编程是一种并发的编程模式, 可以有效节省 CPU 阻塞等待 I/O 事件造成的时间浪费, 借以提高性能.</p>
+<p>在这里也简单介绍一下 <em>并行 (parallel)</em> 与 <em>并发 (concurrent)</em> 的区别. 并发是指多个任务可以被同时运行的现象; 但需要注意的是, 并发在某一时刻可能并不一定有多个任务在运行. 但是并行是严格的多线程工作模式, 在某一时刻有多个任务在同时工作. 于是很容易看出, 并行也被包含在并发之中.</p>
+<p>异步的核心在于一个字 &ldquo;<strong>等</strong>&rdquo;. 简而言之, 异步编程好似去食堂窗口买饭, 当你告诉他你要点的餐以后, 不是一定要在窗口前等着, 而是可以去做点别的事情, 比如买瓶饮料什么的, 直到老板通知你取餐, 这就是一次异步事件. 在编程时我们调用一个异步 API, 若它不能立刻返回结果, 那么也不会阻塞等待, 而是立刻向后执行; 直到获取到结果再通知我们进行处理.</p>
+<p>不同的语言有各色的异步支持, <code>JavaScript</code> 和 <code>Rust</code> 的异步模型都很有代表性. <code>JavaScript</code> 中, 异步函数可以返回一个 <code>Promise</code> 对象, 其名字形象地说明了它的功能: 我承诺完成你要的操作; 潜台词则是我保证 <strong>将来</strong> 会完成你要的操作, 不一定是立刻做到. <code>Rust</code> 的 <code>Future</code> 机制则更为直白: 你的任务我将来会完成的.</p>
+<p>非多线程的异步程序的本质是 CPU 的 <strong>时分复用</strong>, 它用划分时间片交替运行各项任务来模拟同时运行每项任务. 必须指出, 有些语言实际上使用多线程实现的异步, 在这种情况下可以实现真正的并行, 即每个时刻多项任务同时被运行. 于是很容易推断, 若 CPU 本来就没有空闲时间, 那么非多线程的异步也并不能提高效率. 这也是为什么异步大多都被用于 I/O 操作, 因为可以有效利用好 I/O 事件中因为等待而空闲的 CPU 时间. 若是 CPU 密集型的工作, 例如科学计算等, 使用异步模型反而会因为时间片切换而损失性能. 这种情况更适合用多线程的方法提高效率.</p>
+<p>异步模型的通知机制, 也就是当任务完成时如何处理结果, 是各种异步模型要解决的核心问题, 不同的解决方案也催生出不同的异步模型. 最为简单的方法自然是传递一个回调函数, 当任务完成时调用回调来处理结果. 这也被称为 <em>事件驱动 (Event Driven)</em> 模型.</p>
+<h2 id="libuv-使用"><code>libuv</code> 使用<a class="anchor" href="#libuv-%e4%bd%bf%e7%94%a8">#</a></h2>
+<p><code>libuv</code> 是 <code>c</code> 语言编写的强调异步 I/O 的多平台支持库. 我们的目标是使用它编写异步的接收串口数据程序.</p>
+<p>我们以异步打开文件来举例:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">uv_fs_t</span> open_req;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_open</span>(<span style="color:#66d9ef">uv_fs_t</span> <span style="color:#f92672">*</span>req) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (req<span style="color:#f92672">-&gt;</span>result <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// do something...
+</span></span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> fname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/...&#34;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">uv_fs_open</span>(<span style="color:#a6e22e">uv_default_loop</span>(), <span style="color:#f92672">&amp;</span>open_req, fname, O_RDONLY, <span style="color:#ae81ff">0</span>, on_open);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">uv_run</span>(<span style="color:#a6e22e">uv_default_loop</span>(), UV_RUN_DEFAULT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">uv_fs_req_cleanup</span>(<span style="color:#f92672">&amp;</span>open_req);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: April 18, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#异步">异步?</a></li>
+    <li><a href="#libuv-使用"><code>libuv</code> 使用</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开发环境 on EiEddie&#39;s Mind</title>
+    <link>https://example.org/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link>
+    <description>Recent content in 开发环境 on EiEddie&#39;s Mind</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 05 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ESP32 环境配置与开发</title>
+      <link>https://example.org/docs/esp32-dev/</link>
+      <pubDate>Sat, 05 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/esp32-dev/</guid>
+      <description>&lt;h1 id=&#34;esp32-环境配置与开发&#34;&gt;ESP32 环境配置与开发&lt;a class=&#34;anchor&#34; href=&#34;#esp32-%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae%e4%b8%8e%e5%bc%80%e5%8f%91&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;&lt;em&gt;我必须承认, esp idf 是我配置过最困难的开发环境.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;本篇文章的开发环境选择是 &lt;strong&gt;Visual Studio Code&lt;/strong&gt; 与 &lt;strong&gt;esp idf&lt;/strong&gt;.&#xA;以 &lt;a href=&#34;https://www.waveshare.net/wiki/ESP32-S3-Nano&#34;&gt;&lt;strong&gt;微雪电子 ESP32-S3-Nano&lt;/strong&gt; 开发板&lt;/a&gt; 为例; 这款开发板理论上与 &lt;strong&gt;Arduino Nano esp32&lt;/strong&gt; 开发板完全兼容.&#xA;在 &lt;a href=&#34;https://docs.arduino.cc/resources/pinouts/ABX00083-full-pinout.pdf&#34;&gt;这里&lt;/a&gt; 可以找到 Arduino 开发板的引脚定义.&lt;/p&gt;&#xA;&lt;h2 id=&#34;esp-idf-安装与配置&#34;&gt;esp idf 安装与配置&lt;a class=&#34;anchor&#34; href=&#34;#esp-idf-%e5%ae%89%e8%a3%85%e4%b8%8e%e9%85%8d%e7%bd%ae&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;esp idf 有两种安装途径: 通过官方安装器; 或是通过 VSCode 插件安装.&lt;/p&gt;&#xA;&lt;blockquote class=&#39;book-hint warning&#39;&gt;&#xA;&lt;p&gt;上述两种方式安装的 esp idf 互不兼容.&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;鉴于我们将在 VSCode 中进行开发, 所以最好选择第二种: 通过插件安装.&lt;/p&gt;&#xA;&lt;p&gt;具体的安装过程可以在 &lt;a href=&#34;https://docs.espressif.com/projects/vscode-esp-idf-extension/zh_CN/latest/installation.html&#34;&gt;官方教程&lt;/a&gt; 找到.&lt;/p&gt;&#xA;&lt;h2 id=&#34;安装-usb-设备驱动&#34;&gt;安装 USB 设备驱动&lt;a class=&#34;anchor&#34; href=&#34;#%e5%ae%89%e8%a3%85-usb-%e8%ae%be%e5%a4%87%e9%a9%b1%e5%8a%a8&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;安装 &lt;a href=&#34;https://zadig.akeo.ie&#34;&gt;Zadig&lt;/a&gt;. 启动它, 选择 &lt;em&gt;Options &amp;gt; List All Devices&lt;/em&gt;.&#xA;此时应该能在下拉菜单中找到两个 &lt;code&gt;USB JTAG/serial debug unit&lt;/code&gt;, 分别以 &lt;code&gt;Interface 0&lt;/code&gt; 与 &lt;code&gt;Interface 2&lt;/code&gt; 区分. 下面分别设置这两个的驱动.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Windows 下的现代 C/C&#43;&#43; 开发环境配置</title>
+      <link>https://example.org/docs/vscode-cmake-with-msvc/</link>
+      <pubDate>Fri, 20 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/docs/vscode-cmake-with-msvc/</guid>
+      <description>&lt;h1 id=&#34;windows-下的现代-cc-开发环境配置&#34;&gt;Windows 下的现代 C/C++ 开发环境配置&lt;a class=&#34;anchor&#34; href=&#34;#windows-%e4%b8%8b%e7%9a%84%e7%8e%b0%e4%bb%a3-cc-%e5%bc%80%e5%8f%91%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;首先应该确保电脑上有这些必需的软件:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;CMake&lt;/li&gt;&#xA;&lt;li&gt;Ninja&lt;/li&gt;&#xA;&lt;li&gt;vcpkg&lt;/li&gt;&#xA;&lt;li&gt;MSVC 套件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;msvc-安装&#34;&gt;MSVC 安装&lt;a class=&#34;anchor&#34; href=&#34;#msvc-%e5%ae%89%e8%a3%85&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;可以使用 &lt;a href=&#34;https://visualstudio.microsoft.com/zh-hans/downloads/&#34;&gt;&lt;em&gt;Visual Studio 安装工具&lt;/em&gt;&lt;/a&gt; 针对性地安装 MSVC 套件而不必安装全套 Visual Studio .&lt;/p&gt;&#xA;&lt;p&gt;只需在下载的 Visual Studio Installer 中选择 &lt;strong&gt;单个组件 → 编译器、生成工具和运行时 → MSVC vXXX - VS 2022 C++ x64/x86 生成工具&lt;/strong&gt; 选项进行安装. 建议安装最新版本.&lt;/p&gt;&#xA;&lt;p&gt;MSVC 环境必须经过初始化才可以使用. 安装完成后会自动出现 &lt;em&gt;Developer Command Prompt for VS 20xx&lt;/em&gt; (即 &lt;em&gt;开发人员命令提示符&lt;/em&gt; ) 和 &lt;em&gt;Developer PowerShell for VS 20xx&lt;/em&gt; (即 &lt;em&gt;开发人员 PowerShell&lt;/em&gt; ), 这两个终端就是已经初始化的环境, 在这两个终端中可以直接调用编译器. 另外 Visual Studio 还提供了初始化脚本来初始化编译器环境.&lt;/p&gt;&#xA;&lt;h2 id=&#34;vcpkg-安装&#34;&gt;vcpkg 安装&lt;a class=&#34;anchor&#34; href=&#34;#vcpkg-%e5%ae%89%e8%a3%85&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;访问 vcpkg 的 GitHub 仓库以查看安装说明.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

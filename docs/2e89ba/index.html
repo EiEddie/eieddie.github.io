@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="约定式提交# 约定式提交规定了一套编写 git 提交信息的规范, 方便写出清晰, 突出重点, 分类明确的提交信息, 尤其在团队协作时十分必要.
+本文中介绍的规范有别于标准的 约定式提交规范, 在一些方面做了让步, 方便新手编写.
+概述# 一个提交应由以下几部分组成
+&lt;类型&gt;: &lt;描述&gt; [正文]类型 字段见下文 类型 一章.
+描述 应当是对提交的一句话总结, 力求简洁清楚, 重点分明. 对于描述部分的详细解释, 可以写在 正文 部分. 正文并非必要, 最好只在提交十分复杂, 或是包含了多个不同修改时编写.
+要使用约定式提交, 需要对提交本身进行规范:
+拆分不同文件的修改. 例如文档的修改与源代码的修改应该分开提交; 配置文件, 测试代码, 编译脚本等等都应该尽量分离. 可以阅读 类型 一章, 了解哪些修改应该单独提交. 拆分提交的方法在 这里. 尽量更细致地进行提交, 一次提交一个功能的修改. 也就是说, 不要一股脑将全部文件的修改送入版本库. 例如在某一源代码文件中, 既修改了数据的展示方式, 又修改了某 API 的实现, 那它们应该被拆分为两个提交. 避免过于细小的提交. 某些微小又不重要的提交, 例如文档中某个拼写或代码某处符号后的空格, 可以等后面修改此文件时一并提交. 描述与正文部分尽量使用 markdown 语言标记. 特别地, 提到文件名时应使用反引号 ` 括起. 在正文中陈列多条修改时使用 markdown 的列表语法.
+当修改过多以至于无法细致提交时, 可以在描述处写 多次提交, 转而在正文处陈列. 但是强烈建议涉及业务功能的修改不要这样, 以免淹没在不重要的琐碎提交中.
+当目标未完成时, 在 &lt;类型&gt; 之后, 冒号 : 之前添加一个问号 ? 来注明. 例如要为用户页面添加一个新的按钮, 只完成了前端的 UI 绘制, 但后端并没有写相应业务代码. 此时若必须提交, 那么就要添加一个未完成标签 ?. 不能编译或运行的代码必须添加未完成标签. 原则上, 上述修改不允许提交, 未完成标签是与实际情况的无奈妥协. 一个最佳实践是: 将未完成的工作都提交到开发分支, 如 dev; 等目标全部完成后, 将这些提交全部 压缩 为一个提交, 再合并到主线. 不要将未完成的修改合并进去.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/2e89ba/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="约定式提交">
+  <meta property="og:description" content="约定式提交# 约定式提交规定了一套编写 git 提交信息的规范, 方便写出清晰, 突出重点, 分类明确的提交信息, 尤其在团队协作时十分必要.
+本文中介绍的规范有别于标准的 约定式提交规范, 在一些方面做了让步, 方便新手编写.
+概述# 一个提交应由以下几部分组成
+&lt;类型&gt;: &lt;描述&gt; [正文]类型 字段见下文 类型 一章.
+描述 应当是对提交的一句话总结, 力求简洁清楚, 重点分明. 对于描述部分的详细解释, 可以写在 正文 部分. 正文并非必要, 最好只在提交十分复杂, 或是包含了多个不同修改时编写.
+要使用约定式提交, 需要对提交本身进行规范:
+拆分不同文件的修改. 例如文档的修改与源代码的修改应该分开提交; 配置文件, 测试代码, 编译脚本等等都应该尽量分离. 可以阅读 类型 一章, 了解哪些修改应该单独提交. 拆分提交的方法在 这里. 尽量更细致地进行提交, 一次提交一个功能的修改. 也就是说, 不要一股脑将全部文件的修改送入版本库. 例如在某一源代码文件中, 既修改了数据的展示方式, 又修改了某 API 的实现, 那它们应该被拆分为两个提交. 避免过于细小的提交. 某些微小又不重要的提交, 例如文档中某个拼写或代码某处符号后的空格, 可以等后面修改此文件时一并提交. 描述与正文部分尽量使用 markdown 语言标记. 特别地, 提到文件名时应使用反引号 ` 括起. 在正文中陈列多条修改时使用 markdown 的列表语法.
+当修改过多以至于无法细致提交时, 可以在描述处写 多次提交, 转而在正文处陈列. 但是强烈建议涉及业务功能的修改不要这样, 以免淹没在不重要的琐碎提交中.
+当目标未完成时, 在 &lt;类型&gt; 之后, 冒号 : 之前添加一个问号 ? 来注明. 例如要为用户页面添加一个新的按钮, 只完成了前端的 UI 绘制, 但后端并没有写相应业务代码. 此时若必须提交, 那么就要添加一个未完成标签 ?. 不能编译或运行的代码必须添加未完成标签. 原则上, 上述修改不允许提交, 未完成标签是与实际情况的无奈妥协. 一个最佳实践是: 将未完成的工作都提交到开发分支, 如 dev; 等目标全部完成后, 将这些提交全部 压缩 为一个提交, 再合并到主线. 不要将未完成的修改合并进去.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2025-01-26T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-01-26T00:00:00+00:00">
+    <meta property="article:tag" content="Git">
+
+
+  <meta itemprop="name" content="约定式提交">
+  <meta itemprop="description" content="约定式提交# 约定式提交规定了一套编写 git 提交信息的规范, 方便写出清晰, 突出重点, 分类明确的提交信息, 尤其在团队协作时十分必要.
+本文中介绍的规范有别于标准的 约定式提交规范, 在一些方面做了让步, 方便新手编写.
+概述# 一个提交应由以下几部分组成
+&lt;类型&gt;: &lt;描述&gt; [正文]类型 字段见下文 类型 一章.
+描述 应当是对提交的一句话总结, 力求简洁清楚, 重点分明. 对于描述部分的详细解释, 可以写在 正文 部分. 正文并非必要, 最好只在提交十分复杂, 或是包含了多个不同修改时编写.
+要使用约定式提交, 需要对提交本身进行规范:
+拆分不同文件的修改. 例如文档的修改与源代码的修改应该分开提交; 配置文件, 测试代码, 编译脚本等等都应该尽量分离. 可以阅读 类型 一章, 了解哪些修改应该单独提交. 拆分提交的方法在 这里. 尽量更细致地进行提交, 一次提交一个功能的修改. 也就是说, 不要一股脑将全部文件的修改送入版本库. 例如在某一源代码文件中, 既修改了数据的展示方式, 又修改了某 API 的实现, 那它们应该被拆分为两个提交. 避免过于细小的提交. 某些微小又不重要的提交, 例如文档中某个拼写或代码某处符号后的空格, 可以等后面修改此文件时一并提交. 描述与正文部分尽量使用 markdown 语言标记. 特别地, 提到文件名时应使用反引号 ` 括起. 在正文中陈列多条修改时使用 markdown 的列表语法.
+当修改过多以至于无法细致提交时, 可以在描述处写 多次提交, 转而在正文处陈列. 但是强烈建议涉及业务功能的修改不要这样, 以免淹没在不重要的琐碎提交中.
+当目标未完成时, 在 &lt;类型&gt; 之后, 冒号 : 之前添加一个问号 ? 来注明. 例如要为用户页面添加一个新的按钮, 只完成了前端的 UI 绘制, 但后端并没有写相应业务代码. 此时若必须提交, 那么就要添加一个未完成标签 ?. 不能编译或运行的代码必须添加未完成标签. 原则上, 上述修改不允许提交, 未完成标签是与实际情况的无奈妥协. 一个最佳实践是: 将未完成的工作都提交到开发分支, 如 dev; 等目标全部完成后, 将这些提交全部 压缩 为一个提交, 再合并到主线. 不要将未完成的修改合并进去.">
+  <meta itemprop="datePublished" content="2025-01-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-01-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="210">
+  <meta itemprop="keywords" content="Git">
+
+<title>约定式提交 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/2e89ba/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.21d1ebbc72a59a8b382d695863231a987f94357587d503914fa3d410640407bc.js" integrity="sha256-IdHrvHKlmos4LWlYYyMamH&#43;UNXWH1QORT6PUEGQEB7w=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c8b164/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ce801b/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/af2d30/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/414ecc/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/d6a126/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/cb7535/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/7e6d58/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/5ff52f/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c3e9f1/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/0db9ab/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/243281/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e89ba/" class="active">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/b9a0d6/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/66247c/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/4da923/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/8cbed4/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e7eba/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>约定式提交</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#类型">类型</a></li>
+    <li><a href="#更多规范">更多规范</a></li>
+    <li><a href="#可选的破坏性提交说明">可选的破坏性提交说明</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="约定式提交">约定式提交<a class="anchor" href="#%e7%ba%a6%e5%ae%9a%e5%bc%8f%e6%8f%90%e4%ba%a4">#</a></h1>
+<p>约定式提交规定了一套编写 <code>git</code> 提交信息的规范, 方便写出清晰, 突出重点, 分类明确的提交信息, 尤其在团队协作时十分必要.</p>
+<p>本文中介绍的规范有别于标准的 <a href="#%e5%8f%82%e8%80%83">约定式提交规范</a>, 在一些方面做了让步, 方便新手编写.</p>
+<h2 id="概述">概述<a class="anchor" href="#%e6%a6%82%e8%bf%b0">#</a></h2>
+<p>一个提交应由以下几部分组成</p>
+<pre tabindex="0"><code>&lt;类型&gt;: &lt;描述&gt;
+
+[正文]</code></pre><p><em>类型</em> 字段见下文 <a href="#%e7%b1%bb%e5%9e%8b">类型</a> 一章.</p>
+<p><em>描述</em> 应当是对提交的一句话总结, 力求简洁清楚, 重点分明. 对于描述部分的详细解释, 可以写在 <em>正文</em> 部分. 正文并非必要, 最好只在提交十分复杂, 或是包含了多个不同修改时编写.</p>
+<p>要使用约定式提交, 需要对提交本身进行规范:</p>
+<ul>
+<li>拆分不同文件的修改. <br>
+例如文档的修改与源代码的修改应该分开提交;
+配置文件, 测试代码, 编译脚本等等都应该尽量分离.
+可以阅读 <a href="#%e7%b1%bb%e5%9e%8b">类型</a> 一章, 了解哪些修改应该单独提交.
+拆分提交的方法在 <a href="Git%20Tips.md#%e6%8b%86%e5%88%86%e6%8f%90%e4%ba%a4">这里</a>.</li>
+<li>尽量更细致地进行提交, 一次提交一个功能的修改. <br>
+也就是说, 不要一股脑将全部文件的修改送入版本库.
+例如在某一源代码文件中, 既修改了数据的展示方式, 又修改了某 API 的实现,
+那它们应该被拆分为两个提交.</li>
+<li>避免过于细小的提交. <br>
+某些微小又不重要的提交,
+例如文档中某个拼写或代码某处符号后的空格, 可以等后面修改此文件时一并提交.</li>
+</ul>
+<p>描述与正文部分尽量使用 <code>markdown</code> 语言标记. 特别地, 提到文件名时应使用反引号 <code>`</code> 括起.
+在正文中陈列多条修改时使用 <code>markdown</code> 的列表语法.</p>
+<p>当修改过多以至于无法细致提交时, 可以在描述处写 <strong>多次提交</strong>, 转而在正文处陈列.
+但是强烈建议涉及业务功能的修改不要这样, 以免淹没在不重要的琐碎提交中.</p>
+<p>当目标未完成时, 在 <code>&lt;类型&gt;</code> 之后, 冒号 <code>:</code> 之前添加一个问号 <code>?</code> 来注明.
+例如要为用户页面添加一个新的按钮, 只完成了前端的 UI 绘制, 但后端并没有写相应业务代码. 此时若必须提交, 那么就要添加一个未完成标签 <code>?</code>.
+不能编译或运行的代码必须添加未完成标签.
+原则上, 上述修改不允许提交, 未完成标签是与实际情况的无奈妥协.
+一个最佳实践是: 将未完成的工作都提交到开发分支, 如 <code>dev</code>; 等目标全部完成后, 将这些提交全部 <a href="Git%20Tips.md#%e5%8e%8b%e7%bc%a9%e6%8f%90%e4%ba%a4">压缩</a> 为一个提交, 再合并到主线. 不要将未完成的修改合并进去.</p>
+<p>在分支 <em>合并 (merge)</em> 时可以不遵守约定式提交, 但是也要具有统一的规范.</p>
+<p>相较于标准规范, 取消了关于 <em>提交范围 (scope)</em> 和强制说明 <em>破坏性提交</em> 的部分; 增加了未完成标签.</p>
+<h2 id="类型">类型<a class="anchor" href="#%e7%b1%bb%e5%9e%8b">#</a></h2>
+<ul>
+<li><code>feat</code>: 新功能, 新特性.</li>
+<li><code>fix</code>: 修改 bug.</li>
+<li><code>perf</code>: 在不影响代码内部行为的前提下, 更改代码, 对程序性能进行优化.</li>
+<li><code>refactor</code>: 代码重构. 在不影响代码内部行为, 功能下的代码修改.</li>
+<li><code>docs</code>: 文档修改.</li>
+<li><code>style</code>: 代码格式修改. 例如添加分号, 修改或添加空格, 更改缩进格式等.</li>
+<li><code>test</code>: 测试的新增, 修改.</li>
+<li><code>build</code>: 影响项目构建或依赖项修改.</li>
+<li><code>revert</code>: 恢复上一次提交.</li>
+<li><code>ci</code>: 持续集成相关文件修改.</li>
+<li><code>chore</code>: 其他修改, 即不在上述类型中的修改. 例如 <code>.gitignore</code> 的修改.</li>
+</ul>
+<h2 id="更多规范">更多规范<a class="anchor" href="#%e6%9b%b4%e5%a4%9a%e8%a7%84%e8%8c%83">#</a></h2>
+<ol>
+<li>每个提交都<strong>必须</strong>使用类型字段前缀, 它由一个名词构成, 诸如 <code>feat</code> 或 <code>fix</code>, 其后接<strong>必要的</strong>冒号（<strong>英文半角</strong>）和<strong>空格</strong>.</li>
+<li>当一个提交为应用或类库实现了新功能时, <strong>必须</strong>使用 <code>feat</code> 类型.</li>
+<li>当一个提交为应用修复了 bug 时, <strong>必须</strong>使用 <code>fix</code> 类型.</li>
+<li>在简短描述之后, 可以编写较长的提交正文, 为代码变更提供额外的上下文信息. 正文<strong>必须</strong>起始于描述字段结束的一个空行后.</li>
+<li>提交的正文内容自由编写, 并使用空行分隔不同段落.</li>
+<li>所有符号都建议使用半角符号.</li>
+</ol>
+<h2 id="可选的破坏性提交说明">可选的破坏性提交说明<a class="anchor" href="#%e5%8f%af%e9%80%89%e7%9a%84%e7%a0%b4%e5%9d%8f%e6%80%a7%e6%8f%90%e4%ba%a4%e8%af%b4%e6%98%8e">#</a></h2>
+<p>破坏性提交是指不能与修改前代码或 API 相兼容的修改, 例如删除或重命名 API, 修改函数的参数类型或返回类型等等.
+若进行了破坏性提交, 可在正文后空一行编写破坏性提交说明. 说明以 <code>BREAKING CHANGE:</code> 起头, 空一格写内容. 若内容有多条, 可换行按列表语法陈列.
+破坏性提交也可以加注标签: 在 <code>&lt;类型&gt;</code> 之后, 冒号 <code>:</code> 之前添加一个叹号 <code>!</code> 来注明.</p>
+<p>若仓库从一开始就执意没有说明破坏性提交, 则后续都不要添加; 直到进入稳定发布版本再添加.</p>
+<h2 id="参考">参考<a class="anchor" href="#%e5%8f%82%e8%80%83">#</a></h2>
+<p><a href="https://www.conventionalcommits.org/zh-hans/v1.0.0">约定式提交规范</a></p>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: January 26, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/243281/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>异步非阻塞串口数据接收</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/b9a0d6/" class="flex align-center">
+        <span>`git` 子模块</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#类型">类型</a></li>
+    <li><a href="#更多规范">更多规范</a></li>
+    <li><a href="#可选的破坏性提交说明">可选的破坏性提交说明</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

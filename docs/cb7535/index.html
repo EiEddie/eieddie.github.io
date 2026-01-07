@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="可交换的线性变换# 这篇文章讨论可交换的线性变换, 即对于线性变换 $A$, $B$, 有 $AB = BA$.
+引理# $f(A)$ 与 $B$ 可交换的充要条件是 $A$, $B$ 可交换.
+充要条件# 复数域上线性变换 $A$, $B$ 可交换的充要条件是:
+$A$ 的每个广义特征空间 $E_{\lambda}$ 都是 $B$ 的不变子空间.
+其中广义特征空间 $E_{\lambda} = {\mathbf{v} ~ | ~ (A - \lambda I)^m ; \mathbf{v} = \mathbf{0}, m \in \mathbb{N}_&#43;}$. 线性空间 $V$ 总是可以分解为其上某一线性变换的广义特征空间的直和.
+证明: 充分性: 任取 $A$ 在重数 $m$ 的广义特征空间 $E_{\lambda}$, $\forall \mathbf{v} \in E_{\lambda}; B \mathbf{v} \in E_{\lambda}$. 于是 $B (A - \lambda I)^m \mathbf{v} = B ; \mathbf{0} = \mathbf{0}$, $(A - \lambda I)^m B \mathbf{v} = (A - \lambda I)^m (B \mathbf{v}) = \mathbf{0}$. 注意到 $(A - \lambda I)^m$ 是关于 $A$ 的多项式, 由此可得 $E_{\lambda}$ 上 $A$ 与 $B$ 可交换.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/cb7535/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="可交换的线性变换">
+  <meta property="og:description" content="可交换的线性变换# 这篇文章讨论可交换的线性变换, 即对于线性变换 $A$, $B$, 有 $AB = BA$.
+引理# $f(A)$ 与 $B$ 可交换的充要条件是 $A$, $B$ 可交换.
+充要条件# 复数域上线性变换 $A$, $B$ 可交换的充要条件是:
+$A$ 的每个广义特征空间 $E_{\lambda}$ 都是 $B$ 的不变子空间.
+其中广义特征空间 $E_{\lambda} = {\mathbf{v} ~ | ~ (A - \lambda I)^m ; \mathbf{v} = \mathbf{0}, m \in \mathbb{N}_&#43;}$. 线性空间 $V$ 总是可以分解为其上某一线性变换的广义特征空间的直和.
+证明: 充分性: 任取 $A$ 在重数 $m$ 的广义特征空间 $E_{\lambda}$, $\forall \mathbf{v} \in E_{\lambda}; B \mathbf{v} \in E_{\lambda}$. 于是 $B (A - \lambda I)^m \mathbf{v} = B ; \mathbf{0} = \mathbf{0}$, $(A - \lambda I)^m B \mathbf{v} = (A - \lambda I)^m (B \mathbf{v}) = \mathbf{0}$. 注意到 $(A - \lambda I)^m$ 是关于 $A$ 的多项式, 由此可得 $E_{\lambda}$ 上 $A$ 与 $B$ 可交换.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2025-11-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-01T00:00:00+00:00">
+    <meta property="article:tag" content="数学">
+    <meta property="article:tag" content="小品">
+    <meta property="article:tag" content="Undone">
+    <meta property="article:tag" content="Todo">
+
+
+  <meta itemprop="name" content="可交换的线性变换">
+  <meta itemprop="description" content="可交换的线性变换# 这篇文章讨论可交换的线性变换, 即对于线性变换 $A$, $B$, 有 $AB = BA$.
+引理# $f(A)$ 与 $B$ 可交换的充要条件是 $A$, $B$ 可交换.
+充要条件# 复数域上线性变换 $A$, $B$ 可交换的充要条件是:
+$A$ 的每个广义特征空间 $E_{\lambda}$ 都是 $B$ 的不变子空间.
+其中广义特征空间 $E_{\lambda} = {\mathbf{v} ~ | ~ (A - \lambda I)^m ; \mathbf{v} = \mathbf{0}, m \in \mathbb{N}_&#43;}$. 线性空间 $V$ 总是可以分解为其上某一线性变换的广义特征空间的直和.
+证明: 充分性: 任取 $A$ 在重数 $m$ 的广义特征空间 $E_{\lambda}$, $\forall \mathbf{v} \in E_{\lambda}; B \mathbf{v} \in E_{\lambda}$. 于是 $B (A - \lambda I)^m \mathbf{v} = B ; \mathbf{0} = \mathbf{0}$, $(A - \lambda I)^m B \mathbf{v} = (A - \lambda I)^m (B \mathbf{v}) = \mathbf{0}$. 注意到 $(A - \lambda I)^m$ 是关于 $A$ 的多项式, 由此可得 $E_{\lambda}$ 上 $A$ 与 $B$ 可交换.">
+  <meta itemprop="datePublished" content="2025-11-01T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="192">
+  <meta itemprop="keywords" content="数学,小品,Undone,Todo">
+
+<title>可交换的线性变换 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/cb7535/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.21d1ebbc72a59a8b382d695863231a987f94357587d503914fa3d410640407bc.js" integrity="sha256-IdHrvHKlmos4LWlYYyMamH&#43;UNXWH1QORT6PUEGQEB7w=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c8b164/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ce801b/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/af2d30/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/414ecc/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/d6a126/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/cb7535/" class="active">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/7e6d58/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/5ff52f/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/c3e9f1/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/0db9ab/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/243281/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e89ba/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/b9a0d6/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/66247c/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/4da923/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/8cbed4/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/2e7eba/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>可交换的线性变换</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#引理">引理</a></li>
+    <li><a href="#充要条件">充要条件</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="可交换的线性变换">可交换的线性变换<a class="anchor" href="#%e5%8f%af%e4%ba%a4%e6%8d%a2%e7%9a%84%e7%ba%bf%e6%80%a7%e5%8f%98%e6%8d%a2">#</a></h1>
+<p>这篇文章讨论可交换的线性变换, 即对于线性变换 $A$, $B$, 有 $AB = BA$.</p>
+<h2 id="引理">引理<a class="anchor" href="#%e5%bc%95%e7%90%86">#</a></h2>
+<blockquote class='book-hint '>
+<p>$f(A)$ 与 $B$ 可交换的充要条件是 $A$, $B$ 可交换.</p>
+</blockquote><h2 id="充要条件">充要条件<a class="anchor" href="#%e5%85%85%e8%a6%81%e6%9d%a1%e4%bb%b6">#</a></h2>
+<p>复数域上线性变换 $A$, $B$ 可交换的充要条件是:</p>
+<blockquote class='book-hint '>
+<p>$A$ 的每个广义特征空间 $E_{\lambda}$ 都是 $B$ 的不变子空间.</p>
+</blockquote><p>其中<em>广义特征空间</em> $E_{\lambda} = {\mathbf{v} ~ | ~ (A - \lambda I)^m ; \mathbf{v} = \mathbf{0}, m \in \mathbb{N}_+}$.
+线性空间 $V$ 总是可以分解为其上某一线性变换的广义特征空间的直和.</p>
+<p><strong>证明</strong>: <br>
+<strong>充分性</strong>:
+任取 $A$ 在重数 $m$ 的广义特征空间 $E_{\lambda}$, $\forall \mathbf{v} \in E_{\lambda}; B \mathbf{v} \in E_{\lambda}$.
+于是 $B (A - \lambda I)^m \mathbf{v} = B ; \mathbf{0} = \mathbf{0}$, $(A - \lambda I)^m B \mathbf{v} = (A - \lambda I)^m (B \mathbf{v}) = \mathbf{0}$.
+注意到 $(A - \lambda I)^m$ 是关于 $A$ 的多项式, 由此可得 $E_{\lambda}$ 上 $A$ 与 $B$ 可交换.</p>
+<p>将复数域上向量空间 $V$ 分解为广义特征空间的直和 $V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \dots \oplus E_{\lambda_r}$,
+其中 $E_{\lambda_i}$ 是对应于特征值 $\lambda_i$ 的广义特征空间.
+任取 $\mathbf{u} \in V$, $\mathbf{u} = \sum_i k_i \mathbf{v}_i$, 其中 $\mathbf{v}<em>i \in E</em>{\lambda_i}$.
+对于任意 $\mathbf{v}_i$ 都有 $A$, $B$ 可交换, 故对于其线性组合 $\mathbf{u}$ 也可交换.</p>
+<p>综上, $A$, $B$ 在 $V$ 上可交换.</p>
+<p><strong>必要性</strong>:
+若 $A$, $B$ 可交换, 则对任意 $\mathbf{v} \in E_{\lambda}$, 都有
+$(A - \lambda I)^m (B \mathbf{v}) = B ((A - \lambda I)^m \mathbf{v}) = B ; \mathbf{0} = \mathbf{0}$.
+故 $B \mathbf{v} \in E_{\lambda}$.
+即 $E_{\lambda}$ 是 $B$ 的不变子空间.</p>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: November 1, 2025</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/d6a126/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>若尔当标准型</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/7e6d58/" class="flex align-center">
+        <span>密度流体的动态模拟</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#引理">引理</a></li>
+    <li><a href="#充要条件">充要条件</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
