@@ -41,7 +41,7 @@ obsidian 与 git submodule# obsidian 本质上还是文字编辑软件, 在不�
 . ├─ Blog └─ Work ├─ A └─ B ... 其中 Blog 是记录日常或简单知识的文章; 而偏知识向或更专业的, 以及不使用 markdown 语言写的内容都放置于 Work 目录下, 每组另外再分目录.">
   <meta itemprop="datePublished" content="2025-01-25T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-01-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="114">
+  <meta itemprop="wordCount" content="118">
   <meta itemprop="keywords" content="折腾,Git">
 
 <title>关于知识库框架结构的一些想法 | EiEddie&#39;s Mind</title>
@@ -52,7 +52,7 @@ obsidian 与 git submodule# obsidian 本质上还是文字编辑软件, 在不�
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.9a3d8aee6992a293362066ff39ba0a197a21c66d42124796f0d0934f3a217c92.js" integrity="sha256-mj2K7mmSopM2IGb/OboKGXohxm1CEkeW8NCTTzohfJI=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.63065b1b59094d43b352599bd3ea4f86d6a45a7d01194a1001081e963362b78e.js" integrity="sha256-YwZbG1kJTUOzUlmb0&#43;pPhtakWn0BGUoQAQgeljNit44=" crossorigin="anonymous"></script>
 
 
 
@@ -117,6 +117,20 @@ obsidian 与 git submodule# obsidian 本质上还是文字编辑软件, 在不�
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -491,7 +505,9 @@ obsidian 与 git submodule# obsidian 本质上还是文字编辑软件, 在不�
     ...
 </code></pre>
 <p>其中 <code>Blog</code> 是记录日常或简单知识的文章; 而偏知识向或更专业的, 以及不使用 <code>markdown</code> 语言写的内容都放置于 <code>Work</code> 目录下, 每组另外再分目录.</p>
-<p><code>Work</code> 目录下的每个文件夹都是独立的 <code>git</code> 仓库, 并都注册为知识库的 <a href="/docs/git-submodule/">子模块</a>. 这样做有助于知识库挂载各种项目, 并且都高度自治, 提高独立性.</p>
+<p><code>Work</code> 目录下的每个文件夹都是独立的 <code>git</code> 仓库, 并都注册为知识库的 <a href="/docs/git-submodule/">子模块</a>.
+这样做有助于知识库挂载各种项目, 并且都高度自治, 提高独立性.
+建议不要在子项目内编写文章, 重要的文章应该存放在主仓库内, 使用链接导向子项目内的文件, 如代码等.</p>
 <h2 id="版本控制">版本控制<a class="anchor" href="#%e7%89%88%e6%9c%ac%e6%8e%a7%e5%88%b6">#</a></h2>
 <p>将整个知识库置于 <code>git</code> 的管理之下, 不仅有助于追溯历史, 而且可以使用 GitHub 实现同步. 但是缺点也显而易见, 就是修改不再随心所欲. 因为你总要为它编写一个提交信息, 而且也不希望提交历史中总是无聊琐碎的标点符号或是遣词造句修改.</p>
 <p>提交信息的编写总体上符合 <a href="/docs/conventional-commits/">约定式提交</a>, 只是在另一些方面进行了扩充与修改:</p>

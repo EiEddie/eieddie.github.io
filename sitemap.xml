@@ -3,21 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://example.org/</loc>
-    <lastmod>2026-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.org/docs/</loc>
-    <lastmod>2026-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.org/tags/</loc>
-    <lastmod>2026-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.org/tags/%E6%8A%98%E8%85%BE/</loc>
+    <lastmod>2026-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://example.org/docs/article-processing-pipeline/</loc>
+    <lastmod>2026-01-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.org/docs/hugo-with-math/</loc>
     <lastmod>2026-01-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.org/docs/static-site-with-hugo/</loc>
-    <lastmod>2026-01-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://example.org/tags/%E6%8A%98%E8%85%BE/</loc>
     <lastmod>2026-01-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.org/docs/calc-with-unit/</loc>

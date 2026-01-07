@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="文章处理管线# 这篇文章将介绍结合本地 Obsidian 知识库与远程站点的文章处理体系, 聚焦于在本地与 hugo 搭建的静态网站中都实现良好的显示效果, 并构建一套相对自动化的文章发布管线.
+我们构建的文章处理流程如下所示:
+本地使用 Obsidian 编写与管理. 使用 pandoc 处理文档, 使其符合 hugo 的文档规范. 使用 hugo 打包为静态站点. 发布到托管服务. 因为 Windows 系统对于文件名过于苛刻的限制, 并且我们需要使用命令行工具进行自动化, 将在 Linux 环境下进行处理. 为了照顾本地知识库, 它明显在 Windows 下更方便, 可以将处理管线布置在 WSL 中, 它与 Windows 配合得非常好. 关于 hugo 搭建站点的内容可以查看 这篇文章.
+格式化文档# 首先要做的就是保证文章格式能够被 pandoc 正确处理, 且被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被 Obsidian, pandoc 和 hugo 支持的 Markdown 语法.
+hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://example.org/docs/article-processing-pipeline/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="文章处理管线">
+  <meta property="og:description" content="文章处理管线# 这篇文章将介绍结合本地 Obsidian 知识库与远程站点的文章处理体系, 聚焦于在本地与 hugo 搭建的静态网站中都实现良好的显示效果, 并构建一套相对自动化的文章发布管线.
+我们构建的文章处理流程如下所示:
+本地使用 Obsidian 编写与管理. 使用 pandoc 处理文档, 使其符合 hugo 的文档规范. 使用 hugo 打包为静态站点. 发布到托管服务. 因为 Windows 系统对于文件名过于苛刻的限制, 并且我们需要使用命令行工具进行自动化, 将在 Linux 环境下进行处理. 为了照顾本地知识库, 它明显在 Windows 下更方便, 可以将处理管线布置在 WSL 中, 它与 Windows 配合得非常好. 关于 hugo 搭建站点的内容可以查看 这篇文章.
+格式化文档# 首先要做的就是保证文章格式能够被 pandoc 正确处理, 且被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被 Obsidian, pandoc 和 hugo 支持的 Markdown 语法.
+hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-01-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-01-07T00:00:00+00:00">
+    <meta property="article:tag" content="折腾">
+
+
+  <meta itemprop="name" content="文章处理管线">
+  <meta itemprop="description" content="文章处理管线# 这篇文章将介绍结合本地 Obsidian 知识库与远程站点的文章处理体系, 聚焦于在本地与 hugo 搭建的静态网站中都实现良好的显示效果, 并构建一套相对自动化的文章发布管线.
+我们构建的文章处理流程如下所示:
+本地使用 Obsidian 编写与管理. 使用 pandoc 处理文档, 使其符合 hugo 的文档规范. 使用 hugo 打包为静态站点. 发布到托管服务. 因为 Windows 系统对于文件名过于苛刻的限制, 并且我们需要使用命令行工具进行自动化, 将在 Linux 环境下进行处理. 为了照顾本地知识库, 它明显在 Windows 下更方便, 可以将处理管线布置在 WSL 中, 它与 Windows 配合得非常好. 关于 hugo 搭建站点的内容可以查看 这篇文章.
+格式化文档# 首先要做的就是保证文章格式能够被 pandoc 正确处理, 且被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被 Obsidian, pandoc 和 hugo 支持的 Markdown 语法.
+hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.">
+  <meta itemprop="datePublished" content="2026-01-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-01-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1013">
+  <meta itemprop="keywords" content="折腾">
+
+<title>文章处理管线 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://example.org/docs/article-processing-pipeline/">
+<link rel="stylesheet" href="/book.min.11270e190e6f52db54f0e3a0a4a7faab75b77e0e50bcbc00224375a7e38fdd7d.css" integrity="sha256-EScOGQ5vUttU8OOgpKf6q3W3fg5QvLwAIkN1p&#43;OP3X0=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.63065b1b59094d43b352599bd3ea4f86d6a45a7d01194a1001081e963362b78e.js" integrity="sha256-YwZbG1kJTUOzUlmb0&#43;pPhtakWn0BGUoQAQgeljNit44=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="active">
+      文章处理管线</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>文章处理管线</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#格式化文档">格式化文档</a></li>
+    <li><a href="#语法差异处理">语法差异处理</a>
+      <ul>
+        <li><a href="#图片资源">图片资源</a></li>
+        <li><a href="#本地文件链接">本地文件链接</a></li>
+        <li><a href="#html-标记">HTML 标记</a></li>
+        <li><a href="#特殊标记">特殊标记</a></li>
+      </ul>
+    </li>
+    <li><a href="#自动化">自动化</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="文章处理管线">文章处理管线<a class="anchor" href="#%e6%96%87%e7%ab%a0%e5%a4%84%e7%90%86%e7%ae%a1%e7%ba%bf">#</a></h1>
+<p>这篇文章将介绍结合本地 Obsidian 知识库与远程站点的文章处理体系, 聚焦于在本地与 hugo 搭建的静态网站中都实现良好的显示效果, 并构建一套相对自动化的文章发布管线.</p>
+<p>我们构建的文章处理流程如下所示:</p>
+<ol>
+<li>本地使用 Obsidian 编写与管理.</li>
+<li>使用 pandoc 处理文档, 使其符合 hugo 的文档规范.</li>
+<li>使用 hugo 打包为静态站点.</li>
+<li>发布到托管服务.</li>
+</ol>
+<p>因为 Windows 系统对于文件名过于苛刻的限制, 并且我们需要使用命令行工具进行自动化, 将在 Linux 环境下进行处理.
+为了照顾本地知识库, 它明显在 Windows 下更方便, 可以将处理管线布置在 WSL 中, 它与 Windows 配合得非常好.
+关于 hugo 搭建站点的内容可以查看 <a href="/docs/static-site-with-hugo/">这篇文章</a>.</p>
+<h2 id="格式化文档">格式化文档<a class="anchor" href="#%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%96%87%e6%a1%a3">#</a></h2>
+<p>首先要做的就是保证文章格式能够被 pandoc 正确处理, 且被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被 Obsidian, pandoc 和 hugo 支持的 Markdown 语法.</p>
+<p>hugo 依赖于 <code>title</code> 而非文件名显示文章标题, 使用 <code>date</code> 标记文章修改时间, 并且会读取 <code>tags</code> 来分类文章.
+为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 <a href="https://github.com/platers/obsidian-linter">Linter</a> 插件, 它可以自动格式化文档, 并重排与补全元数据.
+将 Linter 的 <a href="https://platers.github.io/obsidian-linter/settings/yaml-rules/#yaml-title-alias">标题别名</a> 部分设置打开, 便可以自动从第一个 <code>#</code> 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入.
+如果以前在使用 <code>datetime</code> 字段储存文档修改或编写日期, <strong>强烈建议改为 <code>date</code> 字段</strong>, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.</p>
+<blockquote class='book-hint warning'>
+<p>建议将 Linter 的 <em>确保中日韩文与英文数字之间有一个空格</em> 选项中的引号 <code>&quot;</code> <code>'</code> 删除, 否则中文引号之后也会加入一个空格, 有时会破坏排版.</p></blockquote><p>hugo 的 book 或其他主题提供了一些元数据字段来控制其行为, 例如 <code>bookToC</code> 将会控制是否默认展开该文章的目录. 关于 book 的控制字段可以查看其 <a href="https://github.com/alex-shpak/hugo-book?tab=readme-ov-file#page-configuration">文档</a>.</p>
+<p>Obsidian 中有些非标准的拓展 Markdown 语法, 例如 <em>Wiki 链接</em> 等, 都建议关闭, 因为难以被 hugo 与其他平台的标准化 Markdown 渲染器支持.</p>
+<p>目前已经识别到一些 pandoc 处理错误的地方, 例如其<strong>列表内的行间代码块支持较差</strong>, 此时需要<strong>列表内使用四空格缩进, 并注意添加一个空行</strong>, 就像 <a href="/docs/repo-struct/">这篇文章</a> 末尾处做得那样.</p>
+<h2 id="语法差异处理">语法差异处理<a class="anchor" href="#%e8%af%ad%e6%b3%95%e5%b7%ae%e5%bc%82%e5%a4%84%e7%90%86">#</a></h2>
+<p>hugo 中有些文档元素设计时就有意使用了特殊的语法, 一方面是为了适应网站查看的需要, 另一方面是为了便于处理器进行修饰.
+下面将介绍这些差异, 并给出其解决方案.</p>
+<h3 id="图片资源">图片资源<a class="anchor" href="#%e5%9b%be%e7%89%87%e8%b5%84%e6%ba%90">#</a></h3>
+<p>hugo 对链接的要求格外与众不同.
+对于图片, 若在文中引用图像文件, 普通的相对路径并不可用, 因为 hugo 会重新组织文档路径, 并分离静态元素, 如图片与内容.
+它要求我们将图像文件等放置于 <code>static</code> 文件夹, 并在文中使用绝对路径来引用.
+例如, 原本有如下布局</p>
+<pre><code>.
+├─ a.md
+└─ figs
+    └─ a
+       └─ img.png
+</code></pre>
+<p>此时我们会在文中用相对路径引用图片 <code>![fig (1)](figs/a/img.png)</code>.
+但是在 hugo 站点中, 应当将 <code>figs</code> 转移到 <code>static</code> 中,</p>
+<pre><code>static
+ └─ figs
+     └─ a
+        └─ img.png
+</code></pre>
+<p>在文中使用绝对路径引用 <code>![fig (1)](/figs/a/img.png)</code>.
+注意前导 <code>/</code> 的不同.
+我们将稍后编写一个 pandoc 过滤器来更新图片路径.</p>
+<h3 id="本地文件链接">本地文件链接<a class="anchor" href="#%e6%9c%ac%e5%9c%b0%e6%96%87%e4%bb%b6%e9%93%be%e6%8e%a5">#</a></h3>
+<p>更大的区别表现在对文件的链接, 即使用相对路径的本地文件链接.
+如果要在此时插入一个跳转到另一篇文章的链接, 一般我们会这样做 <code>[to another](path/to/another.md)</code>, 但是 hugo 要求使用 <a href="https://gohugo.io/shortcodes/relref/"><em>Relref 短链接</em></a>, 即改为 <code>[to another]({{% relref &quot;path/to/another.md&quot; %}})</code></p>
+<p>还有一些更特殊的, 即指向本地可达, 但不准备上载到网站, 导致在网页上不可达的资源的链接.
+当 hugo 遇到这种链接, 将直接报错.
+一种方案是使用 Markdown 提供的 <em>链接标签</em> 功能, 例如 <code>[context](path &quot;tag&quot;)</code> 中的 <code>tag</code> 便是一个标签, 将鼠标放到链接上等待便会出现.
+若一个链接被特殊的标签标记, 将在 pandoc 处理时退化为普通文字 <code>context</code>, 去除其链接, 以此避免发布时出现问题, 同时保证行文正常.
+以标签为 <code>local</code> 举例, <code>[something in here...](path &quot;local&quot;)</code> 经过处理后将变为 <code>something in here...</code>.</p>
+<p>下面是处理上述<strong>图片</strong>, <strong>链接</strong>与<strong>标记链接</strong>的 pandoc 过滤器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#75715e">-- link_modifier.lua</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 链接处理器</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 图片链接: 改为前导 /</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 文件链接:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--   - 本地可达文件改为 hugo relref 格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--   - 将标记过的链接改为文字</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> utils <span style="color:#f92672">=</span> require(<span style="color:#e6db74">&#34;pandoc.utils&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> TAG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;local&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 判断是否外部 URL / scheme</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">is_external_url</span>(s)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s <span style="color:#f92672">or</span> s <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> s:match(<span style="color:#e6db74">&#34;^//&#34;</span>) <span style="color:#f92672">or</span> s:match(<span style="color:#e6db74">&#34;^[a-zA-Z][%w+.-]*:&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 简单规范路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- - 去掉开头的 ./</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- - 合并重复的 / , 但保留前导 ../</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">normalize_path</span>(p)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> p <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> p <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 去掉前导 ./ , 但保留 ../</span>
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> p:gsub(<span style="color:#e6db74">&#34;^%./+&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 合并中间多重 // 为 /</span>
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> p:gsub(<span style="color:#e6db74">&#34;([^:])//+&#34;</span>, <span style="color:#e6db74">&#34;%1/&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> p
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 将显示文本转为安全的 markdown 链接文本</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- - 转义 ] 及反斜杠</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- - 压平换行</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">escape_bracket_text</span>(s)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- stringify</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 把 inlines 转为纯文本</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> t <span style="color:#f92672">=</span> utils.stringify(s)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 压平换行, 合并多空白</span>
+</span></span><span style="display:flex;"><span>  t <span style="color:#f92672">=</span> t:gsub(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34; &#34;</span>):gsub(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34; &#34;</span>):gsub(<span style="color:#e6db74">&#34;%s+&#34;</span>, <span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 转义反斜杠和右方括号</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 放在 [ ... ] 中</span>
+</span></span><span style="display:flex;"><span>  t <span style="color:#f92672">=</span> t:gsub(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">&#34;</span>):gsub(<span style="color:#e6db74">&#34;%]&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">]&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> t
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 调整非外部, 非以 / 或 /static/ 开头的路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Image</span>(img)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> src <span style="color:#f92672">=</span> img.src
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> src <span style="color:#f92672">or</span> src <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> is_external_url(src) <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> src:match(<span style="color:#e6db74">&#34;^/static/&#34;</span>) <span style="color:#f92672">or</span> src:match(<span style="color:#e6db74">&#34;^/&#34;</span>) <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> n <span style="color:#f92672">=</span> normalize_path(src)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 加前导 /</span>
+</span></span><span style="display:flex;"><span>  img.src <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">..</span> n
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> img
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Link</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> target <span style="color:#f92672">=</span> el.target <span style="color:#f92672">or</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> target <span style="color:#f92672">or</span> target <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#66d9ef">then</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> is_external_url(target) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 如果是 fragment-only (#anchor)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 不处理</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> target:match(<span style="color:#e6db74">&#34;^#&#34;</span>) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 如果 link title 标记为 TAG</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 去掉链接, 仅保留文字</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> el.title <span style="color:#f92672">and</span> el.title <span style="color:#f92672">==</span> TAG <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> el.content
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 将本地 .md 链接改为 relref</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 分离 path 与 anchor</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> path, anchor <span style="color:#f92672">=</span> target:match(<span style="color:#e6db74">&#34;^([^#]*)#?(.*)$&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> path <span style="color:#66d9ef">then</span> path <span style="color:#f92672">=</span> target <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> path:lower():match(<span style="color:#e6db74">&#34;%.md$&#34;</span>) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">local</span> npath <span style="color:#f92672">=</span> normalize_path(path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> anchor <span style="color:#f92672">and</span> anchor <span style="color:#f92672">~=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      npath <span style="color:#f92672">=</span> npath <span style="color:#f92672">..</span> <span style="color:#e6db74">&#34;#&#34;</span> <span style="color:#f92672">..</span> anchor
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">-- 生成安全的显示文本</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">local</span> text <span style="color:#f92672">=</span> escape_bracket_text(el.content)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">local</span> md <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[&#34;</span> <span style="color:#f92672">..</span> text <span style="color:#f92672">..</span> <span style="color:#e6db74">&#34;]({{% relref </span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">..</span> npath <span style="color:#f92672">..</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> %}})&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> pandoc.RawInline(<span style="color:#e6db74">&#34;markdown&#34;</span>, md)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div><h3 id="html-标记">HTML 标记<a class="anchor" href="#html-%e6%a0%87%e8%ae%b0">#</a></h3>
+<p>Markdown 中可以插入一些 HTML 代码, 在一般的编辑器中都能正常显示, 但并不推荐这样做.
+我将克制地只使用其注释语法, 来提醒自己注意某些事情或编写待办事项.
+在交由 hugo 打包前, 必须将这些 HTML 标记除去.
+一个简单的 pandoc 过滤器如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#75715e">-- remove_html.lua</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">RawBlock</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> el.format <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;html&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">RawInline</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> el.format <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;html&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div><h3 id="特殊标记">特殊标记<a class="anchor" href="#%e7%89%b9%e6%ae%8a%e6%a0%87%e8%ae%b0">#</a></h3>
+<p>与 <a href="/docs/hugo-with-math/">这篇文章</a> 中遭遇的问题一致, 如果在代码块 <code>...</code> 中包含短代码, 如 <code>{{&lt; ... &gt;}}</code>, hugo 将先处理短代码而忽略代码块的转义作用, 因此其内容不能被正常渲染显示.
+为了解决这一问题, 简单修改一下 <a href="/docs/hugo-with-math/">那篇文章</a> 中提供的过滤器:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#75715e">-- delimiter.lua</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Math</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> el.mathtype <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;InlineMath&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">-- $...$ -&gt; \(...\)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> pandoc.RawInline(<span style="color:#e6db74">&#34;markdown&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">(&#34;</span> <span style="color:#f92672">..</span> el.text <span style="color:#f92672">..</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">)&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Code</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> s <span style="color:#f92672">=</span> el.text
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- \ -&gt; \\</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- $$ -&gt; \$\$</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;%$%$&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">$</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">$&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- {{&lt; -&gt; {{&lt;/*/*</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;{{&lt;/*&#34;</span>, <span style="color:#e6db74">&#34;{{&lt;/*/*&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- &gt;}} -&gt; */*/&gt;}}</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;*/&gt;}}&#34;</span>, <span style="color:#e6db74">&#34;*/*/&gt;}}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- {{% -&gt; {{%/*/*</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;{{%/*%&#34;</span>, <span style="color:#e6db74">&#34;{{%/*%/*&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- %}} -&gt; */*/%}}</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;%*/%}}&#34;</span>, <span style="color:#e6db74">&#34;*/%*/%}}&#34;</span>)
+</span></span><span style="display:flex;"><span>  el.text <span style="color:#f92672">=</span> s
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> el
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">CodeBlock</span>(el)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> s <span style="color:#f92672">=</span> el.text
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- {{&lt; -&gt; {{&lt;/*/*</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;{{&lt;/*&#34;</span>, <span style="color:#e6db74">&#34;{{&lt;/*/*&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- &gt;}} -&gt; */*/&gt;}}</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;*/&gt;}}&#34;</span>, <span style="color:#e6db74">&#34;*/*/&gt;}}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- {{% -&gt; {{%/*/*</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;{{%/*%&#34;</span>, <span style="color:#e6db74">&#34;{{%/*%/*&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- %}} -&gt; */*/%}}</span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> s:gsub(<span style="color:#e6db74">&#34;%*/%}}&#34;</span>, <span style="color:#e6db74">&#34;*/%*/%}}&#34;</span>)
+</span></span><span style="display:flex;"><span>  el.text <span style="color:#f92672">=</span> s
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> el
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div><p>它将 <code>{{&lt;</code> <code>{{%/*</code> 改为 <code>{{&lt;/*/*</code> <code>{{%/*/*</code>, <code>&gt;}}</code> <code>*/%}}</code> 改为 <code>*/*/&gt;}}</code> <code>*/*/%}}</code>, 这是 hugo 官方给出的转义方法.</p>
+<h2 id="自动化">自动化<a class="anchor" href="#%e8%87%aa%e5%8a%a8%e5%8c%96">#</a></h2>
+<p>我们期望的自动化流程包括:</p>
+<ol>
+<li>从源目录 <code>src</code> 中将文档复制到目标目录 <code>dst</code> 中; 将图片文件夹 <code>src/figs</code> 复制到 <code>static</code> 中.</li>
+<li>使用 pandoc 处理每个文档.</li>
+<li>构建与打包.</li>
+<li>便捷地推送到托管平台.</li>
+</ol>
+<p>我将编写一个 <code>Makefile</code> 来完成上述工作:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span>SHELL <span style="color:#f92672">:=</span> /bin/bash
+</span></span><span style="display:flex;"><span>root <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst %/,%,<span style="color:#66d9ef">$(</span>dir <span style="color:#66d9ef">$(</span>abspath <span style="color:#66d9ef">$(</span>lastword <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)))))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>src <span style="color:#f92672">:=</span> &lt;your source dir&gt;
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>root<span style="color:#66d9ef">)</span>/content/docs
+</span></span><span style="display:flex;"><span>static <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>root<span style="color:#66d9ef">)</span>/static
+</span></span><span style="display:flex;"><span>pandoc_config <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>root<span style="color:#66d9ef">)</span>/tools/pandoc.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 找出 src 下的所有文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># 但排除 src/figs 下的内容
+</span></span></span><span style="display:flex;"><span>docs <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell find <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span> -type f ! -path <span style="color:#e6db74">&#39;$(src)/figs/*&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>docs <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/%,<span style="color:#66d9ef">$(</span>dst<span style="color:#66d9ef">)</span>/%,<span style="color:#66d9ef">$(</span>docs<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>figs_src <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell <span style="color:#f92672">[</span> -d <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/figs <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> find <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/figs -type f <span style="color:#f92672">||</span> true<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>figs_dst <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/%,<span style="color:#66d9ef">$(</span>static<span style="color:#66d9ef">)</span>/%,<span style="color:#66d9ef">$(</span>figs_src<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all build publish clean
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">$(</span>docs<span style="color:#66d9ef">)</span> <span style="color:#66d9ef">$(</span>figs_dst<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">build</span><span style="color:#f92672">:</span> all
+</span></span><span style="display:flex;"><span>        @hugo
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">publish</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        cd public <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>        git add -A <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>        git diff --cached --quiet <span style="color:#f92672">||</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>        git commit -m <span style="color:#e6db74">&#34;update&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>        git push
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clean</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        -rm -rf <span style="color:#66d9ef">$(</span>dst<span style="color:#66d9ef">)</span>/*
+</span></span><span style="display:flex;"><span>        -rm -rf <span style="color:#66d9ef">$(</span>static<span style="color:#66d9ef">)</span>/figs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">$(dst)/%.md</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/%.md <span style="color:#66d9ef">$(</span>pandoc_config<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>        @mkdir -p <span style="color:#66d9ef">$(</span>dir $@<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>        pandoc $&lt; --defaults <span style="color:#66d9ef">$(</span>pandoc_config<span style="color:#66d9ef">)</span> -o $@
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">$(dst)/%</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/%
+</span></span><span style="display:flex;"><span>        @mkdir -p <span style="color:#66d9ef">$(</span>dir $@<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>        cp -u $&lt; $@
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">$(static)/%</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">$(</span>src<span style="color:#66d9ef">)</span>/%
+</span></span><span style="display:flex;"><span>        @mkdir -p <span style="color:#66d9ef">$(</span>dir $@<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>        cp -u $&lt; $@
+</span></span></code></pre></div><p>将 <code>src</code> 改为对应的源文档目录; 将本文提到的 3 个 pandoc 过滤器放置于 <code>tools/pandoc-filter</code> 中, 并编写如下 pandoc 配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">from</span>: <span style="color:#ae81ff">markdown</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">to</span>: <span style="color:#ae81ff">markdown</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">filters</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">tools/pandoc-filter/delimiter.lua</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">tools/pandoc-filter/remove-html.lua</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">tools/pandoc-filter/link_modifier.lua</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">standalone</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">wrap</span>: <span style="color:#ae81ff">preserve</span></span></span></code></pre></div><p>即可使用.</p>
+<p><code>make</code> 或 <code>make all</code> 将用于布置文档与图像文件; <code>make build</code> 用于打包网站到 <code>public</code> 目录; <code>make publish</code> 将打包好的 <code>public</code> 目录推送到 GitHub Page 服务.</p>
+</article>
+ 
+      
+
+
+
+
+  <div class="flex flex-wrap justify-between">
+    <div class="flex align-center text-sm text-muted">
+      
+      <span class="overline" style="font-style:italic;">Last updated: January 7, 2026</span>
+    </div>
+  </div>
+
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/hugo-with-math/" class="flex align-center">
+        <span>为 Hugo 添加数学支持</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#格式化文档">格式化文档</a></li>
+    <li><a href="#语法差异处理">语法差异处理</a>
+      <ul>
+        <li><a href="#图片资源">图片资源</a></li>
+        <li><a href="#本地文件链接">本地文件链接</a></li>
+        <li><a href="#html-标记">HTML 标记</a></li>
+        <li><a href="#特殊标记">特殊标记</a></li>
+      </ul>
+    </li>
+    <li><a href="#自动化">自动化</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

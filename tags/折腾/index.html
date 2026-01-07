@@ -19,8 +19,8 @@ https://github.com/alex-shpak/hugo-book
 
 
   <meta itemprop="name" content="折腾">
-  <meta itemprop="datePublished" content="2026-01-04T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2026-01-04T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2026-01-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-01-07T00:00:00+00:00">
 
 <title>折腾 | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
@@ -30,7 +30,7 @@ https://github.com/alex-shpak/hugo-book
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.9a3d8aee6992a293362066ff39ba0a197a21c66d42124796f0d0934f3a217c92.js" integrity="sha256-mj2K7mmSopM2IGb/OboKGXohxm1CEkeW8NCTTzohfJI=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.63065b1b59094d43b352599bd3ea4f86d6a45a7d01194a1001081e963362b78e.js" integrity="sha256-YwZbG1kJTUOzUlmb0&#43;pPhtakWn0BGUoQAQgeljNit44=" crossorigin="anonymous"></script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://example.org/tags/%E6%8A%98%E8%85%BE/index.xml" title="EiEddie's Mind" />
@@ -96,6 +96,20 @@ https://github.com/alex-shpak/hugo-book
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -443,6 +457,46 @@ https://github.com/alex-shpak/hugo-book
   
   <article class="markdown book-post">
     <h2>
+      <a href="/docs/article-processing-pipeline/">文章处理管线</a>
+    </h2>
+    
+  <div class="flex align-center text-small book-post-date">
+    <img src="/icons/calendar.svg" class="book-icon" alt="Calendar" />
+    <span>January 7, 2026</span>
+  </div>
+
+
+
+  
+  <div class="text-small">
+    
+      <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+  </div>
+  
+
+
+    <div class="book-post-content"><h1 id="文章处理管线">文章处理管线<a class="anchor" href="#%e6%96%87%e7%ab%a0%e5%a4%84%e7%90%86%e7%ae%a1%e7%ba%bf">#</a></h1>
+<p>这篇文章将介绍结合本地 Obsidian 知识库与远程站点的文章处理体系, 聚焦于在本地与 hugo 搭建的静态网站中都实现良好的显示效果, 并构建一套相对自动化的文章发布管线.</p>
+<p>我们构建的文章处理流程如下所示:</p>
+<ol>
+<li>本地使用 Obsidian 编写与管理.</li>
+<li>使用 pandoc 处理文档, 使其符合 hugo 的文档规范.</li>
+<li>使用 hugo 打包为静态站点.</li>
+<li>发布到托管服务.</li>
+</ol>
+<p>因为 Windows 系统对于文件名过于苛刻的限制, 并且我们需要使用命令行工具进行自动化, 将在 Linux 环境下进行处理.
+为了照顾本地知识库, 它明显在 Windows 下更方便, 可以将处理管线布置在 WSL 中, 它与 Windows 配合得非常好.
+关于 hugo 搭建站点的内容可以查看 <a href="/docs/static-site-with-hugo/">这篇文章</a>.</p>
+<h2 id="格式化文档">格式化文档<a class="anchor" href="#%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%96%87%e6%a1%a3">#</a></h2>
+<p>首先要做的就是保证文章格式能够被 pandoc 正确处理, 且被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被 Obsidian, pandoc 和 hugo 支持的 Markdown 语法.</p>
+<p>hugo 依赖于 <code>title</code> 而非文件名显示文章标题, 使用 <code>date</code> 标记文章修改时间, 并且会读取 <code>tags</code> 来分类文章.
+为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 <a href="https://github.com/platers/obsidian-linter">Linter</a> 插件, 它可以自动格式化文档, 并重排与补全元数据.
+将 Linter 的 <a href="https://platers.github.io/obsidian-linter/settings/yaml-rules/#yaml-title-alias">标题别名</a> 部分设置打开, 便可以自动从第一个 <code>#</code> 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入.
+如果以前在使用 <code>datetime</code> 字段储存文档修改或编写日期, <strong>强烈建议改为 <code>date</code> 字段</strong>, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.</p></div>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
       <a href="/docs/hugo-with-math/">为 Hugo 添加数学支持</a>
     </h2>
     
@@ -510,19 +564,21 @@ https://github.com/alex-shpak/hugo-book
 <p>在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便.
 另外文章虽在 GitHub 保存, 但其缺失对元数据的整理功能, 对于必要的 Markdown 拓展语法支持也不佳, 更关键的是, 其使用的 KaTeX 数学引擎较为简陋, 难以招架文章中出现的连篇累牍的公式.
 无奈之下, 恐怕建立一个阅览站点成了唯一可行的选择.</p>
+<p>本篇文章着重介绍站点本身的配置与搭建, 关于内容的编写与发布请看 <a href="/docs/article-processing-pipeline/">这篇文章</a>.</p>
 <h2 id="主题选择">主题选择<a class="anchor" href="#%e4%b8%bb%e9%a2%98%e9%80%89%e6%8b%a9">#</a></h2>
 <p>我希望站点整体上是静态的, 没有过分到眼花缭乱的小动画与动态效果, 主题风格简洁严肃, 就像一本书或一页纸一样, 仅用来供人阅览而不喧宾夺主.
 最后我选择的主题是 <a href="https://github.com/alex-shpak/hugo-book">book</a>, 效果和它的名字一样沉静.
 然而不得不说的是, 或许我下面的要求过分了点, 没有让我完全满意的主题, book 也不例外.
 于是只好对它进行一番改造了.</p>
-<h2 id="格式化文档">格式化文档<a class="anchor" href="#%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%96%87%e6%a1%a3">#</a></h2>
-<p>首先要做的就是保证文章格式能够被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被支持的 Markdown 语法.
-我们的目的是文章能够在 Obsidian 与 hugo 两端都能被正确渲染.
-日后发布文章或博客的工作流将是使用 Obsidian 编写, 并在本地查看审阅, 待满意后使用 hugo 打包并推送服务器上线.</p>
-<p>hugo 依赖于 <code>title</code> 而非文件名显示文章标题, 使用 <code>date</code> 标记文章修改时间, 并且会读取 <code>tags</code> 来分类文章.
-为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 <a href="https://github.com/platers/obsidian-linter">Linter</a> 插件, 它可以自动格式化文档, 并重排与补全元数据.
-将 Linter 的 <a href="https://platers.github.io/obsidian-linter/settings/yaml-rules/#yaml-title-alias">标题别名</a> 部分设置打开, 便可以自动从第一个 <code>#</code> 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入.
-如果以前在使用 <code>datetime</code> 字段储存文档修改或编写日期, <strong>强烈建议改为 <code>date</code> 字段</strong>, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.</p></div>
+<h2 id="特殊语法支持">特殊语法支持<a class="anchor" href="#%e7%89%b9%e6%ae%8a%e8%af%ad%e6%b3%95%e6%94%af%e6%8c%81">#</a></h2>
+<p>一些 Markdown 方言提供了特别有益的拓展语法, 例如 <code>admonitions</code>, 我们希望尽可能地使其可用.
+幸运地是 book 主题本身就支持这一语法, 因此我们并不需要大费周章配置.
+但如果是不支持此语法的主题, 可以额外安装一个 <a href="https://github.com/KKKZOZ/hugo-admonitions">hugo-admonitions</a> 主题, 并将其置于主要主题之前, 这样便可覆盖原主题来提供 admonitions 支持, 如下</p>
+<pre><code>theme = [&quot;hugo-admonitions&quot;, &quot;book&quot;]
+</code></pre>
+<blockquote class='book-hint note'>
+<p>一定注意 hugo-admonitions 应该放置于主要主题 &ndash; 这里是 book&ndash; 前面, 因为主题的使用是从前到后的.</p>
+<p>另外, 这就是一个 admonition.</p></div>
   </article>
   
   <article class="markdown book-post">
@@ -794,7 +850,7 @@ Disk identifier: 0x00109879
       
         <li class="flex align-center">
           <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
-          <span>7</span>
+          <span>8</span>
         </li>
       
         <li class="flex align-center">

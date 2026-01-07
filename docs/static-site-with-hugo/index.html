@@ -9,9 +9,11 @@ https://github.com/alex-shpak/hugo-book
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="使用 Hugo 搭建静态站点# 在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便. 另外文章虽在 GitHub 保存, 但其缺失对元数据的整理功能, 对于必要的 Markdown 拓展语法支持也不佳, 更关键的是, 其使用的 KaTeX 数学引擎较为简陋, 难以招架文章中出现的连篇累牍的公式. 无奈之下, 恐怕建立一个阅览站点成了唯一可行的选择.
+本篇文章着重介绍站点本身的配置与搭建, 关于内容的编写与发布请看 这篇文章.
 主题选择# 我希望站点整体上是静态的, 没有过分到眼花缭乱的小动画与动态效果, 主题风格简洁严肃, 就像一本书或一页纸一样, 仅用来供人阅览而不喧宾夺主. 最后我选择的主题是 book, 效果和它的名字一样沉静. 然而不得不说的是, 或许我下面的要求过分了点, 没有让我完全满意的主题, book 也不例外. 于是只好对它进行一番改造了.
-格式化文档# 首先要做的就是保证文章格式能够被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被支持的 Markdown 语法. 我们的目的是文章能够在 Obsidian 与 hugo 两端都能被正确渲染. 日后发布文章或博客的工作流将是使用 Obsidian 编写, 并在本地查看审阅, 待满意后使用 hugo 打包并推送服务器上线.
-hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.
+特殊语法支持# 一些 Markdown 方言提供了特别有益的拓展语法, 例如 admonitions, 我们希望尽可能地使其可用. 幸运地是 book 主题本身就支持这一语法, 因此我们并不需要大费周章配置. 但如果是不支持此语法的主题, 可以额外安装一个 hugo-admonitions 主题, 并将其置于主要主题之前, 这样便可覆盖原主题来提供 admonitions 支持, 如下
+theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitions 应该放置于主要主题 – 这里是 book– 前面, 因为主题的使用是从前到后的.
+另外, 这就是一个 admonition.
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
@@ -19,9 +21,11 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
   <meta property="og:site_name" content="EiEddie&#39;s Mind">
   <meta property="og:title" content="使用 Hugo 搭建静态站点">
   <meta property="og:description" content="使用 Hugo 搭建静态站点# 在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便. 另外文章虽在 GitHub 保存, 但其缺失对元数据的整理功能, 对于必要的 Markdown 拓展语法支持也不佳, 更关键的是, 其使用的 KaTeX 数学引擎较为简陋, 难以招架文章中出现的连篇累牍的公式. 无奈之下, 恐怕建立一个阅览站点成了唯一可行的选择.
+本篇文章着重介绍站点本身的配置与搭建, 关于内容的编写与发布请看 这篇文章.
 主题选择# 我希望站点整体上是静态的, 没有过分到眼花缭乱的小动画与动态效果, 主题风格简洁严肃, 就像一本书或一页纸一样, 仅用来供人阅览而不喧宾夺主. 最后我选择的主题是 book, 效果和它的名字一样沉静. 然而不得不说的是, 或许我下面的要求过分了点, 没有让我完全满意的主题, book 也不例外. 于是只好对它进行一番改造了.
-格式化文档# 首先要做的就是保证文章格式能够被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被支持的 Markdown 语法. 我们的目的是文章能够在 Obsidian 与 hugo 两端都能被正确渲染. 日后发布文章或博客的工作流将是使用 Obsidian 编写, 并在本地查看审阅, 待满意后使用 hugo 打包并推送服务器上线.
-hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.">
+特殊语法支持# 一些 Markdown 方言提供了特别有益的拓展语法, 例如 admonitions, 我们希望尽可能地使其可用. 幸运地是 book 主题本身就支持这一语法, 因此我们并不需要大费周章配置. 但如果是不支持此语法的主题, 可以额外安装一个 hugo-admonitions 主题, 并将其置于主要主题之前, 这样便可覆盖原主题来提供 admonitions 支持, 如下
+theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitions 应该放置于主要主题 – 这里是 book– 前面, 因为主题的使用是从前到后的.
+另外, 这就是一个 admonition.">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
@@ -32,12 +36,14 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 
   <meta itemprop="name" content="使用 Hugo 搭建静态站点">
   <meta itemprop="description" content="使用 Hugo 搭建静态站点# 在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便. 另外文章虽在 GitHub 保存, 但其缺失对元数据的整理功能, 对于必要的 Markdown 拓展语法支持也不佳, 更关键的是, 其使用的 KaTeX 数学引擎较为简陋, 难以招架文章中出现的连篇累牍的公式. 无奈之下, 恐怕建立一个阅览站点成了唯一可行的选择.
+本篇文章着重介绍站点本身的配置与搭建, 关于内容的编写与发布请看 这篇文章.
 主题选择# 我希望站点整体上是静态的, 没有过分到眼花缭乱的小动画与动态效果, 主题风格简洁严肃, 就像一本书或一页纸一样, 仅用来供人阅览而不喧宾夺主. 最后我选择的主题是 book, 效果和它的名字一样沉静. 然而不得不说的是, 或许我下面的要求过分了点, 没有让我完全满意的主题, book 也不例外. 于是只好对它进行一番改造了.
-格式化文档# 首先要做的就是保证文章格式能够被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被支持的 Markdown 语法. 我们的目的是文章能够在 Obsidian 与 hugo 两端都能被正确渲染. 日后发布文章或博客的工作流将是使用 Obsidian 编写, 并在本地查看审阅, 待满意后使用 hugo 打包并推送服务器上线.
-hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.">
+特殊语法支持# 一些 Markdown 方言提供了特别有益的拓展语法, 例如 admonitions, 我们希望尽可能地使其可用. 幸运地是 book 主题本身就支持这一语法, 因此我们并不需要大费周章配置. 但如果是不支持此语法的主题, 可以额外安装一个 hugo-admonitions 主题, 并将其置于主要主题之前, 这样便可覆盖原主题来提供 admonitions 支持, 如下
+theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitions 应该放置于主要主题 – 这里是 book– 前面, 因为主题的使用是从前到后的.
+另外, 这就是一个 admonition.">
   <meta itemprop="datePublished" content="2026-01-04T00:00:00+00:00">
   <meta itemprop="dateModified" content="2026-01-04T00:00:00+00:00">
-  <meta itemprop="wordCount" content="538">
+  <meta itemprop="wordCount" content="451">
   <meta itemprop="keywords" content="折腾">
 
 <title>使用 Hugo 搭建静态站点 | EiEddie&#39;s Mind</title>
@@ -48,7 +54,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.9a3d8aee6992a293362066ff39ba0a197a21c66d42124796f0d0934f3a217c92.js" integrity="sha256-mj2K7mmSopM2IGb/OboKGXohxm1CEkeW8NCTTzohfJI=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.63065b1b59094d43b352599bd3ea4f86d6a45a7d01194a1001081e963362b78e.js" integrity="sha256-YwZbG1kJTUOzUlmb0&#43;pPhtakWn0BGUoQAQgeljNit44=" crossorigin="anonymous"></script>
 
 
 
@@ -113,6 +119,20 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -460,7 +480,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 <nav id="TableOfContents">
   <ul>
     <li><a href="#主题选择">主题选择</a></li>
-    <li><a href="#格式化文档">格式化文档</a></li>
+    <li><a href="#特殊语法支持">特殊语法支持</a></li>
     <li><a href="#定制字体">定制字体</a></li>
     <li><a href="#添加文章修改时间">添加文章修改时间</a></li>
     <li><a href="#数学支持">数学支持</a></li>
@@ -482,23 +502,14 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 <p>在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便.
 另外文章虽在 GitHub 保存, 但其缺失对元数据的整理功能, 对于必要的 Markdown 拓展语法支持也不佳, 更关键的是, 其使用的 KaTeX 数学引擎较为简陋, 难以招架文章中出现的连篇累牍的公式.
 无奈之下, 恐怕建立一个阅览站点成了唯一可行的选择.</p>
+<p>本篇文章着重介绍站点本身的配置与搭建, 关于内容的编写与发布请看 <a href="/docs/article-processing-pipeline/">这篇文章</a>.</p>
 <h2 id="主题选择">主题选择<a class="anchor" href="#%e4%b8%bb%e9%a2%98%e9%80%89%e6%8b%a9">#</a></h2>
 <p>我希望站点整体上是静态的, 没有过分到眼花缭乱的小动画与动态效果, 主题风格简洁严肃, 就像一本书或一页纸一样, 仅用来供人阅览而不喧宾夺主.
 最后我选择的主题是 <a href="https://github.com/alex-shpak/hugo-book">book</a>, 效果和它的名字一样沉静.
 然而不得不说的是, 或许我下面的要求过分了点, 没有让我完全满意的主题, book 也不例外.
 于是只好对它进行一番改造了.</p>
-<h2 id="格式化文档">格式化文档<a class="anchor" href="#%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%96%87%e6%a1%a3">#</a></h2>
-<p>首先要做的就是保证文章格式能够被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被支持的 Markdown 语法.
-我们的目的是文章能够在 Obsidian 与 hugo 两端都能被正确渲染.
-日后发布文章或博客的工作流将是使用 Obsidian 编写, 并在本地查看审阅, 待满意后使用 hugo 打包并推送服务器上线.</p>
-<p>hugo 依赖于 <code>title</code> 而非文件名显示文章标题, 使用 <code>date</code> 标记文章修改时间, 并且会读取 <code>tags</code> 来分类文章.
-为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 <a href="https://github.com/platers/obsidian-linter">Linter</a> 插件, 它可以自动格式化文档, 并重排与补全元数据.
-将 Linter 的 <a href="https://platers.github.io/obsidian-linter/settings/yaml-rules/#yaml-title-alias">标题别名</a> 部分设置打开, 便可以自动从第一个 <code>#</code> 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入.
-如果以前在使用 <code>datetime</code> 字段储存文档修改或编写日期, <strong>强烈建议改为 <code>date</code> 字段</strong>, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.</p>
-<blockquote class='book-hint warning'>
-<p>建议将 Linter 的 <em>确保中日韩文与英文数字之间有一个空格</em> 选项中的引号 <code>&quot;</code> <code>'</code> 删除, 否则中文引号之后也会加入一个空格, 有时会破坏排版.</p></blockquote><p>book 或其他主题提供了一些元数据字段来控制其行为, 例如 <code>bookToC</code> 将会控制是否默认展开该文章的目录. 关于 book 的控制字段可以查看其 <a href="https://github.com/alex-shpak/hugo-book?tab=readme-ov-file#page-configuration">文档</a>.</p>
-<p>Obsidian 中有些非标准的拓展 Markdown 语法, 例如 <em>Wiki 链接</em> 等, 都建议关闭, 因为难以被 hugo 与其他平台的标准化 Markdown 渲染器支持.</p>
-<p>但对于一些特别有益的拓展语法, 例如 <code>admonitions</code>, 我们希望尽可能地使其可用.
+<h2 id="特殊语法支持">特殊语法支持<a class="anchor" href="#%e7%89%b9%e6%ae%8a%e8%af%ad%e6%b3%95%e6%94%af%e6%8c%81">#</a></h2>
+<p>一些 Markdown 方言提供了特别有益的拓展语法, 例如 <code>admonitions</code>, 我们希望尽可能地使其可用.
 幸运地是 book 主题本身就支持这一语法, 因此我们并不需要大费周章配置.
 但如果是不支持此语法的主题, 可以额外安装一个 <a href="https://github.com/KKKZOZ/hugo-admonitions">hugo-admonitions</a> 主题, 并将其置于主要主题之前, 这样便可覆盖原主题来提供 admonitions 支持, 如下</p>
 <pre><code>theme = [&quot;hugo-admonitions&quot;, &quot;book&quot;]
@@ -714,7 +725,7 @@ book 主题中提供的注入点可以在 GitHub <a href="https://github.com/ale
 <nav id="TableOfContents">
   <ul>
     <li><a href="#主题选择">主题选择</a></li>
-    <li><a href="#格式化文档">格式化文档</a></li>
+    <li><a href="#特殊语法支持">特殊语法支持</a></li>
     <li><a href="#定制字体">定制字体</a></li>
     <li><a href="#添加文章修改时间">添加文章修改时间</a></li>
     <li><a href="#数学支持">数学支持</a></li>
