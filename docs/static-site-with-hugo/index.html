@@ -17,7 +17,7 @@ theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitio
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://example.org/docs/static-site-with-hugo/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://eieddie.github.io/docs/static-site-with-hugo/">
   <meta property="og:site_name" content="EiEddie&#39;s Mind">
   <meta property="og:title" content="使用 Hugo 搭建静态站点">
   <meta property="og:description" content="使用 Hugo 搭建静态站点# 在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便. 另外文章虽在 GitHub 保存, 但其缺失对元数据的整理功能, 对于必要的 Markdown 拓展语法支持也不佳, 更关键的是, 其使用的 KaTeX 数学引擎较为简陋, 难以招架文章中出现的连篇累牍的公式. 无奈之下, 恐怕建立一个阅览站点成了唯一可行的选择.
@@ -30,7 +30,7 @@ theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitio
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
     <meta property="article:published_time" content="2026-01-04T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-01-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-03T00:00:00+00:00">
     <meta property="article:tag" content="折腾">
 
 
@@ -42,19 +42,19 @@ theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitio
 theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitions 应该放置于主要主题 – 这里是 book– 前面, 因为主题的使用是从前到后的.
 另外, 这就是一个 admonition.">
   <meta itemprop="datePublished" content="2026-01-04T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2026-01-04T00:00:00+00:00">
-  <meta itemprop="wordCount" content="494">
+  <meta itemprop="dateModified" content="2026-02-03T00:00:00+00:00">
+  <meta itemprop="wordCount" content="602">
   <meta itemprop="keywords" content="折腾">
 
 <title>使用 Hugo 搭建静态站点 | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="https://example.org/docs/static-site-with-hugo/">
-<link rel="stylesheet" href="/book.min.da13678e0f8d7d2b749f4c561f5f2f27b57defeb2b27e506235b21dcd411be4a.css" integrity="sha256-2hNnjg&#43;NfSt0n0xWH18vJ7V97&#43;srJ&#43;UGI1sh3NQRvko=" crossorigin="anonymous">
+<link rel="canonical" href="https://eieddie.github.io/docs/static-site-with-hugo/">
+<link rel="stylesheet" href="/book.min.045c09b685f9369c2c4280231864d68c2a049d478b4427a0c2e6e4d5a476128b.css" integrity="sha256-BFwJtoX5NpwsQoAjGGTWjCoEnUeLRCegwubk1aR2Eos=" crossorigin="anonymous">
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.9777f4c6ce2f46dd477a055b2f0f1c99767b90dd82fbd40a2f5edac4aac408ef.js" integrity="sha256-l3f0xs4vRt1HegVbLw8cmXZ7kN2C&#43;9QKL17axKrECO8=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.6242db2eb794863d9d137c4603886576385b2b48aca9fed8b4c56901c359152d.js" integrity="sha256-YkLbLreUhj2dE3xGA4hldjhbK0isqf7YtMVpAcNZFS0=" crossorigin="anonymous"></script>
 
 
 
@@ -483,6 +483,7 @@ theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitio
     <li><a href="#特殊语法支持">特殊语法支持</a></li>
     <li><a href="#定制字体">定制字体</a></li>
     <li><a href="#添加文章修改时间">添加文章修改时间</a></li>
+    <li><a href="#未完成标记">未完成标记</a></li>
     <li><a href="#数学支持">数学支持</a></li>
     <li><a href="#主页面">主页面</a></li>
     <li><a href="#最终配置文件">最终配置文件</a></li>
@@ -497,6 +498,14 @@ theme = [&#34;hugo-admonitions&#34;, &#34;book&#34;] 一定注意 hugo-admonitio
       </header>
 
       
+
+
+
+  
+
+
+
+
       
   <article class="markdown book-article"><h1 id="使用-hugo-搭建静态站点">使用 Hugo 搭建静态站点<a class="anchor" href="#%e4%bd%bf%e7%94%a8-hugo-%e6%90%ad%e5%bb%ba%e9%9d%99%e6%80%81%e7%ab%99%e7%82%b9">#</a></h1>
 <p>在本地知识库软件编写文章在很多时候已经足够满足我参考的需要, 但若遇上呈给别人台鉴的情况, 终归不够方便.
@@ -577,18 +586,20 @@ book 主题提供了设置字体的 <a href="https://github.com/alex-shpak/hugo-
 book 主题中提供的注入点可以在 GitHub <a href="https://github.com/alex-shpak/hugo-book?tab=readme-ov-file#partials">自述文件</a> 中找到.</p>
 <p>我将利用 book 在<strong>页面内容之后</strong>的注入点 <code>layouts/partials/docs/inject/content-after.html</code> 来手动实现一个修改时间显示, 它会读取文档元数据 <code>date</code> 字段来格式化为相应的日期显示.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- layouts/partials/docs/inject/content-after.html --&gt;</span>
-</span></span><span style="display:flex;"><span>{{ $date := .Lastmod | default .Date }}
+</span></span><span style="display:flex;"><span>{{ $dateFormat := default &#34;January 2, 2006&#34; $.Site.Params.BookDateFormat }}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>{{ if .IsPage  }}
-</span></span><span style="display:flex;"><span>{{ with $date }}
-</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;flex flex-wrap justify-between&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;flex align-center text-sm text-muted&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">&lt;!--img src=&#34;{{ partial &#34;docs/icon&#34; &#34;calendar&#34; }}&#34; class=&#34;book-icon&#34; alt=&#34;{{ partial &#34;docs/text/i18n&#34; &#34;Calendar&#34; }}&#34; /--&gt;</span>
-</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;overline&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;font-style:italic;&#34;</span>&gt;Last updated: {{ .Format (default &#34;January 2, 2006&#34; $.Site.Params.BookDateFormat) }}&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>{{ if and .IsPage .Date }}
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;flex&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span>  <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;font-style:italic;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;overline&#34;</span>&gt;&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display:block;&#34;</span>&gt;Created in {{ .Date.Format $dateFormat }}&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display:block;&#34;</span>&gt;Last modified in {{ .Lastmod.Format $dateFormat }}&lt;/<span style="color:#f92672">span</span>&gt;
 </span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
 </span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>{{ end }}
-</span></span><span style="display:flex;"><span>{{ end }}</span></span></code></pre></div><p>以及其配套的样式 <code>overline</code></p>
+</span></span><span style="display:flex;"><span>{{ end }}</span></span></code></pre></div><p>这段代码将从文档元数据字段 <code>date</code> 中读取日期, 并按站点设置 <code>BookDateFormat</code> 中规定的样式格式化.
+上次修改日期 <code>lastmod</code> 由 hugo 提供, 它总是存在, 当 markdown 的 front matter 中不存在此字段时, 它的值将回退到 <code>date</code> 的值<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+最后的显示效果为左下角的 <em>Created in January 2, 2006</em> 与 <em>Last modified in January 2, 2006</em>, 分两行显示. 斜体, 上方覆盖一条与文字等长的灰色分割线.</p>
+<p>其配套的样式 <code>overline</code> 定义在 <code>assets/_custom.scss</code> 中</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span><span style="color:#75715e">/* assets/_custom.scss */</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">.overline</span> {
@@ -611,9 +622,38 @@ book 主题中提供的注入点可以在 GitHub <a href="https://github.com/ale
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">z-index</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>;
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">pointer-events</span><span style="color:#f92672">:</span> none;
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">transform</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">translateY</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span><span style="color:#66d9ef">%</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>这段代码将从文档元数据字段 <code>date</code> 中读取日期, 并按站点设置 <code>BookDateFormat</code> 中规定的样式格式化.
-最后的显示效果为左下角的 <em>Last updated: January 2, 2006</em>, 斜体, 上方覆盖一条与文字等长的灰色分割线.</p>
-<h2 id="数学支持">数学支持<a class="anchor" href="#%e6%95%b0%e5%ad%a6%e6%94%af%e6%8c%81">#</a></h2>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* skipping... */</span></span></span></code></pre></div><h2 id="未完成标记">未完成标记<a class="anchor" href="#%e6%9c%aa%e5%ae%8c%e6%88%90%e6%a0%87%e8%ae%b0">#</a></h2>
+<p>如果文章未完成, 我会在文章的 tag 中添加一个 <code>undone</code>.
+我们将要给所有未完成的文章添加一个标记, 使读者能够意识到这一点, 否则可能会对只有半拉的内容产生疑问.</p>
+<p>我们使用 book 在<strong>页面内容之前</strong>的注入点 <code>layouts/partials/docs/inject/content-before.html</code> 来实现.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- layouts/partials/docs/inject/content-before.html --&gt;</span>
+</span></span><span style="display:flex;"><span>{{ $tags := .Params.tags }}
+</span></span><span style="display:flex;"><span>{{ $hasUndone := false }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{{ range $t := $tags }}
+</span></span><span style="display:flex;"><span>  {{ if eq (lower (print $t)) &#34;undone&#34; }}
+</span></span><span style="display:flex;"><span>    {{ $hasUndone = true }}
+</span></span><span style="display:flex;"><span>  {{ end }}
+</span></span><span style="display:flex;"><span>{{ end }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{{ if $hasUndone }}
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display:flex; margin-bottom:5px;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">span</span>&gt;[&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;status-undone&#34;</span>&gt;未完成&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">span</span>&gt;]&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>{{ end }}</span></span></code></pre></div><p>这段代码会尝试在 tag 列表中查找 <code>undone</code>, 如果找到了, 就会在标题之上显示一个 <em>[未完成]</em>, 字体颜色为红色, 醒目地警告读者.</p>
+<p>其配套的样式 <code>status-undone</code> 同样定义在 <code>assets/_custom.scss</code> 中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span><span style="color:#75715e">/* assets/_custom.scss */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* skipping... */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.status-undone</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">var</span>(<span style="color:#f92672">--</span>color<span style="color:#f92672">-</span>accent-caution);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">font-family</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">var</span>(<span style="color:#f92672">--</span>paper-font-ui);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 id="数学支持">数学支持<a class="anchor" href="#%e6%95%b0%e5%ad%a6%e6%94%af%e6%8c%81">#</a></h2>
 <p>关于为 hugo 添加 MathJax 支持, 请看 <a href="/docs/hugo-with-math/">这篇文章</a>.</p>
 <h2 id="主页面">主页面<a class="anchor" href="#%e4%b8%bb%e9%a1%b5%e9%9d%a2">#</a></h2>
 <p>访问网址时进入的页面为主页面, 默认情况下主页面是空的, 你可以在 <code>content</code> 目录中新建一个 <code>content/_index.md</code> 来定制你主页面的内容.
@@ -650,20 +690,27 @@ book 主题中提供的注入点可以在 GitHub <a href="https://github.com/ale
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">goldmark</span>.<span style="color:#a6e22e">extensions</span>.<span style="color:#a6e22e">passthrough</span>]
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">enable</span> = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">delimiters</span> = { <span style="color:#a6e22e">block</span> = [[<span style="color:#e6db74">&#39;$$&#39;</span>, <span style="color:#e6db74">&#39;$$&#39;</span>]], <span style="color:#a6e22e">inline</span> = [[<span style="color:#e6db74">&#39;\(&#39;</span>, <span style="color:#e6db74">&#39;\)&#39;</span>]] }</span></span></code></pre></div></article>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">delimiters</span> = { <span style="color:#a6e22e">block</span> = [[<span style="color:#e6db74">&#39;$$&#39;</span>, <span style="color:#e6db74">&#39;$$&#39;</span>]], <span style="color:#a6e22e">inline</span> = [[<span style="color:#e6db74">&#39;\(&#39;</span>, <span style="color:#e6db74">&#39;\)&#39;</span>]] }</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://gohugo.io/configuration/front-matter/#dates">Hugo: Configure front matter</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article>
  
       
 
 
 
-
-  <div class="flex flex-wrap justify-between">
-    <div class="flex align-center text-sm text-muted">
-      
-      <span class="overline" style="font-style:italic;">Last updated: January 4, 2026</span>
+  <div class="flex">
+    <div  style="font-style:italic;">
+      <span class="overline"></span>
+      <span style="display:block;">Created in January 4, 2026</span>
+      <span style="display:block;">Last modified in February 3, 2026</span>
     </div>
   </div>
-
 
 
 
@@ -744,6 +791,7 @@ book 主题中提供的注入点可以在 GitHub <a href="https://github.com/ale
     <li><a href="#特殊语法支持">特殊语法支持</a></li>
     <li><a href="#定制字体">定制字体</a></li>
     <li><a href="#添加文章修改时间">添加文章修改时间</a></li>
+    <li><a href="#未完成标记">未完成标记</a></li>
     <li><a href="#数学支持">数学支持</a></li>
     <li><a href="#主页面">主页面</a></li>
     <li><a href="#最终配置文件">最终配置文件</a></li>
