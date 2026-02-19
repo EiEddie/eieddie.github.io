@@ -6,8 +6,15 @@
     <description>Recent content in Docs on EiEddie&#39;s Mind</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 05 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://eieddie.github.io/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Delta 机器人的动力学建模</title>
+      <link>https://eieddie.github.io/docs/delta-robotics/</link>
+      <pubDate>Tue, 17 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://eieddie.github.io/docs/delta-robotics/</guid>
+      <description>&lt;h1 id=&#34;delta-机器人的动力学建模&#34;&gt;Delta 机器人的动力学建模&lt;a class=&#34;anchor&#34; href=&#34;#delta-%e6%9c%ba%e5%99%a8%e4%ba%ba%e7%9a%84%e5%8a%a8%e5%8a%9b%e5%ad%a6%e5%bb%ba%e6%a8%a1&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/Delta%E6%A9%9F%E5%99%A8%E4%BA%BA&#34;&gt;Delta 机器人&lt;/a&gt; 是一种三自由度的常用并联型机器人.&#xA;由于其特殊设计, 能够保证其顶板始终平行于底板, 只有三个平动自由度而无转动.&#xA;这一点很容易证明, 此处不再赘述.&#xA;因此我们将按下面的模型讨论&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://eieddie.github.io/figs/Delta-Robotics/model.png&#34; alt=&#34;机器人模型&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;机器人有三个可以独立活动的支部, 编号为 \(1\), \(2\), \(3\), 按右手顺序排列, 彼此相隔 \(\frac{2\pi}{3}\).&#xA;我们之后的讨论将更多只限于同一个支部, 在不引起误会的情况下, 将省略下标以求简洁.&#xA;此时我们讨论的将是适用于三支的通用关系.&lt;/p&gt;&#xA;&lt;p&gt;约定粗体 \(\mathbf{L}\) 代表向量, 非粗体的相同字母代表其模长 \(L := \|\mathbf{L}\|\).&#xA;在模型中, \(L_i\), \(i = 1,2,3\) 都是等长的, 因此都记为 \(L\); \(g\) 与 \(l\) 同理.&#xA;单位坐标轴方向为 \(\hat{\mathbf{i}}\), \(\hat{\mathbf{j}}\), \(\hat{\mathbf{k}}\); \(\hat{\cdot}\) 表示归一化.&#xA;\(P\) 为关心的末端位置.&lt;/p&gt;&#xA;&lt;h2 id=&#34;正向运动学&#34;&gt;正向运动学&lt;a class=&#34;anchor&#34; href=&#34;#%e6%ad%a3%e5%90%91%e8%bf%90%e5%8a%a8%e5%ad%a6&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;正向运动学解决的问题是如何通过已知的广义坐标 \(\theta_i\), \(i = 1,2,3\) 来得到 \(P\) 的位置.&#xA;我们将从底部开始, 逐步地依次求解 \(B\), \(M\) 直到 \(P\) 的位置.&lt;/p&gt;&#xA;&lt;h3 id=&#34;中途向量&#34;&gt;中途向量&lt;a class=&#34;anchor&#34; href=&#34;#%e4%b8%ad%e9%80%94%e5%90%91%e9%87%8f&#34;&gt;#&lt;/a&gt;&lt;/h3&gt;&#xA;&lt;p&gt;\(\mathbf{g}\) 与 \(B\) 的求解是极为简单的.&#xA;记方位角 \(\phi\) 为三支在水平面上的偏角, 有 \(\phi_1 = 0\), \(\phi_2 = \frac{2\pi}{3}\), \(\phi_3 = \frac{4\pi}{3}\).&#xA;于是&#xA;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>我坐在石球子上</title>
       <link>https://eieddie.github.io/docs/sit-on-stone-ball-barrier/</link>
