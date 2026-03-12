@@ -19,18 +19,18 @@ https://github.com/alex-shpak/hugo-book
 
 
   <meta itemprop="name" content="Linux">
-  <meta itemprop="datePublished" content="2025-04-18T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-04-18T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2026-03-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-03-12T00:00:00+00:00">
 
 <title>Linux | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://eieddie.dpdns.org/tags/linux/">
-<link rel="stylesheet" href="/book.min.da33c7dad09bc51cf5383ba5e484fa201ca25939a4bd237cabb7bd29bf1c3743.css" integrity="sha256-2jPH2tCbxRz1ODul5IT6IByiWTmkvSN8q7e9Kb8cN0M=" crossorigin="anonymous">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.a530410177f374efdb12de74cd7557b8a4bcb4801183779081b42a71c81958ff.js" integrity="sha256-pTBBAXfzdO/bEt50zXVXuKS8tIARg3eQgbQqccgZWP8=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.5c7a24fb0524f4820d2ea363984f232177aff85307ea9fc4b6140678d99f9d84.js" integrity="sha256-XHok&#43;wUk9IINLqNjmE8jIXev&#43;FMH6p/EthQGeNmfnYQ=" crossorigin="anonymous"></script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://eieddie.dpdns.org/tags/linux/index.xml" title="EiEddie's Mind" />
@@ -49,8 +49,9 @@ https://github.com/alex-shpak/hugo-book
     }
   };
 </script>
+
 <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
   async>
 </script>
 
@@ -96,6 +97,20 @@ https://github.com/alex-shpak/hugo-book
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -491,6 +506,69 @@ https://github.com/alex-shpak/hugo-book
   
   <article class="markdown book-post">
     <h2>
+      <a href="/docs/package-app-as-single-file/">将应用打包为单个文件</a>
+    </h2>
+    
+  <div class="flex align-center text-small book-post-date">
+    <img src="/icons/calendar.svg" class="book-icon" alt="Calendar" />
+    <span>March 12, 2026</span>
+  </div>
+
+
+
+  
+  <div class="text-small">
+    
+      <a href="/tags/linux/">Linux</a>, 
+      <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+  </div>
+  
+
+
+    <div class="book-post-content"><h1 id="将应用打包为单个文件">将应用打包为单个文件<a class="anchor" href="#%e5%b0%86%e5%ba%94%e7%94%a8%e6%89%93%e5%8c%85%e4%b8%ba%e5%8d%95%e4%b8%aa%e6%96%87%e4%bb%b6">#</a></h1>
+<p>为什么要将 Linux 的程序打包为单个文件?
+众所周知, 程序可能有数个甚至几十上百个依赖库, 或者叫<em>动态链接库</em>.
+这一设计是为了减小程序体积, 因为可以多个程序共用同一套功能相同的代码.
+但在一些时候, 它帮得倒忙远比其优点多.
+具体地说, 当你的程序:</p>
+<ul>
+<li>依赖数量庞大的动态链接库;</li>
+<li>部分依赖安装起来非常麻烦, 或只能从半公开渠道获取 (例如需要注册后下载);</li>
+<li>无法静态编译, 或部分库未提供静态版本;</li>
+<li>需要在极短的时间内完成部署.</li>
+</ul>
+<p>那么将其打包为单个文件可以解决你的烦恼.</p>
+<p>当然, 这一方法并非没有缺点.
+我们都很清楚, 把所有依赖都打包进来会导致分发文件体积膨胀严重, 甚至文件大小翻百倍都是常事.
+在我的测试中, 打包后的应用大小在 120MB 左右.
+如果你能接受这一点, 那么我确信它很适合你.</p>
+<p>我们使用的文件格式被称为 <a href="https://appimage.org/"><strong>AppImage</strong></a>, 对于几乎所有发行版, 它都是开箱即用的.
+我们将先介绍手动打包的方式, 并以此认识包的格式;
+随后给出更简单的打包方法.</p>
+<h2 id="手动打包">手动打包<a class="anchor" href="#%e6%89%8b%e5%8a%a8%e6%89%93%e5%8c%85">#</a></h2>
+<p>下面的内容基于官方给出的 <a href="https://docs.appimage.org/packaging-guide/manual.html">手动打包流程</a>.</p>
+<p>要手动打包, 你需要一个以下结构的目录:</p>
+<pre><code>MyApp.AppDir
+├── AppRun
+├── myapp.desktop
+├── myapp.png
+└── usr
+     ├── bin
+     │   └── myapp
+     └── lib
+         └── lib*.so
+</code></pre>
+<p>上面给出的是最小结构, 也就是说你不能再省略内容了.
+目录名 <code>*.AppDir</code> 是惯例;
+<code>AppRun</code> 将作为被执行的程序, 它可以是可执行文件, 或是一个脚本, 关于它我们会在后文详细讲述;
+<code>myapp.desktop</code> 是清单文件, 文件名基本是任意的, 但根目录必须存在且只存在一个 <code>.desktop</code> 文件;
+<code>myapp.png</code> 是程序图标, 遗憾的是它不能省略.
+<code>usr</code> 目录就像 LFS 描述的一样, <code>bin</code> 内存放可执行文件, <code>lib</code> 内存放库文件.
+你要执行的应用文件应该就是 <code>myapp</code>.</p></div>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
       <a href="/docs/async-serial/">异步非阻塞串口数据接收</a>
     </h2>
     
@@ -635,6 +713,16 @@ Disk identifier: 0x00109879
       <ul>
       
         <li class="flex align-center">
+          <a href="/tags/linux/">Linux</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+          <span>9</span>
+        </li>
+      
+        <li class="flex align-center">
           <a href="/tags/%E6%8E%A7%E5%88%B6/">控制</a>
           <span>2</span>
         </li>
@@ -652,11 +740,6 @@ Disk identifier: 0x00109879
         <li class="flex align-center">
           <a href="/tags/%E6%96%87%E5%AD%A6/">文学</a>
           <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
-          <span>8</span>
         </li>
       
         <li class="flex align-center">
@@ -686,11 +769,6 @@ Disk identifier: 0x00109879
       
         <li class="flex align-center">
           <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
-          <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/linux/">Linux</a>
           <span>2</span>
         </li>
       

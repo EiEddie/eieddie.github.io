@@ -20,17 +20,17 @@ https://github.com/alex-shpak/hugo-book
 
   <meta itemprop="name" content="Todo">
   <meta itemprop="datePublished" content="2025-12-05T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-12-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-03-10T00:00:00+00:00">
 
 <title>Todo | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://eieddie.dpdns.org/tags/todo/">
-<link rel="stylesheet" href="/book.min.da33c7dad09bc51cf5383ba5e484fa201ca25939a4bd237cabb7bd29bf1c3743.css" integrity="sha256-2jPH2tCbxRz1ODul5IT6IByiWTmkvSN8q7e9Kb8cN0M=" crossorigin="anonymous">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.a530410177f374efdb12de74cd7557b8a4bcb4801183779081b42a71c81958ff.js" integrity="sha256-pTBBAXfzdO/bEt50zXVXuKS8tIARg3eQgbQqccgZWP8=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.5c7a24fb0524f4820d2ea363984f232177aff85307ea9fc4b6140678d99f9d84.js" integrity="sha256-XHok&#43;wUk9IINLqNjmE8jIXev&#43;FMH6p/EthQGeNmfnYQ=" crossorigin="anonymous"></script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://eieddie.dpdns.org/tags/todo/index.xml" title="EiEddie's Mind" />
@@ -49,8 +49,9 @@ https://github.com/alex-shpak/hugo-book
     }
   };
 </script>
+
 <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
   async>
 </script>
 
@@ -96,6 +97,20 @@ https://github.com/alex-shpak/hugo-book
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -520,10 +535,15 @@ https://github.com/alex-shpak/hugo-book
 <p>对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可.
 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.</p>
 <p>对于这两个问题, 我们首先想到的应该是线性变化的对角化.
-对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\);
+对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E(\lambda_1) \oplus E(\lambda_2) \oplus \cdots \oplus E(\lambda_n)\);
 并且我们知道这一变换在其特征向量组成的基下是对角矩阵,
 这样两个问题就都得到解决.
-遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.</p></div>
+遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.</p>
+<h2 id="广义特征空间">广义特征空间<a class="anchor" href="#%e5%b9%bf%e4%b9%89%e7%89%b9%e5%be%81%e7%a9%ba%e9%97%b4">#</a></h2>
+<p>我们的讨论将限于复线性空间中, 即 \(\mathbb{C}\) 上的线性空间 \(V\).</p>
+<p>某些线性变换没有足够的特征向量, 无法张成整个空间, 为了解决这个问题, 我们将要引入<strong>广义特征向量</strong>的概念.</p>
+<blockquote class='book-hint note'>
+<p>对于线性变换 \(A\) 的特征值 \(\lambda\), 满足 \(\mathbf{v} \ne 0\) 且存在 \(j \in \mathbb{N}_+\) 使 \((A - \lambda I)^j \, \mathbf{v} = 0\), 则称 \(\mathbf{v}\) 是相应于 \(\lambda\) 的<strong>广义特征向量</strong>.</p></div>
   </article>
   
   <article class="markdown book-post">
@@ -631,6 +651,16 @@ https://github.com/alex-shpak/hugo-book
       <ul>
       
         <li class="flex align-center">
+          <a href="/tags/linux/">Linux</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+          <span>9</span>
+        </li>
+      
+        <li class="flex align-center">
           <a href="/tags/%E6%8E%A7%E5%88%B6/">控制</a>
           <span>2</span>
         </li>
@@ -648,11 +678,6 @@ https://github.com/alex-shpak/hugo-book
         <li class="flex align-center">
           <a href="/tags/%E6%96%87%E5%AD%A6/">文学</a>
           <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
-          <span>8</span>
         </li>
       
         <li class="flex align-center">
@@ -682,11 +707,6 @@ https://github.com/alex-shpak/hugo-book
       
         <li class="flex align-center">
           <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
-          <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/linux/">Linux</a>
           <span>2</span>
         </li>
       

@@ -10,7 +10,10 @@ https://github.com/alex-shpak/hugo-book
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="若尔当标准型# 我们对若尔当标准型的讨论始于两个最基本与最常见的问题:
 如何将线性空间 \(V\) 分解为线性变换 \(A\) 的不变子空间 \(V_i\) 的直和? 如何使线性变换 \(A\) 在 \(V\) 的一组基上具有最简洁的矩阵形式? 对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可. 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.
-对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\); 并且我们知道这一变换在其特征向量组成的基下是对角矩阵, 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.
+对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E(\lambda_1) \oplus E(\lambda_2) \oplus \cdots \oplus E(\lambda_n)\); 并且我们知道这一变换在其特征向量组成的基下是对角矩阵, 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.
+广义特征空间# 我们的讨论将限于复线性空间中, 即 \(\mathbb{C}\) 上的线性空间 \(V\).
+某些线性变换没有足够的特征向量, 无法张成整个空间, 为了解决这个问题, 我们将要引入广义特征向量的概念.
+对于线性变换 \(A\) 的特征值 \(\lambda\), 满足 \(\mathbf{v} \ne 0\) 且存在 \(j \in \mathbb{N}_&#43;\) 使 \((A - \lambda I)^j \, \mathbf{v} = 0\), 则称 \(\mathbf{v}\) 是相应于 \(\lambda\) 的广义特征向量.
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
@@ -19,12 +22,15 @@ https://github.com/alex-shpak/hugo-book
   <meta property="og:title" content="若尔当标准型">
   <meta property="og:description" content="若尔当标准型# 我们对若尔当标准型的讨论始于两个最基本与最常见的问题:
 如何将线性空间 \(V\) 分解为线性变换 \(A\) 的不变子空间 \(V_i\) 的直和? 如何使线性变换 \(A\) 在 \(V\) 的一组基上具有最简洁的矩阵形式? 对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可. 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.
-对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\); 并且我们知道这一变换在其特征向量组成的基下是对角矩阵, 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.">
+对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E(\lambda_1) \oplus E(\lambda_2) \oplus \cdots \oplus E(\lambda_n)\); 并且我们知道这一变换在其特征向量组成的基下是对角矩阵, 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.
+广义特征空间# 我们的讨论将限于复线性空间中, 即 \(\mathbb{C}\) 上的线性空间 \(V\).
+某些线性变换没有足够的特征向量, 无法张成整个空间, 为了解决这个问题, 我们将要引入广义特征向量的概念.
+对于线性变换 \(A\) 的特征值 \(\lambda\), 满足 \(\mathbf{v} \ne 0\) 且存在 \(j \in \mathbb{N}_&#43;\) 使 \((A - \lambda I)^j \, \mathbf{v} = 0\), 则称 \(\mathbf{v}\) 是相应于 \(\lambda\) 的广义特征向量.">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
     <meta property="article:published_time" content="2025-12-05T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-12-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-03-10T00:00:00+00:00">
     <meta property="article:tag" content="数学">
     <meta property="article:tag" content="Undone">
     <meta property="article:tag" content="Todo">
@@ -33,21 +39,24 @@ https://github.com/alex-shpak/hugo-book
   <meta itemprop="name" content="若尔当标准型">
   <meta itemprop="description" content="若尔当标准型# 我们对若尔当标准型的讨论始于两个最基本与最常见的问题:
 如何将线性空间 \(V\) 分解为线性变换 \(A\) 的不变子空间 \(V_i\) 的直和? 如何使线性变换 \(A\) 在 \(V\) 的一组基上具有最简洁的矩阵形式? 对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可. 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.
-对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\); 并且我们知道这一变换在其特征向量组成的基下是对角矩阵, 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.">
+对于这两个问题, 我们首先想到的应该是线性变化的对角化. 对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E(\lambda_1) \oplus E(\lambda_2) \oplus \cdots \oplus E(\lambda_n)\); 并且我们知道这一变换在其特征向量组成的基下是对角矩阵, 这样两个问题就都得到解决. 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.
+广义特征空间# 我们的讨论将限于复线性空间中, 即 \(\mathbb{C}\) 上的线性空间 \(V\).
+某些线性变换没有足够的特征向量, 无法张成整个空间, 为了解决这个问题, 我们将要引入广义特征向量的概念.
+对于线性变换 \(A\) 的特征值 \(\lambda\), 满足 \(\mathbf{v} \ne 0\) 且存在 \(j \in \mathbb{N}_&#43;\) 使 \((A - \lambda I)^j \, \mathbf{v} = 0\), 则称 \(\mathbf{v}\) 是相应于 \(\lambda\) 的广义特征向量.">
   <meta itemprop="datePublished" content="2025-12-05T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-12-05T00:00:00+00:00">
-  <meta itemprop="wordCount" content="51">
+  <meta itemprop="dateModified" content="2026-03-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1037">
   <meta itemprop="keywords" content="数学,Undone,Todo">
 
 <title>若尔当标准型 | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://eieddie.dpdns.org/docs/jordan-normal-form/">
-<link rel="stylesheet" href="/book.min.da33c7dad09bc51cf5383ba5e484fa201ca25939a4bd237cabb7bd29bf1c3743.css" integrity="sha256-2jPH2tCbxRz1ODul5IT6IByiWTmkvSN8q7e9Kb8cN0M=" crossorigin="anonymous">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.a530410177f374efdb12de74cd7557b8a4bcb4801183779081b42a71c81958ff.js" integrity="sha256-pTBBAXfzdO/bEt50zXVXuKS8tIARg3eQgbQqccgZWP8=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.5c7a24fb0524f4820d2ea363984f232177aff85307ea9fc4b6140678d99f9d84.js" integrity="sha256-XHok&#43;wUk9IINLqNjmE8jIXev&#43;FMH6p/EthQGeNmfnYQ=" crossorigin="anonymous"></script>
 
 
 
@@ -65,8 +74,9 @@ https://github.com/alex-shpak/hugo-book
     }
   };
 </script>
+
 <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
   async>
 </script>
 
@@ -112,6 +122,20 @@ https://github.com/alex-shpak/hugo-book
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -488,10 +512,27 @@ https://github.com/alex-shpak/hugo-book
 
   <label for="toc-control">
     
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
   </label>
 </div>
 
 
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#广义特征空间">广义特征空间</a></li>
+    <li><a href="#循环子空间">循环子空间</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
   
  
       </header>
@@ -527,10 +568,165 @@ https://github.com/alex-shpak/hugo-book
 <p>对于问题一, 一个合理的附加条件是 \(A\) 在这些不变子空间 \(V_i\) 上具有良好的性质, 这样要研究 \(A\), 只需在每个更小的空间上研究, 并且充分利用那些性质, 最后汇总为 \(V\) 即可.
 问题二则是为了方便计算, 我们可以利用这种简洁矩阵的性质, 提供远比普通矩阵乘法等更优的算法.</p>
 <p>对于这两个问题, 我们首先想到的应该是线性变化的对角化.
-对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E_{\lambda_1} \oplus E_{\lambda_2} \oplus \cdots \oplus E_{\lambda_r}\);
+对于可对角化的线性变换, 充要条件之一便是线性空间 \(V\) 可以被分解为特征子空间的直和 \(V = E(\lambda_1) \oplus E(\lambda_2) \oplus \cdots \oplus E(\lambda_n)\);
 并且我们知道这一变换在其特征向量组成的基下是对角矩阵,
 这样两个问题就都得到解决.
 遗憾的是, 并非每一个矩阵都可以对角化. 我们要讨论的便是一种类似对角化的, 可以对每个变换进行的分解.</p>
+<h2 id="广义特征空间">广义特征空间<a class="anchor" href="#%e5%b9%bf%e4%b9%89%e7%89%b9%e5%be%81%e7%a9%ba%e9%97%b4">#</a></h2>
+<p>我们的讨论将限于复线性空间中, 即 \(\mathbb{C}\) 上的线性空间 \(V\).</p>
+<p>某些线性变换没有足够的特征向量, 无法张成整个空间, 为了解决这个问题, 我们将要引入<strong>广义特征向量</strong>的概念.</p>
+<blockquote class='book-hint note'>
+<p>对于线性变换 \(A\) 的特征值 \(\lambda\), 满足 \(\mathbf{v} \ne 0\) 且存在 \(j \in \mathbb{N}_+\) 使 \((A - \lambda I)^j \, \mathbf{v} = 0\), 则称 \(\mathbf{v}\) 是相应于 \(\lambda\) 的<strong>广义特征向量</strong>.</p>
+<p>由相应于 \(\lambda\) 的广义特征向量集张成的空间称<strong>广义特征空间</strong> \(G(\lambda)\), 又称<strong>根子空间</strong>.</p></blockquote><p>显然, \(E(\lambda) \subseteq G(\lambda)\), 因为任何特征向量都是广义特征向量.</p>
+<p>为了形式化地描述广义特征空间, 我们需要以下引理:</p>
+<blockquote class='book-hint '>
+$$\{0\} = \ker A^0 \subseteq \ker A^1 \subseteq \ker A^2 \subseteq \cdots$$<p><br>
+<em>证明</em>:
+对于任意 \(\mathbf{v} \in \ker A^k\), 有 \(A^k \, \mathbf{v} = 0\).
+因此 \(A^{k+1} \, \mathbf{v} = A (A^k \, \mathbf{v}) = 0\), 于是 \(\ker A^k \subseteq \ker A^{k+1}\).
+\(\blacksquare\)</p>
+</blockquote><blockquote class='book-hint '>
+<p>若存在 \(m\) 使 \(\ker A^m = \ker A^{m+1}\), 则
+</p>
+$$\ker A^m = \ker A^{m+1} = \ker A^{m+2} = \cdots$$<p><br>
+<em>证明</em>:
+我们已知 \(\ker A^{m+k} \subseteq \ker A^{m+k+1}\), 只需证 \(\ker A^{m+k+1} \subseteq \ker A^{m+k}\).</p>
+<p>对于任意 \(\mathbf{v} \in \ker A^{m+k+1}\), 有 \(A^{m+k+1} \, \mathbf{v} = A^{m+1} (A^k \, \mathbf{v}) = 0\),
+因此 \(A^k \, \mathbf{v} \in \ker A^{m+1} = \ker A^m\),
+所以 \(A^m (A^k \, \mathbf{v}) = A^{m+k} \, \mathbf{v} = 0\),
+\(\mathbf{v} \in \ker A^{m+k}\).
+于是我们得到 \(\ker A^{m+k+1} \subseteq \ker A^{m+k}\).
+\(\blacksquare\)</p>
+</blockquote><p>由这一引理可知, 存在一个最小的 \(m\), 使幂次小于 \(m\) 时都为真子集, 而大于等于 \(m\) 时都相等, 即 \(\ker A^0 \subsetneq \ker A^1 \subsetneq \cdots \subsetneq \ker A^m = \ker A^{m+1} = \cdots\).
+可以证明, \(m \le \dim V\).
+因此 \(\ker A^{\dim V}\) 是任意 \(\ker A^k\) 的超集.</p>
+<p>依据以上引理, 我们可以这样刻画广义特征空间:</p>
+<blockquote class='book-hint note'>
+<p></p>
+$$G(\lambda) = \ker (A - \lambda I)^{\dim V}$$<p><br>
+<em>证明</em>:
+由定义可知任意 \(\mathbf{v} \in \ker (A - \lambda I)^{\dim V}\) 都有 \(\mathbf{v} \in G(\lambda)\), 所以 \(\ker (A - \lambda I)^{\dim V} \subset G(\lambda)\);
+反过来, 对于任何 \(\mathbf{v} \in G(\lambda)\), \(\mathbf{v} \in \ker (A - \lambda I)^j \subset \ker (A - \lambda I)^{\dim V}\).
+综上得证.
+\(\blacksquare\)</p></blockquote><p>这一空间是 \(A\)- 不变的, 这使它很有价值.
+为了证明这一点, 需要下面的引理:</p>
+<blockquote class='book-hint '>
+<p>对于多项式 \(f\), \(\ker f(A)\) 是 \(A\) 的不变子空间.</p>
+<p><br>
+<em>证明</em>:
+对任意 \(\mathbf{v} \in \ker f(A)\), \(f(A) \, \mathbf{v} = 0\),
+所以 \(f(A) (A \mathbf{v}) = A (f(A) \, \mathbf{v}) = 0\),
+所以 \(A \mathbf{v} \in \ker f(A)\),
+即 \(\ker f(A)\) 是 \(A\)- 不变的.
+\(\blacksquare\)</p>
+</blockquote><p>于是我们得到结论:</p>
+<blockquote class='book-hint note'>
+<p>\(G(\lambda)\) 是 \(A\) 的不变子空间.</p>
+<p><br>
+<em>证明</em>:
+令 \(f(x) = (x - \lambda)^{\dim V}\), 由引理显然成立.
+\(\blacksquare\)</p></blockquote><p>接下来我们将得到第一个有价值的成果, 在此之前, 请看这样一个引理:</p>
+<blockquote class='book-hint '>
+$$V = \ker A^{\dim V} \oplus \text{im} \, A^{\dim V}$$<p><br>
+<em>证明</em>:
+令 \(n = \dim V\).</p>
+<p>先证 \((\ker A^n) \cap (\text{im} \, A^n) = \{0\}\).
+设 \(\mathbf{v} \in (\ker A^n) \cap (\text{im} \, A^n)\),
+则 \(A^n \, \mathbf{v} = 0\), 且存在 \(\mathbf{u} \in V\) 使 \(\mathbf{v} = A^n \, \mathbf{u}\).
+于是有 \(A^n \, \mathbf{v} = A^{2n} \, \mathbf{u} = 0\),
+所以 \(\mathbf{u} \in \ker A^{2n} = \ker A^n\),
+\(\mathbf{v} = A^n \, \mathbf{u} = 0\).</p>
+<p>现在我们知道 \(\ker A^n + \text{im} \, A^n\) 是一个直和,
+此外 \(\dim \, (\ker A^n \oplus \text{im} \, A^n) = \dim \ker A^n + \dim \text{im} \, A^n = \dim V\).
+由此可知 \(V = \ker A^{\dim V} \oplus \text{im} \, A^{\dim V}\).
+\(\blacksquare\)</p>
+</blockquote><p>现在可以证明:</p>
+<blockquote class='book-hint note'>
+<p>[<strong>准素分解</strong>]:
+</p>
+$$V = G(\lambda_1) \oplus G(\lambda_2) \oplus \cdots \oplus G(\lambda_n)$$<p><br>
+<em>证明</em>:
+考虑使用归纳法.</p>
+<p>显然当 \(\dim V = 1\) 时成立.</p>
+<p>假设结论对于维数小于 \(\dim V\) 的空间成立, 来证明结论对于 \(V\) 也成立.
+对于复线性空间 \(V\), \(A\) 必有一个特征值, 记为 \(\lambda_1\).
+将引理应用到 \(A - \lambda_1 I\) 上, 可知
+</p>
+$$ V = G(\lambda_1) \oplus U$$<p>
+其中 \(U = \text{im} \, (A - \lambda_1 I)^{\dim V}\),
+它是 \(A\) 的一个不变子空间.</p>
+<p>由于 \(\dim U < \dim V\), 可以将结论应用在 \(U\) 上.
+这时广义特征空间对应的线性变换应当是 \(A|_U\), 为了区分, 将其记作 \(G'(\lambda_i)\).
+重复上述步骤, 我们可以将 \(U\) 拆分为 \(G'\) 的直和
+</p>
+$$U = G'(\lambda_2) \oplus G'(\lambda_3) \oplus \cdots \oplus G'(\lambda_n)$$<p>现在来完成证明最后一步, 证明 \(G'(\lambda_i) = G(\lambda_i)\), \(i = 2, 3, ..., n\).
+显然 \(G'(\lambda_i) \subseteq G(\lambda_i)\),
+因为 \(G'(\lambda_i) = \ker (A|_U - \lambda_i I)^{\dim V} = \ker (A - \lambda_i I)^{\dim V}|_U = (\ker (A - \lambda_i I)) \cap U = G(\lambda_i) \cap U\).
+要证明 \(G(\lambda_i) \subseteq G'(\lambda_i)\), 即证对于任意 \(\mathbf{v} \in G(\lambda_i)\), \(\mathbf{v} \in G'(\lambda_i) = G(\lambda_i) \cap U\), 即证 \(\mathbf{v} \in U\).
+我们知道 \(\mathbf{v} \in V\), 因此 \(\mathbf{v} = \mathbf{v}_1 + \mathbf{u}\), \(\mathbf{u} \in U\);
+\(\mathbf{u} = \mathbf{v}_2 + \mathbf{v}_3 + \cdots + \mathbf{v}_n\).
+每个 \(\mathbf{v}_j\), \(j = 2, 3, ..., n\) 都在 \(G'(\lambda_j)\) 中.
+因为相应于不同特征值的广义特征向量线性无关, 因此除 \(j = i\) 之外每个 \(\mathbf{v}_j\) 都为 \(0\).
+特别地, \(\mathbf{v}_1 = 0\), 所以 \(\mathbf{v} = \mathbf{u} \in U\).
+\(\blacksquare\)</p></blockquote><p>这样一来, 我们就将 \(V\) 拆分为了广义特征空间 \(G(\lambda)\) 的直和, 这些空间 \(G(\lambda)\) 的个数为特征值的数量 \(n\), 这是显然的.
+<em>请注意, \(n\) 并非指 \(\dim V\)</em>.
+\(G(\lambda)\) 的维度定义为 \(\lambda\) 的 (代数) <strong>重数</strong>,
+显然, 所有特征值的重数之和等于 \(\dim V\).</p>
+<h2 id="循环子空间">循环子空间<a class="anchor" href="#%e5%be%aa%e7%8e%af%e5%ad%90%e7%a9%ba%e9%97%b4">#</a></h2>
+<p>我们希望知道 \(G(\lambda)\) 是否还可以继续拆分.
+为了探究这个问题, 先研究线性变换 \(A\) 在空间上的性质.</p>
+<blockquote class='book-hint note'>
+<p>\((A - \lambda I)|_{G(\lambda)}\) 是幂零变换.</p>
+<p><br>
+<em>证明</em>:
+由 \(G(\lambda) = \ker (A - \lambda I)^{\dim V}\) 显然成立.
+\(\blacksquare\)</p></blockquote><p>在不引起混淆的情况下, 我将使用符号 \(G\) 代表广义特征空间 \(G(\lambda)\);
+\(N := A - \lambda I\).
+需要注意 \(N\) 在 \(V\) 上不总是幂零的, 只有在 \(G\) 及其子空间中才是.
+这一定理告诉我们,
+<strong>在 \(G\) 中线性变换 \(A\) 总是等于单位变换 \(\lambda I\) 与一个幂零变换 \(N\) 之和</strong>.
+现在我们知道, 要继续分解 \(G\), 则需研究 \(N\) 的性质.</p>
+<blockquote class='book-hint '>
+<p>对于任意 \(\mathbf{v}\), 若 \(N^{m-1} \, \mathbf{v} \ne 0\) 且 \(N^m \, \mathbf{v} = 0\),
+则 \(\{\mathbf{v}, N \mathbf{v}, ..., N^{m-1} \, \mathbf{v}\}\) 线性无关.</p>
+<p><br>
+<em>证明</em>:
+设 \(k_0 \mathbf{v} + k_1 N \mathbf{v} + \cdots + k_{m-1} N^{m-1} \, \mathbf{v} = 0\),
+考虑等式两边在 \(N^{m-1}\) 下的像, 有
+</p>
+$$\begin{align} 0 &= N^{m-1} (k_0 \mathbf{v} + k_1 N \mathbf{v} + \cdots + k_{m-1} N^{m-1} \, \mathbf{v}) \\ &= k_0 \, N^{m-1} \, \mathbf{v} + 0 + \cdots + 0 \\ &= k_0 \, N^{m-1} \, \mathbf{v} \end{align}$$<p>
+于是得 \(k_0 = 0\).
+类似考虑两边在 \(N^{m-2}\) 下的像, 可以得到 \(k_1 = 0\).
+依次下去, 可得 \(k_0 = k_1 = \cdots = k_{m-1} = 0\),
+这样就证明了向量组线性无关.
+\(\blacksquare\)</p>
+</blockquote><p>考虑由上述向量组张成的空间 \(C = \langle \mathbf{v}, N \mathbf{v}, ..., N^{m-1} \, \mathbf{v} \rangle\), 显然它是 \(N\) 的不变子空间.
+\(C\) 被称为 \(N\) 的<strong>循环子空间</strong>.</p>
+<p>下面我们将逐渐证明, 任意 \(G\) 都能分解为一系列循环子空间 \(C\) 的直和.</p>
+<blockquote class='book-hint '>
+<p>若 \(V = U \oplus W\), 则商映射 \(\pi: V \rightarrow V/U\) 在 \(W\) 上的限制 \(\pi|_W: W \rightarrow V/U\) 是双射.</p>
+<p><br>
+<em>证明</em>:
+先来证它是单射.
+任意 \(\mathbf{v} \in V\) 满足 \(\pi(\mathbf{v}) = (\mathbf{v} + U) = 0\) 当且仅当 \(\mathbf{v} \in U\),
+所以 \(\ker \pi|_W = (\ker \pi) \cap W = U \cap W = \{0\}\).</p>
+<p>再证它是满射.
+对于任意 \(\mathbf{v} \in V\) 有 \(\mathbf{v} = \mathbf{u} + \mathbf{w}\), 其中 \(\mathbf{u} \in U\), \(\mathbf{w} \in W\).
+\(\pi(\mathbf{v}) = \pi(\mathbf{u}) + \pi(\mathbf{w}) = 0 + \pi(\mathbf{w})\).
+所以 \(\forall ~ [\mathbf{v}] \in V/U\), \([\mathbf{v}] = \pi(\mathbf{v}) = \pi(\mathbf{w})\).
+\(\blacksquare\)</p>
+</blockquote><p>从证明过程中, 我们可以知道:</p>
+<blockquote class='book-hint note'>
+<p>\(G\) 可以分解为循环子空间的直和
+</p>
+$$G = C_1 \oplus C_2 \oplus \cdots \oplus C_s$$</blockquote><p>接下来计算分解出的循环子空间的数量, 以及每个空间的维度.</p>
+<hr>
+<h2 id="参考">参考<a class="anchor" href="#%e5%8f%82%e8%80%83">#</a></h2>
+<ol>
+<li>S. Axler. &ldquo;复向量空间上的算子.&rdquo; 于 <em>线性代数应该这样学</em>, pp. 183-206. 人民邮电出版社, 2016.</li>
+<li>丘维生. <em>高等代数 (下册)</em>. 清华大学出版社, 2010.</li>
+<li>@纯粹. &ldquo;<a href="https://zhuanlan.zhihu.com/p/75745789">Jordan标准型：根子空间+准素分解，幂零变换+循环分解，Weyr特征，A与A^T相似</a>&rdquo;. 知乎, 2020.</li>
+</ol>
 </article>
  
       
@@ -541,7 +737,7 @@ https://github.com/alex-shpak/hugo-book
     <div  style="font-style:italic;">
       <span class="overline"></span>
       <span style="display:block;">Created in December 5, 2025</span>
-      <span style="display:block;">Last modified in December 5, 2025</span>
+      <span style="display:block;">Last modified in March 10, 2026</span>
     </div>
   </div>
 
@@ -613,6 +809,23 @@ https://github.com/alex-shpak/hugo-book
     </div>
 
     
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#广义特征空间">广义特征空间</a></li>
+    <li><a href="#循环子空间">循环子空间</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
   
  
   </main>

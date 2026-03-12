@@ -6,8 +6,15 @@
     <description>Recent content in 折腾 on EiEddie&#39;s Mind</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 04 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://eieddie.dpdns.org/tags/%E6%8A%98%E8%85%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>将应用打包为单个文件</title>
+      <link>https://eieddie.dpdns.org/docs/package-app-as-single-file/</link>
+      <pubDate>Thu, 12 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://eieddie.dpdns.org/docs/package-app-as-single-file/</guid>
+      <description>&lt;h1 id=&#34;将应用打包为单个文件&#34;&gt;将应用打包为单个文件&lt;a class=&#34;anchor&#34; href=&#34;#%e5%b0%86%e5%ba%94%e7%94%a8%e6%89%93%e5%8c%85%e4%b8%ba%e5%8d%95%e4%b8%aa%e6%96%87%e4%bb%b6&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;为什么要将 Linux 的程序打包为单个文件?&#xA;众所周知, 程序可能有数个甚至几十上百个依赖库, 或者叫&lt;em&gt;动态链接库&lt;/em&gt;.&#xA;这一设计是为了减小程序体积, 因为可以多个程序共用同一套功能相同的代码.&#xA;但在一些时候, 它帮得倒忙远比其优点多.&#xA;具体地说, 当你的程序:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;依赖数量庞大的动态链接库;&lt;/li&gt;&#xA;&lt;li&gt;部分依赖安装起来非常麻烦, 或只能从半公开渠道获取 (例如需要注册后下载);&lt;/li&gt;&#xA;&lt;li&gt;无法静态编译, 或部分库未提供静态版本;&lt;/li&gt;&#xA;&lt;li&gt;需要在极短的时间内完成部署.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;那么将其打包为单个文件可以解决你的烦恼.&lt;/p&gt;&#xA;&lt;p&gt;当然, 这一方法并非没有缺点.&#xA;我们都很清楚, 把所有依赖都打包进来会导致分发文件体积膨胀严重, 甚至文件大小翻百倍都是常事.&#xA;在我的测试中, 打包后的应用大小在 120MB 左右.&#xA;如果你能接受这一点, 那么我确信它很适合你.&lt;/p&gt;&#xA;&lt;p&gt;我们使用的文件格式被称为 &lt;a href=&#34;https://appimage.org/&#34;&gt;&lt;strong&gt;AppImage&lt;/strong&gt;&lt;/a&gt;, 对于几乎所有发行版, 它都是开箱即用的.&#xA;我们将先介绍手动打包的方式, 并以此认识包的格式;&#xA;随后给出更简单的打包方法.&lt;/p&gt;&#xA;&lt;h2 id=&#34;手动打包&#34;&gt;手动打包&lt;a class=&#34;anchor&#34; href=&#34;#%e6%89%8b%e5%8a%a8%e6%89%93%e5%8c%85&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;下面的内容基于官方给出的 &lt;a href=&#34;https://docs.appimage.org/packaging-guide/manual.html&#34;&gt;手动打包流程&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;要手动打包, 你需要一个以下结构的目录:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;MyApp.AppDir&#xA;├── AppRun&#xA;├── myapp.desktop&#xA;├── myapp.png&#xA;└── usr&#xA;     ├── bin&#xA;     │   └── myapp&#xA;     └── lib&#xA;         └── lib*.so&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;上面给出的是最小结构, 也就是说你不能再省略内容了.&#xA;目录名 &lt;code&gt;*.AppDir&lt;/code&gt; 是惯例;&#xA;&lt;code&gt;AppRun&lt;/code&gt; 将作为被执行的程序, 它可以是可执行文件, 或是一个脚本, 关于它我们会在后文详细讲述;&#xA;&lt;code&gt;myapp.desktop&lt;/code&gt; 是清单文件, 文件名基本是任意的, 但根目录必须存在且只存在一个 &lt;code&gt;.desktop&lt;/code&gt; 文件;&#xA;&lt;code&gt;myapp.png&lt;/code&gt; 是程序图标, 遗憾的是它不能省略.&#xA;&lt;code&gt;usr&lt;/code&gt; 目录就像 LFS 描述的一样, &lt;code&gt;bin&lt;/code&gt; 内存放可执行文件, &lt;code&gt;lib&lt;/code&gt; 内存放库文件.&#xA;你要执行的应用文件应该就是 &lt;code&gt;myapp&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>文章处理管线</title>
       <link>https://eieddie.dpdns.org/docs/article-processing-pipeline/</link>
