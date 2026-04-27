@@ -28,7 +28,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
     <meta property="article:published_time" content="2026-01-07T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-01-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-27T00:00:00+00:00">
     <meta property="article:tag" content="折腾">
 
 
@@ -39,8 +39,8 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 格式化文档# 首先要做的就是保证文章格式能够被 pandoc 正确处理, 且被 hugo 正确识别, 因此一方面要保证元数据的正确, 另一方面要确保正文中没有不被 Obsidian, pandoc 和 hugo 支持的 Markdown 语法.
 hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章修改时间, 并且会读取 tags 来分类文章. 为了避免流程出错, 与减轻心智负担, 可以在 Obsidian 中安装 Linter 插件, 它可以自动格式化文档, 并重排与补全元数据. 将 Linter 的 标题别名 部分设置打开, 便可以自动从第一个 # 标签处获取文章标题, 并填写到元数据区, 另外还会将标题名作为别名写入. 如果以前在使用 datetime 字段储存文档修改或编写日期, 强烈建议改为 date 字段, 因为这一键名在 Obsidian 与 hugo 两端都受到良好的支持.">
   <meta itemprop="datePublished" content="2026-01-07T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2026-01-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1013">
+  <meta itemprop="dateModified" content="2026-04-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1048">
   <meta itemprop="keywords" content="折腾">
 
 <title>文章处理管线 | EiEddie&#39;s Mind</title>
@@ -51,7 +51,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.5c7a24fb0524f4820d2ea363984f232177aff85307ea9fc4b6140678d99f9d84.js" integrity="sha256-XHok&#43;wUk9IINLqNjmE8jIXev&#43;FMH6p/EthQGeNmfnYQ=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.8e96c520745732e6b8479796f93674c48ee658e42d0d1fdb9c607ac44482b98d.js" integrity="sha256-jpbFIHRXMua4R5eW&#43;TZ0xI7mWOQtDR/bnGB6xESCuY0=" crossorigin="anonymous"></script>
 
 
 
@@ -526,6 +526,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
         <li><a href="#本地文件链接">本地文件链接</a></li>
         <li><a href="#html-标记">HTML 标记</a></li>
         <li><a href="#特殊标记">特殊标记</a></li>
+        <li><a href="#锚点">锚点</a></li>
       </ul>
     </li>
     <li><a href="#自动化">自动化</a></li>
@@ -771,6 +772,14 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
 </span></span><span style="display:flex;"><span>  el.text <span style="color:#f92672">=</span> s
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> el
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span></span></span></code></pre></div><p>它将 <code>{{&lt;</code> <code>{{%/*</code> 改为 <code>{{&lt;/*/*</code> <code>{{%/*/*</code>, <code>&gt;}}</code> <code>*/%}}</code> 改为 <code>*/*/&gt;}}</code> <code>*/*/%}}</code>, 这是 hugo 官方给出的转义方法.</p>
+<h3 id="锚点">锚点<a class="anchor" href="#%e9%94%9a%e7%82%b9">#</a></h3>
+<p>Obsidian 提供了特殊的文章锚点语法用于跳转, 但遗憾的是只有 Obsidian 支持此语法, pandoc 与 hugo 都不支持.
+然而, 后两者支持 <a href="https://gohugo.io/content-management/markdown-attributes/#article">Markdown 属性</a>, 相当于内嵌的 HTML 标记, 同样可用于跳转.
+添加属性的语法为 <code>{ id=&quot;foo&quot; }</code>, 可能需要置于下一行;
+跳转的语法为 <code>[...](#foo)</code>.</p>
+<p>为了解决 Obsidian 不支持属性的问题, 可以安装一些插件来解决.
+目前我找到的插件只有 <em>Markdown Attributes</em>, 它虽然能够隐藏相应的属性标签, 但是不能被跳转.
+希望有其他插件可以提供更完善的支持.</p>
 <h2 id="自动化">自动化<a class="anchor" href="#%e8%87%aa%e5%8a%a8%e5%8c%96">#</a></h2>
 <p>我们期望的自动化流程包括:</p>
 <ol>
@@ -845,7 +854,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
     <div  style="font-style:italic;">
       <span class="overline"></span>
       <span style="display:block;">Created in January 7, 2026</span>
-      <span style="display:block;">Last modified in January 7, 2026</span>
+      <span style="display:block;">Last modified in April 27, 2026</span>
     </div>
   </div>
 
@@ -931,6 +940,7 @@ hugo 依赖于 title 而非文件名显示文章标题, 使用 date 标记文章
         <li><a href="#本地文件链接">本地文件链接</a></li>
         <li><a href="#html-标记">HTML 标记</a></li>
         <li><a href="#特殊标记">特殊标记</a></li>
+        <li><a href="#锚点">锚点</a></li>
       </ul>
     </li>
     <li><a href="#自动化">自动化</a></li>
