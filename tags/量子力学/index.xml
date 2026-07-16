@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>量子力学 on EiEddie&#39;s Mind</title>
+    <link>https://www.eieddie.site/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</link>
+    <description>Recent content in 量子力学 on EiEddie&#39;s Mind</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.eieddie.site/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>量子力学中的微扰理论</title>
+      <link>https://www.eieddie.site/docs/qm-perturbation-theory/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://www.eieddie.site/docs/qm-perturbation-theory/</guid>
+      <description>&lt;h1 id=&#34;量子力学中的微扰理论&#34;&gt;量子力学中的微扰理论&lt;a class=&#34;anchor&#34; href=&#34;#%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e4%b8%ad%e7%9a%84%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;大多数量子系统都是不可解的, 因为其哈密顿量 \(\hat{H}\) 中的势能项 \(\hat{V}\) 过于复杂, 使得薛定谔方程 \(\hat{H} \ket{\psi} = (-\frac{\hbar^2}{2m} \nabla^2 + \hat{V}) \ket{\psi} = E \ket{\psi}\) 无解析解.&#xA;人们发展出一套方法, 使得我们能通过近似手段, 从一个已知可解的系统出发, 近似得到期望求解系统的能量与对应的态矢, 这套方法被称为&lt;em&gt;微扰论&lt;/em&gt;.&lt;/p&gt;&#xA;&lt;p&gt;具体而言, 我们假定所求系统的哈密顿量 \(\hat{H}\) 可以被分为 \(\hat{H} = \hat{H}_0 + \hat{V}\), 其中 \(\hat{H}_0\) &lt;strong&gt;精确可解&lt;/strong&gt;:&#xA;&lt;/p&gt;&#xA;$$\hat{H}_0 \ket{n}_0 = E_0 \ket{n}_0$$&lt;p&gt;&#xA;而 \(\hat{V}\) 被称为一个&lt;em&gt;微扰&lt;/em&gt;, 这说明它一般而言相较于 \(\hat{H}_0\) 是微小的, 以至于加入这一项后, 对系统能量和态矢的改变以小量的形式给出:&#xA;&lt;/p&gt;&#xA;$$E = E_0 + E_1 + \cdots$$&lt;p&gt;&#xA;&lt;/p&gt;&#xA;$$\ket{n} = \ket{n}_0 + \ket{n}_1 + \cdots$$&lt;p&gt;在这篇文章中, 我们将讨论不含时情况下, 非简并与简并微扰理论.&#xA;所使用的符号如下约定:&#xA;对于量子数 \(n\) 对应的每一阶态矢修正, 用 \(\ket{n}_i\) 表示, \(i\) 代表修正的阶数; 每一阶能量修正, 使用 \(E^\mathrm{n}_i\) 表示, \(n\) 代表对应的量子数, 在不至于引起混淆的情况下, 上标 \(n\) 将被隐去, 简写为 \(E_i\).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>量子力学中的角动量</title>
+      <link>https://www.eieddie.site/docs/qm-angular-momentum/</link>
+      <pubDate>Mon, 15 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://www.eieddie.site/docs/qm-angular-momentum/</guid>
+      <description>&lt;h1 id=&#34;量子力学中的角动量&#34;&gt;量子力学中的角动量&lt;a class=&#34;anchor&#34; href=&#34;#%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e4%b8%ad%e7%9a%84%e8%a7%92%e5%8a%a8%e9%87%8f&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;在量子力学中, 除了我们能够想象的沿轨道运动和绕自转轴转动的公转角动量与自转角动量, 这两者分别称为轨道角动量与自旋角动量, 对于任意 \(\mathbf{J}\), 只要其分量 \(J_\alpha\) 满足&#xA;&lt;/p&gt;&#xA;$$ [J_\alpha, J_\beta] = \mathrm{i} \hbar \, \varepsilon_{\alpha \beta \gamma} \, J_\gamma $$&lt;p&gt;&#xA;则我们称它为一种&lt;strong&gt;角动量&lt;/strong&gt;.&#xA;角动量都具有以下对易关系&#xA;&lt;/p&gt;&#xA;$$[\mathbf{J}^2, J_\alpha] = 0$$&lt;p&gt;&#xA;这说明角动量的值与某一个角动量分量可以被同时测得, 一般我们选择 \(z\) 轴分量 \(J_z\).&lt;/p&gt;&#xA;&lt;p&gt;我们将角动量值 \(\mathbf{J}^2\) 与 \(z\) 轴角动量 \(J_z\) 的共同本征态记作 \(\ket{\lambda, m}\), 其中 \(\mathbf{J}^2 \ket{\lambda, m} = \lambda \hbar^2 \ket{\lambda, m}\), \(J_z \ket{\lambda, m} = m \hbar \ket{\lambda, m}\).&lt;/p&gt;&#xA;&lt;h2 id=&#34;阶梯算符&#34;&gt;阶梯算符&lt;a class=&#34;anchor&#34; href=&#34;#%e9%98%b6%e6%a2%af%e7%ae%97%e7%ac%a6&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;定义两个重要的&lt;strong&gt;阶梯算符&lt;/strong&gt; \(J_\pm := J_x \pm \mathrm{i} J_y\).&#xA;这两个算符不是厄米算符, 因此它不能对应一种可观测的力学量.&#xA;我们可以发现它的对易关系&#xA;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

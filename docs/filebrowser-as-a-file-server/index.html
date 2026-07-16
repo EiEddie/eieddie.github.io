@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FileBrowser: 一款文件服务器# 我曾经想过组一台 NAS, 但仔细想想, 这简直是在创造需求而非解决问题, 事实上我可能根本用不上 NAS, 大部分时间只需要一个运行在树莓派上简单的文件服务器就够了.
+对于这种运行在 linux 上的服务程序, 我有自己的一套挑选标准:
+应当是使用原生语言编写、无运行时的, 例如使用 Rust, Go, C/C&#43;&#43; 等, 最好是单一可执行文件; KISS, 即 Keep It Simple &amp; Stupid, 功能克制, 页面简单, 只做好自己该做的事, 不要加一堆用不到的功能, 让软件变得臃肿不堪. 综合来说, 我最后选了 File Browser, 因为它是用 Go 编写的, 只有最简单的文件上传、下载、(图片) 预览等功能, 不像其他文件服务器大包大揽, 还非得加入在线编辑之类用不上的功能; 另外, 它的网页也相当耐看.
+配置服务# 下载它的可执行文件后, 在一个无关紧要的空目录运行 ./filebrowser, 程序将在此处生成一个 filebrowser.db 用于储存配置. 我们修改的配置项也将储存在这个数据库内. 生成了数据库后, 就可以用 Ctrl-C 结束运行了.
+2026/07/16 17:42:56 No config file used 2026/07/16 17:42:56 WARNING: filebrowser.db can&#39;t be found. Initialing in /tmp/filebrowser/ 2026/07/16 17:42:56 Using database: /tmp/filebrowser/filebrowser.db 2026/07/16 17:42:56 Performing quick setup 2026/07/16 17:42:56 User &#39;admin&#39; initialized with randomly generated password: yFgD8wKg0yS1YrGF 2026/07/16 17:42:56 Listening on 127.0.0.1:8080 ^C2026/07/16 17:44:34 Got signal: interrupt 2026/07/16 17:44:34 Stopped serving new connections. 2026/07/16 17:44:34 Graceful shutdown complete. 输出的日志显示程序创建了一个默认管理员用户, ID 始终为 admin, 密码随机, 这里是 yFgD8wKg0yS1YrGF.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www.eieddie.site/docs/filebrowser-as-a-file-server/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="FileBrowser: 一款文件服务器">
+  <meta property="og:description" content="FileBrowser: 一款文件服务器# 我曾经想过组一台 NAS, 但仔细想想, 这简直是在创造需求而非解决问题, 事实上我可能根本用不上 NAS, 大部分时间只需要一个运行在树莓派上简单的文件服务器就够了.
+对于这种运行在 linux 上的服务程序, 我有自己的一套挑选标准:
+应当是使用原生语言编写、无运行时的, 例如使用 Rust, Go, C/C&#43;&#43; 等, 最好是单一可执行文件; KISS, 即 Keep It Simple &amp; Stupid, 功能克制, 页面简单, 只做好自己该做的事, 不要加一堆用不到的功能, 让软件变得臃肿不堪. 综合来说, 我最后选了 File Browser, 因为它是用 Go 编写的, 只有最简单的文件上传、下载、(图片) 预览等功能, 不像其他文件服务器大包大揽, 还非得加入在线编辑之类用不上的功能; 另外, 它的网页也相当耐看.
+配置服务# 下载它的可执行文件后, 在一个无关紧要的空目录运行 ./filebrowser, 程序将在此处生成一个 filebrowser.db 用于储存配置. 我们修改的配置项也将储存在这个数据库内. 生成了数据库后, 就可以用 Ctrl-C 结束运行了.
+2026/07/16 17:42:56 No config file used 2026/07/16 17:42:56 WARNING: filebrowser.db can&#39;t be found. Initialing in /tmp/filebrowser/ 2026/07/16 17:42:56 Using database: /tmp/filebrowser/filebrowser.db 2026/07/16 17:42:56 Performing quick setup 2026/07/16 17:42:56 User &#39;admin&#39; initialized with randomly generated password: yFgD8wKg0yS1YrGF 2026/07/16 17:42:56 Listening on 127.0.0.1:8080 ^C2026/07/16 17:44:34 Got signal: interrupt 2026/07/16 17:44:34 Stopped serving new connections. 2026/07/16 17:44:34 Graceful shutdown complete. 输出的日志显示程序创建了一个默认管理员用户, ID 始终为 admin, 密码随机, 这里是 yFgD8wKg0yS1YrGF.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-07-16T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-07-16T00:00:00+00:00">
+    <meta property="article:tag" content="折腾">
+    <meta property="article:tag" content="Linux">
+
+
+  <meta itemprop="name" content="FileBrowser: 一款文件服务器">
+  <meta itemprop="description" content="FileBrowser: 一款文件服务器# 我曾经想过组一台 NAS, 但仔细想想, 这简直是在创造需求而非解决问题, 事实上我可能根本用不上 NAS, 大部分时间只需要一个运行在树莓派上简单的文件服务器就够了.
+对于这种运行在 linux 上的服务程序, 我有自己的一套挑选标准:
+应当是使用原生语言编写、无运行时的, 例如使用 Rust, Go, C/C&#43;&#43; 等, 最好是单一可执行文件; KISS, 即 Keep It Simple &amp; Stupid, 功能克制, 页面简单, 只做好自己该做的事, 不要加一堆用不到的功能, 让软件变得臃肿不堪. 综合来说, 我最后选了 File Browser, 因为它是用 Go 编写的, 只有最简单的文件上传、下载、(图片) 预览等功能, 不像其他文件服务器大包大揽, 还非得加入在线编辑之类用不上的功能; 另外, 它的网页也相当耐看.
+配置服务# 下载它的可执行文件后, 在一个无关紧要的空目录运行 ./filebrowser, 程序将在此处生成一个 filebrowser.db 用于储存配置. 我们修改的配置项也将储存在这个数据库内. 生成了数据库后, 就可以用 Ctrl-C 结束运行了.
+2026/07/16 17:42:56 No config file used 2026/07/16 17:42:56 WARNING: filebrowser.db can&#39;t be found. Initialing in /tmp/filebrowser/ 2026/07/16 17:42:56 Using database: /tmp/filebrowser/filebrowser.db 2026/07/16 17:42:56 Performing quick setup 2026/07/16 17:42:56 User &#39;admin&#39; initialized with randomly generated password: yFgD8wKg0yS1YrGF 2026/07/16 17:42:56 Listening on 127.0.0.1:8080 ^C2026/07/16 17:44:34 Got signal: interrupt 2026/07/16 17:44:34 Stopped serving new connections. 2026/07/16 17:44:34 Graceful shutdown complete. 输出的日志显示程序创建了一个默认管理员用户, ID 始终为 admin, 密码随机, 这里是 yFgD8wKg0yS1YrGF.">
+  <meta itemprop="datePublished" content="2026-07-16T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-07-16T00:00:00+00:00">
+  <meta itemprop="wordCount" content="424">
+  <meta itemprop="keywords" content="折腾,Linux">
+
+<title>FileBrowser: 一款文件服务器 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://www.eieddie.site/docs/filebrowser-as-a-file-server/">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.e9e1618af4cfe47191851a263ebc51e130799e9466c1b1bc23c95f2c87cb8179.js" integrity="sha256-6eFhivTP5HGRhRomPrxR4TB5npRmwbG8I8lfLIfLgXk=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+
+<script
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/filebrowser-as-a-file-server/" class="active">
+      FileBrowser: 一款文件服务器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-perturbation-theory/" class="">
+      量子力学中的微扰理论</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/delta-robotics/" class="">
+      Delta 机器人的动力学建模</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sit-on-stone-ball-barrier/" class="">
+      我坐在石球子上</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>FileBrowser: 一款文件服务器</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置服务">配置服务</a></li>
+    <li><a href="#服务化">服务化</a></li>
+    <li><a href="#反向代理">反向代理</a></li>
+    <li><a href="#附录-nginx-作为文件服务器">附录: Nginx 作为文件服务器</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+  
+
+  
+
+
+
+
+      
+  <article class="markdown book-article"><h1 id="filebrowser-一款文件服务器">FileBrowser: 一款文件服务器<a class="anchor" href="#filebrowser-%e4%b8%80%e6%ac%be%e6%96%87%e4%bb%b6%e6%9c%8d%e5%8a%a1%e5%99%a8">#</a></h1>
+<p>我曾经想过组一台 NAS, 但仔细想想, 这简直是在创造需求而非解决问题, 事实上我可能根本用不上 NAS, 大部分时间只需要一个运行在树莓派上简单的文件服务器就够了.</p>
+<p>对于这种运行在 linux 上的服务程序, 我有自己的一套挑选标准:</p>
+<ul>
+<li>应当是使用原生语言编写、无运行时的, 例如使用 Rust, Go, C/C++ 等, 最好是单一可执行文件;</li>
+<li><em>KISS</em>, 即 <em>Keep It Simple &amp; Stupid</em>, 功能克制, 页面简单, 只做好自己该做的事, 不要加一堆用不到的功能, 让软件变得臃肿不堪.</li>
+</ul>
+<p>综合来说, 我最后选了 <a href="https://github.com/filebrowser/filebrowser">File Browser</a>, 因为它是用 Go 编写的, 只有最简单的文件上传、下载、(图片) 预览等功能, 不像其他文件服务器大包大揽, 还非得加入在线编辑之类用不上的功能; 另外, 它的网页也相当耐看.</p>
+<h2 id="配置服务">配置服务<a class="anchor" href="#%e9%85%8d%e7%bd%ae%e6%9c%8d%e5%8a%a1">#</a></h2>
+<p>下载它的可执行文件后, 在一个无关紧要的空目录运行 <code>./filebrowser</code>, 程序将在此处生成一个 <code>filebrowser.db</code> 用于储存配置.
+我们修改的配置项也将储存在这个数据库内.
+生成了数据库后, 就可以用 <code>Ctrl-C</code> 结束运行了.</p>
+<pre><code>2026/07/16 17:42:56 No config file used
+2026/07/16 17:42:56 WARNING: filebrowser.db can't be found. Initialing in /tmp/filebrowser/
+2026/07/16 17:42:56 Using database: /tmp/filebrowser/filebrowser.db
+2026/07/16 17:42:56 Performing quick setup
+2026/07/16 17:42:56 User 'admin' initialized with randomly generated password: yFgD8wKg0yS1YrGF
+2026/07/16 17:42:56 Listening on 127.0.0.1:8080
+^C2026/07/16 17:44:34 Got signal: interrupt
+2026/07/16 17:44:34 Stopped serving new connections.
+2026/07/16 17:44:34 Graceful shutdown complete.
+</code></pre>
+<p>输出的日志显示程序创建了一个默认管理员用户, ID 始终为 <code>admin</code>, 密码随机, 这里是 <code>yFgD8wKg0yS1YrGF</code>.</p>
+<p>程序的所有可配置项都在其 <a href="https://filebrowser.org/cli/filebrowser-config-set.html">官网</a> 上提供, 这里我们进行几项必要的修改:</p>
+<ul>
+<li><code>filebrowser config set --root /srv/filebrowser</code><br>
+将文件服务器的显示目录设为 <code>/sev/filebrowser</code>. 默认情况下是当前目录 (<code>.</code>), 你可以将你想要显示的目录软链接到上述目录.</li>
+<li><code>filebrowser config set --port 1314</code><br>
+修改监听端口避免与其他 http 服务冲突, 默认是 <code>8080</code>.</li>
+</ul>
+<p>好了, 再运行 <code>./filebrowser</code>, 程序应该读取了修改过的配置数据库, 并开始在 <code>127.0.0.1:1314</code> 上工作了.
+你可以访问这个地址, 使用刚才打印出的 ID 和密码登录.
+大部分设置都可以在网页中通过图形化的方式修改, 包括增删新用户等.
+顺便一提, 软件自带中文页面.</p>
+<h2 id="服务化">服务化<a class="anchor" href="#%e6%9c%8d%e5%8a%a1%e5%8c%96">#</a></h2>
+<p>我们计划将 filebrowser 注册为一个 systemd 服务, 这样可以更方便地管理它的启停和日志等.</p>
+<p>首先, 将可执行文件移动到 <code>/usr/local/bin</code> 或者其他在环境变量中的目录, 将数据库移动到 <code>/etc/filebrowser/filebrowser.db</code>.
+在 <code>/etc/systemd/system</code> 新建文件 <code>filebrowser.service</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#75715e"># /etc/systemd/system/filebrowser.service</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[Unit]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">FileBrowser: Simple file server</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">After</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">syslog.target</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[Service]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Type</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">simple</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">User</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">root</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ExecStart</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/local/bin/filebrowser --database /etc/filebrowser/filebrowser.db</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Restart</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">on-failure</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[Install]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">WantedBy</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">multi-user.target</span></span></span></code></pre></div><p>其中用 <code>--database</code> 选项显式指明了配置数据库所在的位置.</p>
+<p>重新加载 systemd 服务文件, 你应该可以用 <code>systemctl status filebrowser</code> 等一系列指令管理 filebrowser 了, 它产生的日志也被 journald 同一进行管理.</p>
+<h2 id="反向代理">反向代理<a class="anchor" href="#%e5%8f%8d%e5%90%91%e4%bb%a3%e7%90%86">#</a></h2>
+<p>一台服务器网络安全的最佳实践是<em>默认拒绝策略</em>, 即先封禁所有端口的出入站流量, 再按需开启少数几个<em>确实</em>有必要的端口, 例如 <code>22</code> (ssh), <code>80</code> (http), <code>443</code> (https) 等等.
+我们用 nginx 通过反向代理复用 <code>80</code> 端口, 避免为文件服务器开启新端口, 否则将会提高管理成本, 还有可能引入新的安全问题.</p>
+<p>Nginx 要求配置文件层级为 <code>http &gt; server &gt; location</code>.
+我们在 <code>/etc/nginx</code> 的 <code>sites-available</code> 目录中新建 <code>server</code> 级别的配置, 并且将其软链接到 <code>sites-enabled</code> 目录中, 这一目录中的配置文件将被自动引入默认的 <code>http</code> 块中.</p>
+<p>下面是一个用于内网环境的简易 <code>server</code> 块:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#75715e"># /etc/nginx/sites-available/intra
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#e6db74">[::]:80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> 192.168.0.103;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">allow</span> 192.168.0.0<span style="color:#e6db74">/24</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deny</span> <span style="color:#e6db74">all</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include</span> <span style="color:#e6db74">/etc/nginx/rules-available/filebrowser.conf</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># include /etc/nginx/rules-available/xx.conf;
+</span></span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote class='book-hint warning'>
+<p><code>server</code> 块内的 <code>location</code> 块有顺序要求.
+例如, 地址 <code>/filebrowser/</code> 可以同时被 <code>location /</code> 和 <code>location /filebrowser/</code> 两者捕获, 最终实际进入哪个块取决于定义顺序.
+所以, 最好按 <strong>复杂、具体在上, 简单、普遍在下</strong>的原则排列 <code>location</code>.</p></blockquote><p>我们在 <code>server</code> 块中引入了若干 <code>location</code> 块来模块化地管理站点.
+反向代理相关的配置如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#75715e"># /etc/nginx/rules-available/filebrowser.conf
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">location</span> <span style="color:#e6db74">/filebrowser/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://filebrowser_server/</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_http_version</span> <span style="color:#ae81ff">1</span><span style="color:#e6db74">.1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-Proto</span> $scheme;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Upgrade</span> $http_upgrade;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Connection</span> <span style="color:#e6db74">&#34;upgrade&#34;</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote class='book-hint note'>
+<p><code>rules-available</code> 目录并非原生的 nginx 目录, 我创建这一目录是为了更方便地管理和复用 <code>location</code> 块.</p>
+<p>此目录内的配置文件最好以 <code>.conf</code> 结尾, 并在 <code>server</code> 块中用 <code>include /etc/nginx/rules-available/*.conf</code> 的方式导入.
+这样做是为了可以用 <code>mv xx.conf xx.conf.disabled</code> 的方式方便地禁用某配置.</p></blockquote><p>这里引用了一个 <code>upstream</code> 块, 来更清晰直观地管理代理目标:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#75715e"># /etc/nginx/sites-available/upstream
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">filebrowser_server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server</span> 127.0.0.1:<span style="color:#ae81ff">1314</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 id="附录-nginx-作为文件服务器">附录: Nginx 作为文件服务器<a class="anchor" href="#%e9%99%84%e5%bd%95-nginx-%e4%bd%9c%e4%b8%ba%e6%96%87%e4%bb%b6%e6%9c%8d%e5%8a%a1%e5%99%a8">#</a></h2>
+<p>File Browser 很好, 也很安全, 例如当你访问 <code>.html</code> 资源时, 它将只以源代码形式展示, 而不会将其渲染为页面.
+这当然是为了避免访问到不安全的文件而被攻击或注入, 但是如果我们真的想要浏览器渲染它而非查看源码呢?</p>
+<p>好在我们还有 nginx 作为候补.
+它也可以作为一个简陋的文件服务器, 其功能相比 filebrowser 或其它简直是云泥之别, 但它的确可以用于渲染 <code>html</code> 页面, 很适合作为静态页面展示, 由用户手动导航到它感兴趣的文件中.</p>
+<p>要做到这一点, 只需如下设置 <code>location</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">location</span> <span style="color:#e6db74">/pages/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">alias</span> <span style="color:#e6db74">/srv/pages/</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">autoindex</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">autoindex_exact_size</span> <span style="color:#66d9ef">off</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">autoindex_localtime</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">charset</span> <span style="color:#e6db74">utf-8</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote class='book-hint warning'>
+<p>使用 nginx 作为文件服务器, 请务必做好权限管理, 避免泄露个人隐私到公网!
+毕竟如果不做鉴权 (例如使用 <code>auth_basic</code>), 任何人都可以访问你的文件.</p></blockquote></article>
+ 
+      
+
+
+
+  <div class="flex">
+    <div  style="font-style:italic;">
+      <span class="overline"></span>
+      <span style="display:block;">Created in July 16, 2026</span>
+      <span style="display:block;">Last modified in July 16, 2026</span>
+    </div>
+  </div>
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/qm-perturbation-theory/" class="flex align-center">
+        <span>量子力学中的微扰理论</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置服务">配置服务</a></li>
+    <li><a href="#服务化">服务化</a></li>
+    <li><a href="#反向代理">反向代理</a></li>
+    <li><a href="#附录-nginx-作为文件服务器">附录: Nginx 作为文件服务器</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

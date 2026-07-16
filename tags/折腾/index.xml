@@ -6,8 +6,15 @@
     <description>Recent content in 折腾 on EiEddie&#39;s Mind</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 27 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.eieddie.site/tags/%E6%8A%98%E8%85%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FileBrowser: 一款文件服务器</title>
+      <link>https://www.eieddie.site/docs/filebrowser-as-a-file-server/</link>
+      <pubDate>Thu, 16 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://www.eieddie.site/docs/filebrowser-as-a-file-server/</guid>
+      <description>&lt;h1 id=&#34;filebrowser-一款文件服务器&#34;&gt;FileBrowser: 一款文件服务器&lt;a class=&#34;anchor&#34; href=&#34;#filebrowser-%e4%b8%80%e6%ac%be%e6%96%87%e4%bb%b6%e6%9c%8d%e5%8a%a1%e5%99%a8&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;我曾经想过组一台 NAS, 但仔细想想, 这简直是在创造需求而非解决问题, 事实上我可能根本用不上 NAS, 大部分时间只需要一个运行在树莓派上简单的文件服务器就够了.&lt;/p&gt;&#xA;&lt;p&gt;对于这种运行在 linux 上的服务程序, 我有自己的一套挑选标准:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;应当是使用原生语言编写、无运行时的, 例如使用 Rust, Go, C/C++ 等, 最好是单一可执行文件;&lt;/li&gt;&#xA;&lt;li&gt;&lt;em&gt;KISS&lt;/em&gt;, 即 &lt;em&gt;Keep It Simple &amp;amp; Stupid&lt;/em&gt;, 功能克制, 页面简单, 只做好自己该做的事, 不要加一堆用不到的功能, 让软件变得臃肿不堪.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;综合来说, 我最后选了 &lt;a href=&#34;https://github.com/filebrowser/filebrowser&#34;&gt;File Browser&lt;/a&gt;, 因为它是用 Go 编写的, 只有最简单的文件上传、下载、(图片) 预览等功能, 不像其他文件服务器大包大揽, 还非得加入在线编辑之类用不上的功能; 另外, 它的网页也相当耐看.&lt;/p&gt;&#xA;&lt;h2 id=&#34;配置服务&#34;&gt;配置服务&lt;a class=&#34;anchor&#34; href=&#34;#%e9%85%8d%e7%bd%ae%e6%9c%8d%e5%8a%a1&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;下载它的可执行文件后, 在一个无关紧要的空目录运行 &lt;code&gt;./filebrowser&lt;/code&gt;, 程序将在此处生成一个 &lt;code&gt;filebrowser.db&lt;/code&gt; 用于储存配置.&#xA;我们修改的配置项也将储存在这个数据库内.&#xA;生成了数据库后, 就可以用 &lt;code&gt;Ctrl-C&lt;/code&gt; 结束运行了.&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;2026/07/16 17:42:56 No config file used&#xA;2026/07/16 17:42:56 WARNING: filebrowser.db can&#39;t be found. Initialing in /tmp/filebrowser/&#xA;2026/07/16 17:42:56 Using database: /tmp/filebrowser/filebrowser.db&#xA;2026/07/16 17:42:56 Performing quick setup&#xA;2026/07/16 17:42:56 User &#39;admin&#39; initialized with randomly generated password: yFgD8wKg0yS1YrGF&#xA;2026/07/16 17:42:56 Listening on 127.0.0.1:8080&#xA;^C2026/07/16 17:44:34 Got signal: interrupt&#xA;2026/07/16 17:44:34 Stopped serving new connections.&#xA;2026/07/16 17:44:34 Graceful shutdown complete.&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;输出的日志显示程序创建了一个默认管理员用户, ID 始终为 &lt;code&gt;admin&lt;/code&gt;, 密码随机, 这里是 &lt;code&gt;yFgD8wKg0yS1YrGF&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>将应用打包为单个文件</title>
       <link>https://www.eieddie.site/docs/package-app-as-single-file/</link>

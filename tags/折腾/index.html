@@ -19,8 +19,8 @@ https://github.com/alex-shpak/hugo-book
 
 
   <meta itemprop="name" content="折腾">
-  <meta itemprop="datePublished" content="2026-03-12T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2026-04-27T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2026-07-16T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-07-16T00:00:00+00:00">
 
 <title>折腾 | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
@@ -30,7 +30,7 @@ https://github.com/alex-shpak/hugo-book
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.8e96c520745732e6b8479796f93674c48ee658e42d0d1fdb9c607ac44482b98d.js" integrity="sha256-jpbFIHRXMua4R5eW&#43;TZ0xI7mWOQtDR/bnGB6xESCuY0=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.e9e1618af4cfe47191851a263ebc51e130799e9466c1b1bc23c95f2c87cb8179.js" integrity="sha256-6eFhivTP5HGRhRomPrxR4TB5npRmwbG8I8lfLIfLgXk=" crossorigin="anonymous"></script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://www.eieddie.site/tags/%E6%8A%98%E8%85%BE/index.xml" title="EiEddie's Mind" />
@@ -97,6 +97,34 @@ https://github.com/alex-shpak/hugo-book
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/filebrowser-as-a-file-server/" class="">
+      FileBrowser: 一款文件服务器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-perturbation-theory/" class="">
+      量子力学中的微扰理论</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -503,6 +531,52 @@ https://github.com/alex-shpak/hugo-book
 
 
       
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/docs/filebrowser-as-a-file-server/">FileBrowser: 一款文件服务器</a>
+    </h2>
+    
+  <div class="flex align-center text-small book-post-date">
+    <img src="/icons/calendar.svg" class="book-icon" alt="Calendar" />
+    <span>July 16, 2026</span>
+  </div>
+
+
+
+  
+  <div class="text-small">
+    
+      <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>, 
+      <a href="/tags/linux/">Linux</a>
+  </div>
+  
+
+
+    <div class="book-post-content"><h1 id="filebrowser-一款文件服务器">FileBrowser: 一款文件服务器<a class="anchor" href="#filebrowser-%e4%b8%80%e6%ac%be%e6%96%87%e4%bb%b6%e6%9c%8d%e5%8a%a1%e5%99%a8">#</a></h1>
+<p>我曾经想过组一台 NAS, 但仔细想想, 这简直是在创造需求而非解决问题, 事实上我可能根本用不上 NAS, 大部分时间只需要一个运行在树莓派上简单的文件服务器就够了.</p>
+<p>对于这种运行在 linux 上的服务程序, 我有自己的一套挑选标准:</p>
+<ul>
+<li>应当是使用原生语言编写、无运行时的, 例如使用 Rust, Go, C/C++ 等, 最好是单一可执行文件;</li>
+<li><em>KISS</em>, 即 <em>Keep It Simple &amp; Stupid</em>, 功能克制, 页面简单, 只做好自己该做的事, 不要加一堆用不到的功能, 让软件变得臃肿不堪.</li>
+</ul>
+<p>综合来说, 我最后选了 <a href="https://github.com/filebrowser/filebrowser">File Browser</a>, 因为它是用 Go 编写的, 只有最简单的文件上传、下载、(图片) 预览等功能, 不像其他文件服务器大包大揽, 还非得加入在线编辑之类用不上的功能; 另外, 它的网页也相当耐看.</p>
+<h2 id="配置服务">配置服务<a class="anchor" href="#%e9%85%8d%e7%bd%ae%e6%9c%8d%e5%8a%a1">#</a></h2>
+<p>下载它的可执行文件后, 在一个无关紧要的空目录运行 <code>./filebrowser</code>, 程序将在此处生成一个 <code>filebrowser.db</code> 用于储存配置.
+我们修改的配置项也将储存在这个数据库内.
+生成了数据库后, 就可以用 <code>Ctrl-C</code> 结束运行了.</p>
+<pre><code>2026/07/16 17:42:56 No config file used
+2026/07/16 17:42:56 WARNING: filebrowser.db can't be found. Initialing in /tmp/filebrowser/
+2026/07/16 17:42:56 Using database: /tmp/filebrowser/filebrowser.db
+2026/07/16 17:42:56 Performing quick setup
+2026/07/16 17:42:56 User 'admin' initialized with randomly generated password: yFgD8wKg0yS1YrGF
+2026/07/16 17:42:56 Listening on 127.0.0.1:8080
+^C2026/07/16 17:44:34 Got signal: interrupt
+2026/07/16 17:44:34 Stopped serving new connections.
+2026/07/16 17:44:34 Graceful shutdown complete.
+</code></pre>
+<p>输出的日志显示程序创建了一个默认管理员用户, ID 始终为 <code>admin</code>, 密码随机, 这里是 <code>yFgD8wKg0yS1YrGF</code>.</p></div>
+  </article>
   
   <article class="markdown book-post">
     <h2>
@@ -962,12 +1036,32 @@ Disk identifier: 0x00109879
       
         <li class="flex align-center">
           <a href="/tags/linux/">Linux</a>
-          <span>3</span>
+          <span>4</span>
         </li>
       
         <li class="flex align-center">
           <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
-          <span>9</span>
+          <span>10</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/todo/">Todo</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/undone/">Undone</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/%E7%89%A9%E7%90%86/">物理</a>
+          <span>7</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/">量子力学</a>
+          <span>2</span>
         </li>
       
         <li class="flex align-center">
@@ -981,23 +1075,8 @@ Disk identifier: 0x00109879
         </li>
       
         <li class="flex align-center">
-          <a href="/tags/%E7%89%A9%E7%90%86/">物理</a>
-          <span>6</span>
-        </li>
-      
-        <li class="flex align-center">
           <a href="/tags/%E6%96%87%E5%AD%A6/">文学</a>
           <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/todo/">Todo</a>
-          <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/undone/">Undone</a>
-          <span>4</span>
         </li>
       
         <li class="flex align-center">

@@ -19,8 +19,8 @@ https://github.com/alex-shpak/hugo-book
 
 
   <meta itemprop="name" content="Todo">
-  <meta itemprop="datePublished" content="2025-12-05T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2026-04-27T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2026-06-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-06-07T00:00:00+00:00">
 
 <title>Todo | EiEddie&#39;s Mind</title>
 <link rel="icon" href="/favicon.png" >
@@ -30,7 +30,7 @@ https://github.com/alex-shpak/hugo-book
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.8e96c520745732e6b8479796f93674c48ee658e42d0d1fdb9c607ac44482b98d.js" integrity="sha256-jpbFIHRXMua4R5eW&#43;TZ0xI7mWOQtDR/bnGB6xESCuY0=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.e9e1618af4cfe47191851a263ebc51e130799e9466c1b1bc23c95f2c87cb8179.js" integrity="sha256-6eFhivTP5HGRhRomPrxR4TB5npRmwbG8I8lfLIfLgXk=" crossorigin="anonymous"></script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://www.eieddie.site/tags/todo/index.xml" title="EiEddie's Mind" />
@@ -97,6 +97,34 @@ https://github.com/alex-shpak/hugo-book
 
   
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/filebrowser-as-a-file-server/" class="">
+      FileBrowser: 一款文件服务器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-perturbation-theory/" class="">
+      量子力学中的微扰理论</a>
+  
+
+        </li>
+      
     
       
         <li>
@@ -506,6 +534,44 @@ https://github.com/alex-shpak/hugo-book
   
   <article class="markdown book-post">
     <h2>
+      <a href="/docs/qm-perturbation-theory/">量子力学中的微扰理论</a>
+    </h2>
+    
+  <div class="flex align-center text-small book-post-date">
+    <img src="/icons/calendar.svg" class="book-icon" alt="Calendar" />
+    <span>June 7, 2026</span>
+  </div>
+
+
+
+  
+  <div class="text-small">
+    
+      <a href="/tags/%E7%89%A9%E7%90%86/">物理</a>, 
+      <a href="/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/">量子力学</a>, 
+      <a href="/tags/undone/">Undone</a>, 
+      <a href="/tags/todo/">Todo</a>
+  </div>
+  
+
+
+    <div class="book-post-content"><h1 id="量子力学中的微扰理论">量子力学中的微扰理论<a class="anchor" href="#%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e4%b8%ad%e7%9a%84%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba">#</a></h1>
+<p>大多数量子系统都是不可解的, 因为其哈密顿量 \(\hat{H}\) 中的势能项 \(\hat{V}\) 过于复杂, 使得薛定谔方程 \(\hat{H} \ket{\psi} = (-\frac{\hbar^2}{2m} \nabla^2 + \hat{V}) \ket{\psi} = E \ket{\psi}\) 无解析解.
+人们发展出一套方法, 使得我们能通过近似手段, 从一个已知可解的系统出发, 近似得到期望求解系统的能量与对应的态矢, 这套方法被称为<em>微扰论</em>.</p>
+<p>具体而言, 我们假定所求系统的哈密顿量 \(\hat{H}\) 可以被分为 \(\hat{H} = \hat{H}_0 + \hat{V}\), 其中 \(\hat{H}_0\) <strong>精确可解</strong>:
+</p>
+$$\hat{H}_0 \ket{n}_0 = E_0 \ket{n}_0$$<p>
+而 \(\hat{V}\) 被称为一个<em>微扰</em>, 这说明它一般而言相较于 \(\hat{H}_0\) 是微小的, 以至于加入这一项后, 对系统能量和态矢的改变以小量的形式给出:
+</p>
+$$E = E_0 + E_1 + \cdots$$<p>
+</p>
+$$\ket{n} = \ket{n}_0 + \ket{n}_1 + \cdots$$<p>在这篇文章中, 我们将讨论不含时情况下, 非简并与简并微扰理论.
+所使用的符号如下约定:
+对于量子数 \(n\) 对应的每一阶态矢修正, 用 \(\ket{n}_i\) 表示, \(i\) 代表修正的阶数; 每一阶能量修正, 使用 \(E^\mathrm{n}_i\) 表示, \(n\) 代表对应的量子数, 在不至于引起混淆的情况下, 上标 \(n\) 将被隐去, 简写为 \(E_i\).</p></div>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
       <a href="/docs/jordan-normal-form/">若尔当标准型</a>
     </h2>
     
@@ -649,12 +715,32 @@ https://github.com/alex-shpak/hugo-book
       
         <li class="flex align-center">
           <a href="/tags/linux/">Linux</a>
-          <span>3</span>
+          <span>4</span>
         </li>
       
         <li class="flex align-center">
           <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
-          <span>9</span>
+          <span>10</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/todo/">Todo</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/undone/">Undone</a>
+          <span>5</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/%E7%89%A9%E7%90%86/">物理</a>
+          <span>7</span>
+        </li>
+      
+        <li class="flex align-center">
+          <a href="/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/">量子力学</a>
+          <span>2</span>
         </li>
       
         <li class="flex align-center">
@@ -668,23 +754,8 @@ https://github.com/alex-shpak/hugo-book
         </li>
       
         <li class="flex align-center">
-          <a href="/tags/%E7%89%A9%E7%90%86/">物理</a>
-          <span>6</span>
-        </li>
-      
-        <li class="flex align-center">
           <a href="/tags/%E6%96%87%E5%AD%A6/">文学</a>
           <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/todo/">Todo</a>
-          <span>2</span>
-        </li>
-      
-        <li class="flex align-center">
-          <a href="/tags/undone/">Undone</a>
-          <span>4</span>
         </li>
       
         <li class="flex align-center">

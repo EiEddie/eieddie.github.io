@@ -3,22 +3,40 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.eieddie.site/</loc>
-    <lastmod>2026-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/</loc>
-    <lastmod>2026-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/docs/filebrowser-as-a-file-server/</loc>
+    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/tags/linux/</loc>
-    <lastmod>2026-03-12T00:00:00+00:00</lastmod>
+    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/tags/</loc>
-    <lastmod>2026-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/%E6%8A%98%E8%85%BE/</loc>
+    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/todo/</loc>
+    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/undone/</loc>
+    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/%E7%89%A9%E7%90%86/</loc>
+    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</loc>
+    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/docs/qm-perturbation-theory/</loc>
+    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/package-app-as-single-file/</loc>
     <lastmod>2026-03-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.eieddie.site/tags/%E6%8A%98%E8%85%BE/</loc>
-    <lastmod>2026-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/delta-robotics/</loc>
     <lastmod>2026-02-19T00:00:00+00:00</lastmod>
@@ -28,9 +46,6 @@
   </url><url>
     <loc>https://www.eieddie.site/tags/%E6%95%B0%E5%AD%A6/</loc>
     <lastmod>2026-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.eieddie.site/tags/%E7%89%A9%E7%90%86/</loc>
-    <lastmod>2026-02-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/sit-on-stone-ball-barrier/</loc>
     <lastmod>2026-02-05T00:00:00+00:00</lastmod>
@@ -52,12 +67,6 @@
   </url><url>
     <loc>https://www.eieddie.site/docs/qm-angular-momentum/</loc>
     <lastmod>2025-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.eieddie.site/tags/todo/</loc>
-    <lastmod>2026-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.eieddie.site/tags/undone/</loc>
-    <lastmod>2026-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/jordan-normal-form/</loc>
     <lastmod>2026-03-10T00:00:00+00:00</lastmod>

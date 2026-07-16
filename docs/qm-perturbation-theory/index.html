@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="量子力学中的微扰理论# 大多数量子系统都是不可解的, 因为其哈密顿量 \(\hat{H}\) 中的势能项 \(\hat{V}\) 过于复杂, 使得薛定谔方程 \(\hat{H} \ket{\psi} = (-\frac{\hbar^2}{2m} \nabla^2 &#43; \hat{V}) \ket{\psi} = E \ket{\psi}\) 无解析解. 人们发展出一套方法, 使得我们能通过近似手段, 从一个已知可解的系统出发, 近似得到期望求解系统的能量与对应的态矢, 这套方法被称为微扰论.
+具体而言, 我们假定所求系统的哈密顿量 \(\hat{H}\) 可以被分为 \(\hat{H} = \hat{H}_0 &#43; \hat{V}\), 其中 \(\hat{H}_0\) 精确可解: $$\hat{H}_0 \ket{n}_0 = E_0 \ket{n}_0$$ 而 \(\hat{V}\) 被称为一个微扰, 这说明它一般而言相较于 \(\hat{H}_0\) 是微小的, 以至于加入这一项后, 对系统能量和态矢的改变以小量的形式给出: $$E = E_0 &#43; E_1 &#43; \cdots$$ $$\ket{n} = \ket{n}_0 &#43; \ket{n}_1 &#43; \cdots$$在这篇文章中, 我们将讨论不含时情况下, 非简并与简并微扰理论. 所使用的符号如下约定: 对于量子数 \(n\) 对应的每一阶态矢修正, 用 \(\ket{n}_i\) 表示, \(i\) 代表修正的阶数; 每一阶能量修正, 使用 \(E^\mathrm{n}_i\) 表示, \(n\) 代表对应的量子数, 在不至于引起混淆的情况下, 上标 \(n\) 将被隐去, 简写为 \(E_i\).
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www.eieddie.site/docs/qm-perturbation-theory/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="量子力学中的微扰理论">
+  <meta property="og:description" content="量子力学中的微扰理论# 大多数量子系统都是不可解的, 因为其哈密顿量 \(\hat{H}\) 中的势能项 \(\hat{V}\) 过于复杂, 使得薛定谔方程 \(\hat{H} \ket{\psi} = (-\frac{\hbar^2}{2m} \nabla^2 &#43; \hat{V}) \ket{\psi} = E \ket{\psi}\) 无解析解. 人们发展出一套方法, 使得我们能通过近似手段, 从一个已知可解的系统出发, 近似得到期望求解系统的能量与对应的态矢, 这套方法被称为微扰论.
+具体而言, 我们假定所求系统的哈密顿量 \(\hat{H}\) 可以被分为 \(\hat{H} = \hat{H}_0 &#43; \hat{V}\), 其中 \(\hat{H}_0\) 精确可解: $$\hat{H}_0 \ket{n}_0 = E_0 \ket{n}_0$$ 而 \(\hat{V}\) 被称为一个微扰, 这说明它一般而言相较于 \(\hat{H}_0\) 是微小的, 以至于加入这一项后, 对系统能量和态矢的改变以小量的形式给出: $$E = E_0 &#43; E_1 &#43; \cdots$$ $$\ket{n} = \ket{n}_0 &#43; \ket{n}_1 &#43; \cdots$$在这篇文章中, 我们将讨论不含时情况下, 非简并与简并微扰理论. 所使用的符号如下约定: 对于量子数 \(n\) 对应的每一阶态矢修正, 用 \(\ket{n}_i\) 表示, \(i\) 代表修正的阶数; 每一阶能量修正, 使用 \(E^\mathrm{n}_i\) 表示, \(n\) 代表对应的量子数, 在不至于引起混淆的情况下, 上标 \(n\) 将被隐去, 简写为 \(E_i\).">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-06-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-06-07T00:00:00+00:00">
+    <meta property="article:tag" content="物理">
+    <meta property="article:tag" content="量子力学">
+    <meta property="article:tag" content="Undone">
+    <meta property="article:tag" content="Todo">
+
+
+  <meta itemprop="name" content="量子力学中的微扰理论">
+  <meta itemprop="description" content="量子力学中的微扰理论# 大多数量子系统都是不可解的, 因为其哈密顿量 \(\hat{H}\) 中的势能项 \(\hat{V}\) 过于复杂, 使得薛定谔方程 \(\hat{H} \ket{\psi} = (-\frac{\hbar^2}{2m} \nabla^2 &#43; \hat{V}) \ket{\psi} = E \ket{\psi}\) 无解析解. 人们发展出一套方法, 使得我们能通过近似手段, 从一个已知可解的系统出发, 近似得到期望求解系统的能量与对应的态矢, 这套方法被称为微扰论.
+具体而言, 我们假定所求系统的哈密顿量 \(\hat{H}\) 可以被分为 \(\hat{H} = \hat{H}_0 &#43; \hat{V}\), 其中 \(\hat{H}_0\) 精确可解: $$\hat{H}_0 \ket{n}_0 = E_0 \ket{n}_0$$ 而 \(\hat{V}\) 被称为一个微扰, 这说明它一般而言相较于 \(\hat{H}_0\) 是微小的, 以至于加入这一项后, 对系统能量和态矢的改变以小量的形式给出: $$E = E_0 &#43; E_1 &#43; \cdots$$ $$\ket{n} = \ket{n}_0 &#43; \ket{n}_1 &#43; \cdots$$在这篇文章中, 我们将讨论不含时情况下, 非简并与简并微扰理论. 所使用的符号如下约定: 对于量子数 \(n\) 对应的每一阶态矢修正, 用 \(\ket{n}_i\) 表示, \(i\) 代表修正的阶数; 每一阶能量修正, 使用 \(E^\mathrm{n}_i\) 表示, \(n\) 代表对应的量子数, 在不至于引起混淆的情况下, 上标 \(n\) 将被隐去, 简写为 \(E_i\).">
+  <meta itemprop="datePublished" content="2026-06-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-06-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="861">
+  <meta itemprop="keywords" content="物理,量子力学,Undone,Todo">
+
+<title>量子力学中的微扰理论 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://www.eieddie.site/docs/qm-perturbation-theory/">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.e9e1618af4cfe47191851a263ebc51e130799e9466c1b1bc23c95f2c87cb8179.js" integrity="sha256-6eFhivTP5HGRhRomPrxR4TB5npRmwbG8I8lfLIfLgXk=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+
+<script
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/filebrowser-as-a-file-server/" class="">
+      FileBrowser: 一款文件服务器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-perturbation-theory/" class="active">
+      量子力学中的微扰理论</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/delta-robotics/" class="">
+      Delta 机器人的动力学建模</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sit-on-stone-ball-barrier/" class="">
+      我坐在石球子上</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>量子力学中的微扰理论</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#微扰理论">微扰理论</a>
+      <ul>
+        <li><a href="#广义逆">广义逆</a></li>
+        <li><a href="#回到微扰论">回到微扰论</a></li>
+        <li><a href="#能量修正">能量修正</a></li>
+        <li><a href="#态矢修正">态矢修正</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+
+  <div style="display:flex; margin-bottom:5px;">
+    <span>[</span>
+    <span class="status-undone">未完成</span>
+    <span>]</span>
+  </div>
+
+
+      
+  <article class="markdown book-article"><h1 id="量子力学中的微扰理论">量子力学中的微扰理论<a class="anchor" href="#%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e4%b8%ad%e7%9a%84%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba">#</a></h1>
+<p>大多数量子系统都是不可解的, 因为其哈密顿量 \(\hat{H}\) 中的势能项 \(\hat{V}\) 过于复杂, 使得薛定谔方程 \(\hat{H} \ket{\psi} = (-\frac{\hbar^2}{2m} \nabla^2 + \hat{V}) \ket{\psi} = E \ket{\psi}\) 无解析解.
+人们发展出一套方法, 使得我们能通过近似手段, 从一个已知可解的系统出发, 近似得到期望求解系统的能量与对应的态矢, 这套方法被称为<em>微扰论</em>.</p>
+<p>具体而言, 我们假定所求系统的哈密顿量 \(\hat{H}\) 可以被分为 \(\hat{H} = \hat{H}_0 + \hat{V}\), 其中 \(\hat{H}_0\) <strong>精确可解</strong>:
+</p>
+$$\hat{H}_0 \ket{n}_0 = E_0 \ket{n}_0$$<p>
+而 \(\hat{V}\) 被称为一个<em>微扰</em>, 这说明它一般而言相较于 \(\hat{H}_0\) 是微小的, 以至于加入这一项后, 对系统能量和态矢的改变以小量的形式给出:
+</p>
+$$E = E_0 + E_1 + \cdots$$<p>
+</p>
+$$\ket{n} = \ket{n}_0 + \ket{n}_1 + \cdots$$<p>在这篇文章中, 我们将讨论不含时情况下, 非简并与简并微扰理论.
+所使用的符号如下约定:
+对于量子数 \(n\) 对应的每一阶态矢修正, 用 \(\ket{n}_i\) 表示, \(i\) 代表修正的阶数; 每一阶能量修正, 使用 \(E^\mathrm{n}_i\) 表示, \(n\) 代表对应的量子数, 在不至于引起混淆的情况下, 上标 \(n\) 将被隐去, 简写为 \(E_i\).</p>
+<h2 id="微扰理论">微扰理论<a class="anchor" href="#%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba">#</a></h2>
+<p>让我们先研究非简并情况.
+这意味着对于每个能量 \(E_0\), 只有线性无关意义下的一组态矢 \(\{\ket{n}_0\}\); 数学上讲, 每个特征值 \(E_0\) 对应的几何重数为 \(1\), 特征子空间为 \(1\) 维.</p>
+<p>我们引入变量 \(\lambda\), 此时 \(\hat{H} = \hat{H}_0 + \lambda \hat{V}\).
+\(\lambda\) 从 \(0\) 连续变化到 \(1\) 时, 得出的结果从无微扰情况过渡到加入微扰后的状态.
+这一参数纯粹是形式上的, 这意味着我们引入它是为了追踪每一阶修正的变化, 而没有实际的物理意义; 不过, 如果你愿意, 可以将其理解为微扰的 &ldquo;强度&rdquo;.
+另外, 令 \(\Delta^\mathrm{n} := E^\mathrm{n} - E^\mathrm{n}_0\), 这代表微扰引起的能量变化.</p>
+<p>通过引入 \(\lambda\), 我们可以将 \(\Delta\) 与 \(\ket{n}\) 按 \(\lambda\) 做级数展开
+</p>
+$$\Delta = E - E_0 = \lambda \Delta_1 + \lambda^2 \Delta_2 + \cdots$$<p>
+</p>
+$$\ket{n} = \ket{n}_0 + \lambda \ket{n}_1 + \lambda^2 \ket{n}_2 + \cdots$$<p>
+注意 \(\Delta\) 的展开没有 \(0\) 次项, 因为显然当 \(\lambda \rightarrow 0\) 时, \(\Delta \rightarrow 0\).</p>
+<p>此时, 加入微扰后的薛定谔方程可以写为
+</p>
+$$(E_0 - \hat{H}_0) \ket{n} = (\lambda \hat{V} - \Delta) \ket{n}$$<p>一个略显古怪的解法是, 如果我们能找到算符 \((E_0 - \hat{H}_0)\) 的逆, 那么这一问题就解决了.
+但是正如在线性代数课上讲的那样, 并非每个线性算符都有逆.
+所以让我们抽出时间, 谈谈关于<em>广义逆</em>的事.</p>
+<h3 id="广义逆">广义逆<a class="anchor" href="#%e5%b9%bf%e4%b9%89%e9%80%86">#</a></h3>
+<p>量子力学中的算符都是<strong>自伴的</strong> (或称<strong>厄米的</strong>), 即 \(\hat{A}^\dagger = \hat{A}\).
+这意味这算符都是可对角化的, 它有充足的特征向量张成特征子空间, 并且将全空间作为特征子空间的直和.</p>
+<p>对于算符 \(\hat{E} := E_0 - \hat{H}_0\), 它显然不可逆.
+为了深入研究这一点, 我们寻找其核空间 \(\ker \hat{E}\), 即解 \((E_0 - \hat{H}_0) \ket{\psi} = 0\).
+显然, 当且仅当 \(\ket{\psi} \sim \ket{n}_0\) 时<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, 方程成立.
+其唯一性是由 \(\hat{H}_0\) 不简并这一点保证的.</p>
+<p>因此, 我们令全空间为 \(V\), 其核空间为 \(U := \ker \hat{E} = \mathrm{span}\{\ket{n}_0\}\).
+显然 \(U\) 是特征值 \(E_0\) 对应的特征子空间, 其补空间 \(U^\perp\) 是其他特征子空间的直和, 它们满足 \(V = U \oplus U^\perp\).
+之所以如此大费周章, 是为了建立核空间 \(U\) 与特征子空间的关系, 最终目的是为了说明: <strong>核空间的补空间 \(U^\perp\) 是 \(\hat{E}\) 的不变子空间</strong>, 因为它是特征子空间的直和.</p>
+<p>在这一基础上, 我们可以构造一个 \(\hat{E}\) 的 (广义) 逆算符, 记作 \(\hat{E}^- = (E_0 - \hat{H}_0)^-\), 它:</p>
+<ul>
+<li>在 \(U\) 上始终为零变换, 即 \(\hat{E}^-|_U \equiv 0\);</li>
+<li>在 \(U^\perp\) 上是 \(\hat{E}|_{U^\perp}\) 的逆, 即 \(\hat{E}^-|_{U^\perp} = (\hat{E}|_{U^\perp})^{-1}\).</li>
+</ul>
+<p>我们做一点补充: 在 \(U^\perp\) 上的定义要求 \(U^\perp \cap (\ker \hat{E}) = 0\), 且 \(U^\perp\) 是 \(\hat{E}\)- 不变的.
+上面我们已经说明了这一点.</p>
+<p>这一零碎的定义可能并不适于使用, 可以给出一个更紧凑的表示, 使用我们常见的符号.
+定义投影算符 \(\hat{\phi}\), 它将 \(V\) 上的向量投影到空间 \(U^\perp\) 中.
+在我们这个例子里, 它可以写为
+</p>
+$$\hat{\phi} = 1 - \ket{n}_0 \bra{n}_0$$<p>这样一来, 算符 \((E_0 - \hat{H}_0)^{-1} \hat{\phi}\) 就是良定义的, 因为对于给定的任何一个向量, 上述算符都有唯一的结果, 而且与广义逆给出的结果相同.
+</p>
+$$(E_0 - \hat{H}_0)^- \equiv (E_0 - \hat{H}_0)^{-1} \hat{\phi}$$<h3 id="回到微扰论">回到微扰论<a class="anchor" href="#%e5%9b%9e%e5%88%b0%e5%be%ae%e6%89%b0%e8%ae%ba">#</a></h3>
+<p>我们使用广义逆 \((E_0 - \hat{H}_0)^-\) 求解方程
+</p>
+$$(E_0 - \hat{H}_0) \ket{n} = (\lambda \hat{V} - \Delta) \ket{n}$$<p>事实上, 逆算符所要作用的态矢 \((\lambda \hat{V} - \Delta) \ket{n}\) 没有任何零空间的分量.
+回忆一下算符的零空间只由 \(\ket{n}_0\) 一个向量张成, 而
+</p>
+$$\begin{align}
+\bra{n}_0 (\lambda \hat{V} - \Delta) \ket{n} &= \bra{n}_0 (E_0 - \hat{H}_0) \ket{n} \\
+  &= ((E_0 - \hat{H}_0) \ket{n}_0)^\dagger \ket{n} \\
+  &= 0 \cdot \ket{n} \\
+  &= 0
+\end{align}$$<p>
+这就证明了这一点.
+所以我们给出的广义逆不会丢失任何物理信息.</p>
+<p>应用广义逆, 我们可以得到
+</p>
+$$\begin{align}
+\ket{n} &\overset{?}{=} (E_0 - \hat{H}_0)^- (\lambda \hat{V} - \Delta) \ket{n} \\
+  &= (E_0 - \hat{H}_0)^{-1} \hat{\phi} \ (\lambda \hat{V} - \Delta) \ket{n}
+\end{align}$$<p>但是此式是不正确的!
+还记得我们要求 \(\lambda \rightarrow 0\) 时 \(\ket{n} \rightarrow \ket{n}_0\) 且 \(\Delta \rightarrow 0\).
+但是我们的方程从一开始就出现了问题, 在这一极限下, 它变成了恒等式, 我们无法从中得到 \(\ket{n}\) 的任何信息.
+再次考察解 \(\ket{n} = (E_0 - \hat{H}_0)^{-1} \hat{\phi} \ (\lambda \hat{V} - \Delta) \ket{n}\), 等号右边趋近于 \(0\).
+我们可以做出修正, 在等号右边添加一项 \(c(\lambda) \ket{n}_0\), 并且要求 \(\lambda \rightarrow 1\) 时 \(c(\lambda) \rightarrow 1\).
+这样一来, 最后的解为
+</p>
+$$\ket{n} = c(\lambda) \ket{n}_0 + (E_0 - \hat{H}_0)^{-1} \hat{\phi} \ (\lambda \hat{V} - \Delta) \ket{n}$$<p>为了保持微扰展开的简洁性和可操作性, 我们不再保证 \(\ket{n}\) 的归一化, 而在等号两边除 \(c(\lambda)\), 并重定义 \(\ket{n} := \ket{n}/c(\lambda)\).
+此时
+</p>
+$$\boxed{\ket{n} = \ket{n}_0 + (E_0 - \hat{H}_0)^{-1} \hat{\phi} \ (\lambda \hat{V} - \Delta) \ket{n}}$$<p>
+并且
+</p>
+$$\braket{n | n}_0 = 1$$<p>
+</p>
+$$\braket{n | n} = 1/c^2(\lambda)$$<p>强制归一化会向各阶修正项中混入不必要的, 且通常无物理意义的标量因子, 让计算变得繁琐.
+并且你总可以以很小的代价将其归一化.</p>
+<p>最后, 因为 \(\hat{\phi} = 1 - \ket{n}_0 \bra{n}_0\), 注意到完备性关系 \(1 = \sum_{k} \ket{k}_0 \bra{k}_0\), 有 \(\hat{\phi} = \sum_{k \ne n} \ket{k}_0 \bra{k}_0\).
+则
+</p>
+$$\begin{align}
+(E_0 - \hat{H}_0)^{-1} \hat{\phi} &= (E_0^\mathrm{n} - \hat{H}_0)^{-1} \sum_{k \ne n} \ket{k}_0 \bra{k}_0 \\
+  &= \sum_{k \ne n} (E_0^\mathrm{n} - \hat{H}_0)^{-1} \ket{k}_0 \bra{k}_0 \\
+  &= \sum_{k \ne n} (E_0^\mathrm{n} - E_0^\mathrm{k})^{-1} \ket{k}_0 \bra{k}_0 \\
+  &= \sum_{k \ne n} \frac{\ket{k}_0 \bra{k}_0}{E_0^\mathrm{n} - E_0^\mathrm{k}} \\
+\end{align}$$<p>中间用到了定理: <strong>若 \(\ket{a}\) 是 \(\hat{A}\) 关于 \(a\) 的特征向量, 则 \(\ket{a}\) 也是 \(\hat{A}^{-1}\) 关于 \(a^{-1}\) 的特征向量</strong>.</p>
+<h3 id="能量修正">能量修正<a class="anchor" href="#%e8%83%bd%e9%87%8f%e4%bf%ae%e6%ad%a3">#</a></h3>
+<p>我们的微扰结果都依赖于上面的等式和 \(\bra{n}_0 (\lambda \hat{V} - \Delta) \ket{n} = 0\).
+注意到
+</p>
+$$\begin{align}
+0 &= \bra{n}_0 (\lambda \hat{V} - \Delta) \ket{n} \\
+  &= \lambda \bra{n}_0 \hat{V} \ket{n} - \Delta \braket{n | n}_0
+\end{align}$$<p>
+即
+</p>
+$$\boxed{\Delta = \lambda \bra{n}_0 \hat{V} \ket{n}}$$<p>在等号右侧将级数展开代入, 可以得到
+</p>
+$$\begin{align}
+& \Delta = \lambda \bra{n}_0 \hat{V} \ (\ket{n}_0 + \lambda \ket{n}_1 + \lambda^2 \ket{n}_2 + \cdots) \\
+=& \ \lambda \Delta_1 + \lambda^2 \Delta_2 + \cdots
+\end{align}$$<p>通过对比同样次数的 \(\lambda\) 就可得到各阶 \(\Delta\) 的修正.
+例如, 一阶能量修正 \(\Delta_1 = \bra{n}_0 \hat{V} \ket{n}_0\);
+二阶 \(\Delta_2 = \bra{n}_0 \hat{V} \ket{n}_1\).
+最终的能量为 \(E = E_0 + \Delta = E_0 + \Delta_1 + \Delta_2 + \cdots\).</p>
+<h3 id="态矢修正">态矢修正<a class="anchor" href="#%e6%80%81%e7%9f%a2%e4%bf%ae%e6%ad%a3">#</a></h3>
+<p>对于态矢同理.
+代入级数得
+</p>
+$$\begin{align}
+\ket{n} =& \ \ket{n}_0 + (E_0 - \hat{H}_0)^{-1} \hat{\phi} \ (\lambda \hat{V} - \Delta) \ket{n} \\
+  =& \ \ket{n}_0 + (E_0 - \hat{H}_0)^{-1} \hat{\phi} \\
+  & (\lambda \hat{V} - \lambda \Delta_1 - \lambda^2 \Delta_2 - \cdots) (\ket{n}_0 + \lambda \ket{n}_1 + \lambda^2 \ket{n}_2 + \cdots)
+\end{align}$$<p>
+且
+</p>
+$$\ket{n} = \ket{n}_0 + \lambda \ket{n}_1 + \lambda^2 \ket{n}_2 + \cdots$$<p>仍旧对比两侧系数, 有
+</p>
+$$\begin{align}
+\ket{n}_1 &= (E_0 - \hat{H}_0)^{-1} \hat{\phi} \ (\hat{V} - \Delta_1) \ket{n}_0 \\
+  &= \sum_{k \ne n} \frac{\ket{k}_0 \bra{k}_0}{E_0^\mathrm{n} - E_0^\mathrm{k}} (\hat{V} - \Delta_1) \ket{n}_0 \\
+  &= \sum_{k \ne n} \frac{\bra{k}_0 (\hat{V} - \Delta_1) \ket{n}_0}{E_0^\mathrm{n} - E_0^\mathrm{k}} \ket{k}_0 \\
+  &= \sum_{k \ne n} \frac{\bra{k}_0 \hat{V} \ket{n}_0}{E_0^\mathrm{n} - E_0^\mathrm{k}} \ket{k}_0 \\
+\end{align}$$<p>我们之所以采用这样一种略显复杂的方法讨论非简并微扰论, 是为了统一地给出能量和态矢的各阶修正&ndash;你只需在那两条公式中逐项对比次数即可.
+应用投影算符的思想也将在后面简并情况下的微扰讨论中发挥其独特作用.</p>
+<hr>
+<h2 id="参考">参考<a class="anchor" href="#%e5%8f%82%e8%80%83">#</a></h2>
+<ol>
+<li>J. J. Sakurai, 与 J. Napolitano. &ldquo;时间无关的微扰论: 非简并情况&rdquo; 于 &ldquo;近似方法&rdquo; 于 <em>现代量子力学</em>, pp. 225-229. 世界图书出版公司, 2014.</li>
+</ol>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>\(\sim\) 表示在相差一个常系数的意义下相等, 即 \(a \sim b \Leftrightarrow a = k b\).&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article>
+ 
+      
+
+
+
+  <div class="flex">
+    <div  style="font-style:italic;">
+      <span class="overline"></span>
+      <span style="display:block;">Created in June 7, 2026</span>
+      <span style="display:block;">Last modified in June 7, 2026</span>
+    </div>
+  </div>
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/filebrowser-as-a-file-server/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>FileBrowser: 一款文件服务器</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/package-app-as-single-file/" class="flex align-center">
+        <span>将应用打包为单个文件</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#微扰理论">微扰理论</a>
+      <ul>
+        <li><a href="#广义逆">广义逆</a></li>
+        <li><a href="#回到微扰论">回到微扰论</a></li>
+        <li><a href="#能量修正">能量修正</a></li>
+        <li><a href="#态矢修正">态矢修正</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
