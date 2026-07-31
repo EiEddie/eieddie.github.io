@@ -3,10 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.eieddie.site/</loc>
-    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
+    <lastmod>2026-07-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/</loc>
-    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
+    <lastmod>2026-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/</loc>
+    <lastmod>2026-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/todo/</loc>
+    <lastmod>2026-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/docs/thermodynamical-3rd-law/</loc>
+    <lastmod>2026-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.eieddie.site/tags/%E7%89%A9%E7%90%86/</loc>
+    <lastmod>2026-07-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/docs/filebrowser-as-a-file-server/</loc>
     <lastmod>2026-07-16T00:00:00+00:00</lastmod>
@@ -14,19 +26,10 @@
     <loc>https://www.eieddie.site/tags/linux/</loc>
     <lastmod>2026-07-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.eieddie.site/tags/</loc>
-    <lastmod>2026-07-16T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.eieddie.site/tags/%E6%8A%98%E8%85%BE/</loc>
     <lastmod>2026-07-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.eieddie.site/tags/todo/</loc>
-    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.eieddie.site/tags/undone/</loc>
-    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.eieddie.site/tags/%E7%89%A9%E7%90%86/</loc>
     <lastmod>2026-06-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.eieddie.site/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</loc>

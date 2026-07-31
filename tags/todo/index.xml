@@ -6,8 +6,15 @@
     <description>Recent content in Todo on EiEddie&#39;s Mind</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.eieddie.site/tags/todo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从绝对零度不可到达原理推导能斯特定理</title>
+      <link>https://www.eieddie.site/docs/thermodynamical-3rd-law/</link>
+      <pubDate>Fri, 31 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://www.eieddie.site/docs/thermodynamical-3rd-law/</guid>
+      <description>&lt;h1 id=&#34;从绝对零度不可到达原理推导能斯特定理&#34;&gt;从绝对零度不可到达原理推导能斯特定理&lt;a class=&#34;anchor&#34; href=&#34;#%e4%bb%8e%e7%bb%9d%e5%af%b9%e9%9b%b6%e5%ba%a6%e4%b8%8d%e5%8f%af%e5%88%b0%e8%be%be%e5%8e%9f%e7%90%86%e6%8e%a8%e5%af%bc%e8%83%bd%e6%96%af%e7%89%b9%e5%ae%9a%e7%90%86&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;我们知道热力学第三定律有好几种&lt;strong&gt;被认为&lt;/strong&gt;等价的表述, 最著名的就是&lt;em&gt;绝对零度不可到达原理&lt;/em&gt;和&lt;em&gt;能斯特定理&lt;/em&gt;:&lt;/p&gt;&#xA;&lt;blockquote class=&#39;book-hint note&#39;&gt;&#xA;&lt;p&gt;&lt;strong&gt;绝对零度不可到达原理&lt;/strong&gt; (&lt;strong&gt;Unattainability Principle&lt;/strong&gt;, 下面简称 &lt;em&gt;Ua. P.&lt;/em&gt;)&lt;/p&gt;&#xA;&lt;p&gt;不可能通过有限的步骤使物体温度降低到绝对零度.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote class=&#39;book-hint note&#39;&gt;&#xA;&lt;p&gt;&lt;strong&gt;能斯特定理&lt;/strong&gt; (&lt;strong&gt;Nernst Heat Theorem&lt;/strong&gt;, 下面简称 &lt;em&gt;N. H. T.&lt;/em&gt;)&lt;/p&gt;&#xA;&lt;p&gt;凝聚系的熵在等温过程中的改变随绝对温度趋于 0.&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;从&lt;em&gt;N. H. T.&lt;/em&gt; 推导 &lt;em&gt;Ua. P.&lt;/em&gt; 是很简单的, 但反之则不然.&#xA;一般来说, 从 &lt;em&gt;Ua. P.&lt;/em&gt; 推导出 &lt;em&gt;N. H. T.&lt;/em&gt; 需要附加一些条件, 这些条件可能由实验或其他理论给出;&#xA;并且推导的过程很容易出现逻辑上的漏洞.&#xA;这是因为 &lt;em&gt;Ua. P.&lt;/em&gt; 是以否定的形式给出的, 这使得对它的应用颇为棘手, 尤其是在使用反证法时.&#xA;我们不能确定, 究竟是结论与原命题出现了矛盾, 还是推导过程本身就不能存在, 因为违反了 &lt;em&gt;Ua. P.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;如果我们改写一下 &lt;em&gt;Ua. P.&lt;/em&gt;, 使其写为如下的形式:&lt;/p&gt;&#xA;&lt;blockquote class=&#39;book-hint note&#39;&gt;&#xA;&lt;p&gt;只能通过无穷次步骤使物体温度降低到绝对零度. (&lt;em&gt;Ua. P. (II)&lt;/em&gt;)&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;则这种尴尬局面就迎刃而解了.&#xA;假如我们的确构造了一个使用有限次步骤 (例如有限次等温与绝热过程) 达到 0K 的方法, 就能用反证法尝试从 &lt;em&gt;Ua. P. (II)&lt;/em&gt; 推导出 &lt;em&gt;N. H. T.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>量子力学中的微扰理论</title>
       <link>https://www.eieddie.site/docs/qm-perturbation-theory/</link>

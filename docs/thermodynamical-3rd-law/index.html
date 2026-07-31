@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="从绝对零度不可到达原理推导能斯特定理# 我们知道热力学第三定律有好几种被认为等价的表述, 最著名的就是绝对零度不可到达原理和能斯特定理:
+绝对零度不可到达原理 (Unattainability Principle, 下面简称 Ua. P.)
+不可能通过有限的步骤使物体温度降低到绝对零度.
+能斯特定理 (Nernst Heat Theorem, 下面简称 N. H. T.)
+凝聚系的熵在等温过程中的改变随绝对温度趋于 0.
+从N. H. T. 推导 Ua. P. 是很简单的, 但反之则不然. 一般来说, 从 Ua. P. 推导出 N. H. T. 需要附加一些条件, 这些条件可能由实验或其他理论给出; 并且推导的过程很容易出现逻辑上的漏洞. 这是因为 Ua. P. 是以否定的形式给出的, 这使得对它的应用颇为棘手, 尤其是在使用反证法时. 我们不能确定, 究竟是结论与原命题出现了矛盾, 还是推导过程本身就不能存在, 因为违反了 Ua. P.
+如果我们改写一下 Ua. P., 使其写为如下的形式:
+只能通过无穷次步骤使物体温度降低到绝对零度. (Ua. P. (II))
+则这种尴尬局面就迎刃而解了. 假如我们的确构造了一个使用有限次步骤 (例如有限次等温与绝热过程) 达到 0K 的方法, 就能用反证法尝试从 Ua. P. (II) 推导出 N. H. T.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www.eieddie.site/docs/thermodynamical-3rd-law/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="从绝对零度不可到达原理推导能斯特定理">
+  <meta property="og:description" content="从绝对零度不可到达原理推导能斯特定理# 我们知道热力学第三定律有好几种被认为等价的表述, 最著名的就是绝对零度不可到达原理和能斯特定理:
+绝对零度不可到达原理 (Unattainability Principle, 下面简称 Ua. P.)
+不可能通过有限的步骤使物体温度降低到绝对零度.
+能斯特定理 (Nernst Heat Theorem, 下面简称 N. H. T.)
+凝聚系的熵在等温过程中的改变随绝对温度趋于 0.
+从N. H. T. 推导 Ua. P. 是很简单的, 但反之则不然. 一般来说, 从 Ua. P. 推导出 N. H. T. 需要附加一些条件, 这些条件可能由实验或其他理论给出; 并且推导的过程很容易出现逻辑上的漏洞. 这是因为 Ua. P. 是以否定的形式给出的, 这使得对它的应用颇为棘手, 尤其是在使用反证法时. 我们不能确定, 究竟是结论与原命题出现了矛盾, 还是推导过程本身就不能存在, 因为违反了 Ua. P.
+如果我们改写一下 Ua. P., 使其写为如下的形式:
+只能通过无穷次步骤使物体温度降低到绝对零度. (Ua. P. (II))
+则这种尴尬局面就迎刃而解了. 假如我们的确构造了一个使用有限次步骤 (例如有限次等温与绝热过程) 达到 0K 的方法, 就能用反证法尝试从 Ua. P. (II) 推导出 N. H. T.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-07-31T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-07-31T00:00:00+00:00">
+    <meta property="article:tag" content="物理">
+    <meta property="article:tag" content="Todo">
+
+
+  <meta itemprop="name" content="从绝对零度不可到达原理推导能斯特定理">
+  <meta itemprop="description" content="从绝对零度不可到达原理推导能斯特定理# 我们知道热力学第三定律有好几种被认为等价的表述, 最著名的就是绝对零度不可到达原理和能斯特定理:
+绝对零度不可到达原理 (Unattainability Principle, 下面简称 Ua. P.)
+不可能通过有限的步骤使物体温度降低到绝对零度.
+能斯特定理 (Nernst Heat Theorem, 下面简称 N. H. T.)
+凝聚系的熵在等温过程中的改变随绝对温度趋于 0.
+从N. H. T. 推导 Ua. P. 是很简单的, 但反之则不然. 一般来说, 从 Ua. P. 推导出 N. H. T. 需要附加一些条件, 这些条件可能由实验或其他理论给出; 并且推导的过程很容易出现逻辑上的漏洞. 这是因为 Ua. P. 是以否定的形式给出的, 这使得对它的应用颇为棘手, 尤其是在使用反证法时. 我们不能确定, 究竟是结论与原命题出现了矛盾, 还是推导过程本身就不能存在, 因为违反了 Ua. P.
+如果我们改写一下 Ua. P., 使其写为如下的形式:
+只能通过无穷次步骤使物体温度降低到绝对零度. (Ua. P. (II))
+则这种尴尬局面就迎刃而解了. 假如我们的确构造了一个使用有限次步骤 (例如有限次等温与绝热过程) 达到 0K 的方法, 就能用反证法尝试从 Ua. P. (II) 推导出 N. H. T.">
+  <meta itemprop="datePublished" content="2026-07-31T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-07-31T00:00:00+00:00">
+  <meta itemprop="wordCount" content="511">
+  <meta itemprop="keywords" content="物理,Todo">
+
+<title>从绝对零度不可到达原理推导能斯特定理 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://www.eieddie.site/docs/thermodynamical-3rd-law/">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7923ae40988dcbbf7be23fe89899b2858ce4e48cd29a8db14d9deb1e418eed86.js" integrity="sha256-eSOuQJiNy7974j/omJmyhYzk5IzSmo2xTZ3rHkGO7YY=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+
+<script
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/thermodynamical-3rd-law/" class="active">
+      从绝对零度不可到达原理推导能斯特定理</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/filebrowser-as-a-file-server/" class="">
+      FileBrowser: 一款文件服务器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-perturbation-theory/" class="">
+      量子力学中的微扰理论</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/delta-robotics/" class="">
+      Delta 机器人的动力学建模</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sit-on-stone-ball-barrier/" class="">
+      我坐在石球子上</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>从绝对零度不可到达原理推导能斯特定理</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#推导过程">推导过程</a></li>
+    <li><a href="#附录-n-h-t-到-ua-p">附录: <em>N. H. T.</em> 到 <em>Ua. P.</em></a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+  
+
+  
+
+
+
+
+      
+  <article class="markdown book-article"><h1 id="从绝对零度不可到达原理推导能斯特定理">从绝对零度不可到达原理推导能斯特定理<a class="anchor" href="#%e4%bb%8e%e7%bb%9d%e5%af%b9%e9%9b%b6%e5%ba%a6%e4%b8%8d%e5%8f%af%e5%88%b0%e8%be%be%e5%8e%9f%e7%90%86%e6%8e%a8%e5%af%bc%e8%83%bd%e6%96%af%e7%89%b9%e5%ae%9a%e7%90%86">#</a></h1>
+<p>我们知道热力学第三定律有好几种<strong>被认为</strong>等价的表述, 最著名的就是<em>绝对零度不可到达原理</em>和<em>能斯特定理</em>:</p>
+<blockquote class='book-hint note'>
+<p><strong>绝对零度不可到达原理</strong> (<strong>Unattainability Principle</strong>, 下面简称 <em>Ua. P.</em>)</p>
+<p>不可能通过有限的步骤使物体温度降低到绝对零度.</p></blockquote><blockquote class='book-hint note'>
+<p><strong>能斯特定理</strong> (<strong>Nernst Heat Theorem</strong>, 下面简称 <em>N. H. T.</em>)</p>
+<p>凝聚系的熵在等温过程中的改变随绝对温度趋于 0.</p></blockquote><p>从<em>N. H. T.</em> 推导 <em>Ua. P.</em> 是很简单的, 但反之则不然.
+一般来说, 从 <em>Ua. P.</em> 推导出 <em>N. H. T.</em> 需要附加一些条件, 这些条件可能由实验或其他理论给出;
+并且推导的过程很容易出现逻辑上的漏洞.
+这是因为 <em>Ua. P.</em> 是以否定的形式给出的, 这使得对它的应用颇为棘手, 尤其是在使用反证法时.
+我们不能确定, 究竟是结论与原命题出现了矛盾, 还是推导过程本身就不能存在, 因为违反了 <em>Ua. P.</em></p>
+<p>如果我们改写一下 <em>Ua. P.</em>, 使其写为如下的形式:</p>
+<blockquote class='book-hint note'>
+<p>只能通过无穷次步骤使物体温度降低到绝对零度. (<em>Ua. P. (II)</em>)</p></blockquote><p>则这种尴尬局面就迎刃而解了.
+假如我们的确构造了一个使用有限次步骤 (例如有限次等温与绝热过程) 达到 0K 的方法, 就能用反证法尝试从 <em>Ua. P. (II)</em> 推导出 <em>N. H. T.</em></p>
+<h2 id="推导过程">推导过程<a class="anchor" href="#%e6%8e%a8%e5%af%bc%e8%bf%87%e7%a8%8b">#</a></h2>
+<p>我们将在绝热系统中证明, 下面所有过程都是可逆的.</p>
+<p><em>N. H. T.</em> 等价于, 以力学量 \(y\) 为参量的熵 \(S\) 在 \(T \rightarrow 0\) 时为定值, 即 \((\frac{\partial S}{\partial y})_{T \rightarrow 0} = 0\).
+这表明, 任意 \(S(T \rightarrow 0; y)\) 恒等于一个定值, \(S_y(T)\) 在 \(S-T\) 图像上在 \(T = 0\) 时总交于一点.</p>
+<p>我们的证明思路类似于<em>不动点迭代</em>: 一个不动点迭代序列总是 (在无穷项后) 收敛于不动点; 而其余任何点, 都将在有限项数内被<strong>经过</strong>.
+于是, 0K 时的点必然是一个不动点.</p>
+<p>一个稳定的力学系统要求 \(C_y > 0\), 即 \((\frac{\partial S}{\partial T})_y > 0\) 在 \(T > 0\) 时.
+对于以 \(T\) 为自变量, \(S\) 为值的函数, 这代表在 \((0, +\infty)\) 上是单调递增的.
+我们的讨论仅限于 \((0, +\infty)\), 一旦超出此范围, 讨论便终止.
+此时也说明 <em>Ua. P. (II)</em> 被违背了.
+因此, \((-\infty, 0)\) 时的性质不会影响结果, 我们认为函数在此时仍是单调递增的.</p>
+<p>现在, 给定两个 \(\mathbb{R}\) 上的连续单调增函数 \(f\), \(g\), 定义 \(\phi := f^{-1} \circ g\), \(\psi := \phi^{-1} = g^{-1} \circ f\).
+另外, \(\phi^n := \phi \circ \phi^{n-1}\), 即幂次定义为重复应用 \(n\) 次.
+函数的自变量为 \(T\), 我们按照数学上的惯例将其写作 \(x\); 对应地, 函数值 \(S\) 写作 \(y\).
+\(f\), \(g\) 是对应于不同固定力学量的熵曲线.
+在图像中, 一条横线代表一个等熵过程 (绝热过程), 一条竖线代表一个等温过程, 因此, \(\phi\) 的物理含义为从 \(f\) 上的点 \((x_0, f(x_0))\) 出发, 依次经过一个等温和绝热过程到达 \(f\) 曲线上的另一个点.</p>
+<p>\(f\) 和 \(g\) 的交点称为一个<strong>驻点</strong>, 即 \(x\) 是驻点当且仅当 \(\phi(x) = x\).
+特殊地, 我们认为 \(-\infty\) 和 \(+\infty\) 也是驻点.
+驻点可以将 \(\mathbb{R}\) 分割为一系列无交叠的小区间, 即以驻点作为区间端点, 且内部没有其他驻点.
+设 \(x_-\), \(x_+\) 为两个相邻的驻点, 我们将要证明:</p>
+<blockquote class='book-hint '>
+<p>\(\forall x_0 \in C = (x_-, x_+)\), 当 \(n \rightarrow \infty\) 时 \(\phi^n(x_0) \rightarrow x_\pm\).</p>
+</blockquote><p>不妨先令在 \(C\) 上 \(f > g\), 此时数列 \(\{\phi^n(x_0)\}_n\) 将趋于 \(x_-\).<br>
+先证<strong>单调性</strong> \(\phi^n(x_0) > \phi^{n+1}(x_0)\): 令 \(x_1 = \phi^n(x_0)\), 则 \(f(x_1) > g(x_1) \Leftrightarrow x_1 > \phi(x_1)\).<br>
+再证数列<strong>有下确界</strong>: \(\forall x \in C\), \(g(x) > g(x_-) = f(x_-) \Leftrightarrow \phi(x) > x_-\), 即 \(x_-\) 是一个下界.
+另外, 注意到 \(\forall x' \in C \land x' > x_-\), \(\forall x_- < x < x'\), 都有 \(g(x) < f(x) < f(x') \Leftrightarrow \phi(x) < x'\), 即任意 \(x' > x_-\) 都不再是下界, \(x_-\) 是下确界.<br>
+综上, 数列单调递减且有下确界, 我们可以得知, \(n \rightarrow \infty\) 时 \(\phi^n(x_0) \rightarrow x_-\).</p>
+<p>同理, 对于 \(f < g\) 的情况, 可以证明 \(n \rightarrow \infty\) 时 \(\phi^n(x_0) \rightarrow x_+\), \(\psi^n(x_0) \rightarrow x_-\).
+证明过程中也可以看到, 对于 \(\forall x \in C\), \(\exists x_0 > x\) 使得 \(\phi^{n+1}(x_0) < x < \phi^n(x_0)\), 即经过有限步后经过 \(x\).</p>
+<p>综上所述, 我们来分情况讨论:</p>
+<ul>
+<li>\(0\) 不是驻点, 即 \(0 \in C\), 此时总能在有限次 \(\phi\) 或 \(\psi\) 操作内从 \(x > 0\) 经过 \(0\).
+这违背了 <em>Ua. P. (II)</em>, 不能存在;</li>
+<li>\(0\) 是驻点, 此时在 \(C = (0, x_+)\) 内, 我们可以用无穷次 \(\phi\) 或 \(\psi\) 来逼近 \(0\), 这满足 <em>Ua. P. (II)</em> 的要求, 并且我们给出了一个切实可行的方案.</li>
+</ul>
+<p>于是, \(0\) 必然是驻点, 即 \(f(0) \equiv g(0)\), 这样我们就证明了 <em>N. H. T.</em></p>
+<h2 id="附录-n-h-t-到-ua-p">附录: <em>N. H. T.</em> 到 <em>Ua. P.</em><a class="anchor" href="#%e9%99%84%e5%bd%95-n-h-t-%e5%88%b0-ua-p">#</a></h2>
+<p>我们同时给出从 <em>N. H. T.</em> 推导 <em>Ua. P.</em> 的方法, 以备后用.</p>
+<p>由 <em>N. H. T.</em> 可知 \(S_0 \equiv S(T \rightarrow 0) = S(T = 0)\).
+尝试用可逆绝热过程将系统从 \(T_0\) 降低到 \(T = 0\), 这一过程中熵不变, \(S(T = 0) = S(T_0)\).
+\(\forall T_0 > 0\),
+</p>
+$$S(T_0) = S_0 + \int_0^{T_0} \frac{C}{T} \, \mathrm{d} T$$<p>但因为 \(C, T > 0\), 积分必然大于 \(0\), 则 \(S(T_0) > S_0 = S(T = 0)\), 矛盾, 于是这样的可逆绝热过程不能存在.</p>
+<hr>
+<h2 id="参考">参考<a class="anchor" href="#%e5%8f%82%e8%80%83">#</a></h2>
+<ol>
+<li>刘川, &ldquo;热力学第三定律&rdquo; 于 <em>热力学与统计物理</em>, pp. 85. 北京大学出版社, 2024.</li>
+</ol>
+</article>
+ 
+      
+
+
+
+  <div class="flex">
+    <div  style="font-style:italic;">
+      <span class="overline"></span>
+      <span style="display:block;">Created in July 31, 2026</span>
+      <span style="display:block;">Last modified in July 31, 2026</span>
+    </div>
+  </div>
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/filebrowser-as-a-file-server/" class="flex align-center">
+        <span>FileBrowser: 一款文件服务器</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#推导过程">推导过程</a></li>
+    <li><a href="#附录-n-h-t-到-ua-p">附录: <em>N. H. T.</em> 到 <em>Ua. P.</em></a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
