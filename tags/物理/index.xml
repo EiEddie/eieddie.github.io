@@ -6,8 +6,15 @@
     <description>Recent content in 物理 on EiEddie&#39;s Mind</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 31 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.eieddie.site/tags/%E7%89%A9%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>巨正则系综与量子统计</title>
+      <link>https://www.eieddie.site/docs/grand-canonical-ensemble-and-qm-statistics/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://www.eieddie.site/docs/grand-canonical-ensemble-and-qm-statistics/</guid>
+      <description>&lt;h1 id=&#34;巨正则系综与量子统计&#34;&gt;巨正则系综与量子统计&lt;a class=&#34;anchor&#34; href=&#34;#%e5%b7%a8%e6%ad%a3%e5%88%99%e7%b3%bb%e7%bb%bc%e4%b8%8e%e9%87%8f%e5%ad%90%e7%bb%9f%e8%ae%a1&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;$$\newcommand\ee{\mathrm{e}}&#xA;\newcommand\HH{\mathcal{H}}&#xA;\newcommand\dd{\mathrm{d}}$$&lt;h2 id=&#34;巨配分函数&#34;&gt;巨配分函数&lt;a class=&#34;anchor&#34; href=&#34;#%e5%b7%a8%e9%85%8d%e5%88%86%e5%87%bd%e6%95%b0&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;我们知道对于粒子数为 \(N\) 的系统, 系统整体的量子态 \(\ket{r} \in \HH_N\), \(\HH_N\) 是一个希尔伯特空间, 它与系统的粒子数 \(N\) 有关.&#xA;系统的正则配分函数为&#xA;&lt;/p&gt;&#xA;$$Z = \sum_r \ee^{-\beta E_r}$$&lt;p&gt;&#xA;其中 \(E_r\) 代表系统能量 \(\hat{H} \ket{r} = E_r \ket{r}\), \(\sum_r\) 表示对系统的全部量子态, 即全体 \(\ket{r}\) 求和.&lt;/p&gt;&#xA;&lt;p&gt;当把目光投向粒子数 \(N\) 可变的系统时, 我们转而使用巨正则系综, 其配分函数如下&#xA;&lt;/p&gt;&#xA;$$\Xi = \sum_r \ee^{-\beta (E_r - \mu N_r)}$$&lt;p&gt;&#xA;这时因为 \(N\) 不再固定, 系统的量子态 \(\ket{r}\) 可能存在于任意 \(\HH_N\), \(\forall N \in \mathbb{N}\).&#xA;换言之, \(\ket{r} \in \HH_0 \oplus \HH_1 \oplus \cdots\), 这是一个福克空间.&#xA;为了描述系统的状态, 我们除了需要总能量 \(E_r\) 外, 还需要知道此时系统内包含的粒子数 \(\hat{N} \ket{r} = N_r \ket{r}\).&lt;/p&gt;</description>
+    </item>
     <item>
       <title>从绝对零度不可到达原理推导能斯特定理</title>
       <link>https://www.eieddie.site/docs/thermodynamical-3rd-law/</link>

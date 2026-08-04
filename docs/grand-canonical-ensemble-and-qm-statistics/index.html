@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="巨正则系综与量子统计# $$\newcommand\ee{\mathrm{e}} \newcommand\HH{\mathcal{H}} \newcommand\dd{\mathrm{d}}$$巨配分函数# 我们知道对于粒子数为 \(N\) 的系统, 系统整体的量子态 \(\ket{r} \in \HH_N\), \(\HH_N\) 是一个希尔伯特空间, 它与系统的粒子数 \(N\) 有关. 系统的正则配分函数为 $$Z = \sum_r \ee^{-\beta E_r}$$ 其中 \(E_r\) 代表系统能量 \(\hat{H} \ket{r} = E_r \ket{r}\), \(\sum_r\) 表示对系统的全部量子态, 即全体 \(\ket{r}\) 求和.
+当把目光投向粒子数 \(N\) 可变的系统时, 我们转而使用巨正则系综, 其配分函数如下 $$\Xi = \sum_r \ee^{-\beta (E_r - \mu N_r)}$$ 这时因为 \(N\) 不再固定, 系统的量子态 \(\ket{r}\) 可能存在于任意 \(\HH_N\), \(\forall N \in \mathbb{N}\). 换言之, \(\ket{r} \in \HH_0 \oplus \HH_1 \oplus \cdots\), 这是一个福克空间. 为了描述系统的状态, 我们除了需要总能量 \(E_r\) 外, 还需要知道此时系统内包含的粒子数 \(\hat{N} \ket{r} = N_r \ket{r}\).
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://www.eieddie.site/docs/grand-canonical-ensemble-and-qm-statistics/">
+  <meta property="og:site_name" content="EiEddie&#39;s Mind">
+  <meta property="og:title" content="巨正则系综与量子统计">
+  <meta property="og:description" content="巨正则系综与量子统计# $$\newcommand\ee{\mathrm{e}} \newcommand\HH{\mathcal{H}} \newcommand\dd{\mathrm{d}}$$巨配分函数# 我们知道对于粒子数为 \(N\) 的系统, 系统整体的量子态 \(\ket{r} \in \HH_N\), \(\HH_N\) 是一个希尔伯特空间, 它与系统的粒子数 \(N\) 有关. 系统的正则配分函数为 $$Z = \sum_r \ee^{-\beta E_r}$$ 其中 \(E_r\) 代表系统能量 \(\hat{H} \ket{r} = E_r \ket{r}\), \(\sum_r\) 表示对系统的全部量子态, 即全体 \(\ket{r}\) 求和.
+当把目光投向粒子数 \(N\) 可变的系统时, 我们转而使用巨正则系综, 其配分函数如下 $$\Xi = \sum_r \ee^{-\beta (E_r - \mu N_r)}$$ 这时因为 \(N\) 不再固定, 系统的量子态 \(\ket{r}\) 可能存在于任意 \(\HH_N\), \(\forall N \in \mathbb{N}\). 换言之, \(\ket{r} \in \HH_0 \oplus \HH_1 \oplus \cdots\), 这是一个福克空间. 为了描述系统的状态, 我们除了需要总能量 \(E_r\) 外, 还需要知道此时系统内包含的粒子数 \(\hat{N} \ket{r} = N_r \ket{r}\).">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-08-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-08-04T00:00:00+00:00">
+    <meta property="article:tag" content="物理">
+
+
+  <meta itemprop="name" content="巨正则系综与量子统计">
+  <meta itemprop="description" content="巨正则系综与量子统计# $$\newcommand\ee{\mathrm{e}} \newcommand\HH{\mathcal{H}} \newcommand\dd{\mathrm{d}}$$巨配分函数# 我们知道对于粒子数为 \(N\) 的系统, 系统整体的量子态 \(\ket{r} \in \HH_N\), \(\HH_N\) 是一个希尔伯特空间, 它与系统的粒子数 \(N\) 有关. 系统的正则配分函数为 $$Z = \sum_r \ee^{-\beta E_r}$$ 其中 \(E_r\) 代表系统能量 \(\hat{H} \ket{r} = E_r \ket{r}\), \(\sum_r\) 表示对系统的全部量子态, 即全体 \(\ket{r}\) 求和.
+当把目光投向粒子数 \(N\) 可变的系统时, 我们转而使用巨正则系综, 其配分函数如下 $$\Xi = \sum_r \ee^{-\beta (E_r - \mu N_r)}$$ 这时因为 \(N\) 不再固定, 系统的量子态 \(\ket{r}\) 可能存在于任意 \(\HH_N\), \(\forall N \in \mathbb{N}\). 换言之, \(\ket{r} \in \HH_0 \oplus \HH_1 \oplus \cdots\), 这是一个福克空间. 为了描述系统的状态, 我们除了需要总能量 \(E_r\) 外, 还需要知道此时系统内包含的粒子数 \(\hat{N} \ket{r} = N_r \ket{r}\).">
+  <meta itemprop="datePublished" content="2026-08-04T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-08-04T00:00:00+00:00">
+  <meta itemprop="wordCount" content="618">
+  <meta itemprop="keywords" content="物理">
+
+<title>巨正则系综与量子统计 | EiEddie&#39;s Mind</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://www.eieddie.site/docs/grand-canonical-ensemble-and-qm-statistics/">
+<link rel="stylesheet" href="/book.min.9d2ae6beeb5b93e2d0795fd5bd0384e7eca6081e0a65e334d1524bc4262f4f2c.css" integrity="sha256-nSrmvutbk&#43;LQeV/VvQOE5&#43;ymCB4KZeM00VJLxCYvTyw=" crossorigin="anonymous">
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.2cc4f9f545e61515ad590d716a2587d006c268388f5099f23c0c1d1764d4b896.js" integrity="sha256-LMT59UXmFRWtWQ1xaiWH0AbCaDiPUJnyPAwdF2TUuJY=" crossorigin="anonymous"></script>
+
+
+
+  
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
+
+<script
+  src="https://cdn.jsdmirror.com/npm/mathjax@3/es5/tex-chtml.js"
+  async>
+</script>
+
+
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>EiEddie&#39;s Mind</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/grand-canonical-ensemble-and-qm-statistics/" class="active">
+      巨正则系综与量子统计</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/thermodynamical-3rd-law/" class="">
+      从绝对零度不可到达原理推导能斯特定理</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/filebrowser-as-a-file-server/" class="">
+      FileBrowser: 一款文件服务器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-perturbation-theory/" class="">
+      量子力学中的微扰理论</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/package-app-as-single-file/" class="">
+      将应用打包为单个文件</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/delta-robotics/" class="">
+      Delta 机器人的动力学建模</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sit-on-stone-ball-barrier/" class="">
+      我坐在石球子上</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/article-processing-pipeline/" class="">
+      文章处理管线</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo-with-math/" class="">
+      为 Hugo 添加数学支持</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/static-site-with-hugo/" class="">
+      使用 Hugo 搭建静态站点</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/calc-with-unit/" class="">
+      带有单位的物理计算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/qm-angular-momentum/" class="">
+      量子力学中的角动量</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/jordan-normal-form/" class="">
+      若尔当标准型</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/commutative-lt/" class="">
+      可交换的线性变换</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dynamic-simulation-of-density-fluids/" class="">
+      密度流体的动态模拟</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/long-time-ago-a-essay/" class="">
+      从中科大回来的时候我母亲就预言了我的今天</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/esp32-dev/" class="">
+      ESP32 环境配置与开发</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mahony-complementary-filter/" class="">
+      Mahony 非线性互补滤波器</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/async-serial/" class="">
+      异步非阻塞串口数据接收</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-movement/" class="">
+      三维空间中刚体运动的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rigid-rotation/" class="">
+      三维空间中旋转的描述</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/time-series-forecasting-using-taylor/" class="">
+      使用泰勒展开的运动预测</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ballistics/" class="">
+      抛体运动弹道解算</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/conventional-commits/" class="">
+      约定式提交</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-submodule/" class="">
+      `git` 子模块</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/repo-struct/" class="">
+      关于知识库框架结构的一些想法</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/git-tips/" class="">
+      Git Tips</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/vscode-cmake-with-msvc/" class="">
+      Windows 下的现代 C/C&#43;&#43; 开发环境配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/linux-to-go/" class="">
+      在移动介质中安装操作系统</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>巨正则系综与量子统计</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#巨配分函数">巨配分函数</a></li>
+    <li><a href="#量子统计">量子统计</a>
+      <ul>
+        <li><a href="#费米-狄拉克分布">费米-狄拉克分布</a></li>
+        <li><a href="#玻色-爱因斯坦分布">玻色-爱因斯坦分布</a></li>
+        <li><a href="#态密度">态密度</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+  
+
+
+
+
+      
+  <article class="markdown book-article"><h1 id="巨正则系综与量子统计">巨正则系综与量子统计<a class="anchor" href="#%e5%b7%a8%e6%ad%a3%e5%88%99%e7%b3%bb%e7%bb%bc%e4%b8%8e%e9%87%8f%e5%ad%90%e7%bb%9f%e8%ae%a1">#</a></h1>
+$$\newcommand\ee{\mathrm{e}}
+\newcommand\HH{\mathcal{H}}
+\newcommand\dd{\mathrm{d}}$$<h2 id="巨配分函数">巨配分函数<a class="anchor" href="#%e5%b7%a8%e9%85%8d%e5%88%86%e5%87%bd%e6%95%b0">#</a></h2>
+<p>我们知道对于粒子数为 \(N\) 的系统, 系统整体的量子态 \(\ket{r} \in \HH_N\), \(\HH_N\) 是一个希尔伯特空间, 它与系统的粒子数 \(N\) 有关.
+系统的正则配分函数为
+</p>
+$$Z = \sum_r \ee^{-\beta E_r}$$<p>
+其中 \(E_r\) 代表系统能量 \(\hat{H} \ket{r} = E_r \ket{r}\), \(\sum_r\) 表示对系统的全部量子态, 即全体 \(\ket{r}\) 求和.</p>
+<p>当把目光投向粒子数 \(N\) 可变的系统时, 我们转而使用巨正则系综, 其配分函数如下
+</p>
+$$\Xi = \sum_r \ee^{-\beta (E_r - \mu N_r)}$$<p>
+这时因为 \(N\) 不再固定, 系统的量子态 \(\ket{r}\) 可能存在于任意 \(\HH_N\), \(\forall N \in \mathbb{N}\).
+换言之, \(\ket{r} \in \HH_0 \oplus \HH_1 \oplus \cdots\), 这是一个福克空间.
+为了描述系统的状态, 我们除了需要总能量 \(E_r\) 外, 还需要知道此时系统内包含的粒子数 \(\hat{N} \ket{r} = N_r \ket{r}\).</p>
+<p>现在我们讨论<strong>全同</strong>的<strong>近独立</strong>子系, 也即 (量子) 理想气体.
+所谓<em>近独立</em>, 是指粒子 (或子系) 间的相互作用时间极短, 可以近似认为没有相互作用.
+我们一般把<strong>粒子间的相互作用简称为碰撞</strong>, 那么近独立条件可以严格地表述为: <strong>粒子碰撞时间的测度为 0</strong>, 在<em>几乎所有</em> (almost everywhere, a.e.) 时刻时, 粒子处于自由状态.
+我们不能单纯地假设粒子间没有相互作用, 否则它们将穿过彼此, 自身的能量和动量永恒不变, 那么系统将永远处于非平衡状态, 绝不可能达到平衡.
+碰撞是达到平衡的唯一机制.</p>
+<p>在近独立假设下, 系统总能量 \(E_r\) 可以写成每个粒子的能量之和, 因为没有相互作用能.
+令单粒子量子态为 \(\ket{s}\), \(\hat{H} \ket{s} = \varepsilon_r \ket{s}\).
+注意, 单粒子态是每个粒子可能处于的任意一个量子态, 它的数目同样是无穷的, \(\ket{s} \in \HH_1\).
+因为粒子是全同的, 我们无法区分它们, 所以关注哪个粒子处在某个态 \(\ket{s}\) 毫无意义.
+我们引入<strong>占有数</strong> \(n_s\) 的概念, 它代表有多少个粒子处于态 \(\ket{s}\) 上.
+显然 \(\sum_s n_s = N_r\), 并且 \(\sum_s n_s \varepsilon_s = E_r\).</p>
+<p>我们可以改写配分函数为
+</p>
+$$\begin{align}
+\Xi &= \sum_r \ee^{-\beta (E_r - \mu N_r)} \\
+    &= \sum_{\{n_s\}} \exp(-\beta (\sum_s n_s \varepsilon_s  - \mu \sum_s n_s))
+\end{align}$$<p>
+式中 \(\sum_{\{n_s\}}\) 表示对所有可能的占有数分布 \(\{n_s\}\) 求和.
+它可以进一步写为 \(\sum_{n_1} \sum_{n_2} \cdots\), 且对于 \(n_1, n_2, \cdots\) 都满足给定的约束条件.
+例如, 在正则系综中, 假设 \(N = 2\), 并且我们知道占有数有一个约束条件是 \(\sum_s n_s = N = 2\), 则 \(\sum_{\{n_s\}}\) 表示对 \(\{n_1=2\}\), \(\{n_1=1,n_2=1\}\), \(\{n_2=2\}\), \(\{n_1=1,n_3=1\}\), \(\cdots\) 这无穷多满足约束的占有数分布来求和.
+在巨正则系综中, 仅剩的约束 \(\sum_s n_s = N\) 也被解除, 因为 \(N\) 是不定的, 可以任意取值.
+这导致了每个 \(n_s\) 都可以<strong>独立地</strong>在 \(\mathbb{N}\) 上自由取值, 除非受到系统本身特性的约束 (例如泡利不相容原理).</p>
+<p>进一步化简 \(\Xi\) 可以得到
+</p>
+$$\begin{align}
+\Xi &= \sum_{\{n_s\}} \prod_s \ee^{-\beta (\varepsilon_s - \mu) n_s} \\
+    &= \sum_{n_1} \sum_{n_2} \cdots (\ee^{-\beta (\varepsilon_1 - \mu) n_1}) (\ee^{-\beta (\varepsilon_2 - \mu) n_2}) \cdots \\
+    &= (\sum_{n_1} \ee^{-\beta (\varepsilon_1 - \mu) n_1}) (\sum_{n_2} \ee^{-\beta (\varepsilon_2 - \mu) n_2}) \cdots \\
+    &= \prod_s \sum_n \ee^{-\beta (\varepsilon_s - \mu) n} \\
+    &= \prod_s \Xi_s
+\end{align}$$<p>
+其中我们定义单粒子巨配分函数 \(\Xi_s := \sum_n \ee^{-\beta (\varepsilon_s - \mu) n}\).
+在能态被划分地特别清楚时, 这种按能态展开的方法很有用.</p>
+<p>另外一种改写巨配分函数的方法是按粒子数展开.
+</p>
+$$\begin{align}
+\Xi &= \sum_r \ee^{-\beta (E_r - \mu N_r)} \\
+    &= \sum_{N=0}^{\infty} \sum_s \ee^{-\beta (E_s - \mu N)} \\
+    &= \sum_N \ee^{\beta \mu N} \sum_s \ee^{-\beta E_s} \\
+    &= \sum_N \ee^{\beta \mu N} Z_N
+\end{align}$$<p>
+其中 \(Z_N\) 是在某一总粒子数 \(N\) 下的正则配分函数.
+有时我们还会定义<em>逸度</em> (<em>fugacity</em>) \(z := \ee^{\beta \mu}\).
+当从一个正则系综通过取消总粒子数固定的约束过渡到巨正则系综时, 因为对于任意总粒子数 \(N\) 的 \(Z_N\) 都已得到, 使用这种方法很简便.</p>
+<h2 id="量子统计">量子统计<a class="anchor" href="#%e9%87%8f%e5%ad%90%e7%bb%9f%e8%ae%a1">#</a></h2>
+<p>作为巨正则系综的一个应用, 我们演示一下如何从上面的理论推导出量子理想气体中单个粒子在每个能态 \(\ket{s}\), 对应能量为 \(\varepsilon_s\) 上的平均粒子数 \(\braket{n_s}\).
+这是 \(\varepsilon_s\) 上所有可能占据数 \(n_s\) 中概率最大者, 因此 \(\braket{n_s}\) 又被称为<em>最概然分布</em>.
+\(n_s\) 的分布峰非常狭窄, 我们几乎可以认为实际分布与 \(\braket{n_s}\) 相差甚小, 以至于将两者画上等号.</p>
+<h3 id="费米-狄拉克分布">费米-狄拉克分布<a class="anchor" href="#%e8%b4%b9%e7%b1%b3-%e7%8b%84%e6%8b%89%e5%85%8b%e5%88%86%e5%b8%83">#</a></h3>
+<p><em>费米-狄拉克分布</em>适用于<em>费米子</em>系统, 即自旋为半整数的量子组成的系统, 它们受到泡利不相容原理的限制, 每个态上只能存在一个粒子.
+这么一来, \(\Xi_s\) 有
+</p>
+$$\begin{align}
+\Xi_s &= \sum_{n=0,1} \ee^{-\beta (\varepsilon_s - \mu) n} \\
+  &= 1 + \ee^{-\beta (\varepsilon_s - \mu)}
+\end{align}$$<p>
+那么巨配分函数 \(\Xi\) 即为
+</p>
+$$\Xi = \prod_s (1 + \ee^{-\beta (\varepsilon_s - \mu)})$$<p>考虑到巨正则系综中粒子数 \(N\) 满足
+</p>
+$$N = \beta^{-1} \frac{\partial}{\partial \mu} \ln \Xi$$<p>
+并且显然 \(\sum_s \braket{n_s} = N\), 我们有
+</p>
+$$\begin{align}
+\sum_s \braket{n_s} = N &= \beta^{-1} \frac{\partial}{\partial \mu} \sum_s \ln(1 + \ee^{-\beta (\varepsilon_s - \mu)}) \\
+  &= \sum_s \frac{1}{\ee^{\beta (\varepsilon_s - \mu)} + 1}
+\end{align}$$<p>
+即
+</p>
+$$\braket{n_s} = \frac{1}{\ee^{\beta (\varepsilon_s - \mu)} + 1}$$<h3 id="玻色-爱因斯坦分布">玻色-爱因斯坦分布<a class="anchor" href="#%e7%8e%bb%e8%89%b2-%e7%88%b1%e5%9b%a0%e6%96%af%e5%9d%a6%e5%88%86%e5%b8%83">#</a></h3>
+<p><em>玻色-爱因斯坦分布</em>适用于<em>玻色子</em>系统, 即自旋为整数 (包括 \(0\)) 的量子组成的系统.
+在每个态上都可容纳任意个粒子, 于是
+</p>
+$$\begin{align}
+\Xi_s &= \sum_{n=0}^\infty \ee^{-\beta (\varepsilon_s - \mu) n} \\
+  &= \frac{1}{1 - \ee^{-\beta (\varepsilon_s - \mu)}}
+\end{align}$$<p>
+</p>
+$$\Xi = \prod_s \frac{1}{1 - \ee^{-\beta (\varepsilon_s - \mu)}}$$<p>进一步可以求
+</p>
+$$\begin{align}
+\sum_s \braket{n_s} &= \beta^{-1} \frac{\partial}{\partial \mu} \sum_s \ln \frac{1}{1 - \ee^{-\beta (\varepsilon_s - \mu)}} \\
+  &= \sum_s \frac{1}{\ee^{\beta (\varepsilon_s - \mu)} - 1}
+\end{align}$$<p>
+即
+</p>
+$$\braket{n_s} = \frac{1}{\ee^{\beta (\varepsilon_s - \mu)} - 1}$$<h3 id="态密度">态密度<a class="anchor" href="#%e6%80%81%e5%af%86%e5%ba%a6">#</a></h3>
+<p>当应用分布函数时, 我们需要做求和 \(\sum_s\), 理论上这需要对 \(\ket{s}\) 的 \(6\) 个自由度 (\(3\) 维情况) 进行.
+我们一般用积分替代求和来简化运算, 为了使连续的积分趋近离散求和, 可以对结果进行粗粒化, 即使用<em>相格</em>近似
+</p>
+$$\sum_s \leftrightarrow \frac{1}{(2\pi \hbar)^d} \int \dd \mathbf{q} \, \dd \mathbf{p}$$<p>\(3\) 维时, 一般在无外场情况下粒子哈密顿量一般不显含广义坐标 \(\mathbf{q}\), 则 \(\int \dd \mathbf{q} = V\);
+单粒子能态只与动量大小有关而与方向无关, 则 \(\int \dd \mathbf{p} = \int 4\pi p^2 \dd p\).
+\(\varepsilon\) 的表达式一般也与自旋无关, 我们还有额外的自旋因子 \(g_s\) 来标志态的简并情况.
+上述各因素被综合考虑, 我们有
+</p>
+$$\begin{align}
+\sum_s \leftrightarrow & \int \dd p \; \frac{1}{(2\pi \hbar)^3} \, g_s \, V \, 4\pi p^2 \\
+  = & \int \dd p \; \frac{V}{2\pi^2 \hbar^3} g_s \, p^2 \\
+  = & \int \dd p \; g(p)
+\end{align}$$<p>
+所有对简并的修正被统一打包进<strong>态密度</strong> \(g(p)\) 中.
+对于实际给出的系统, 根据其特点 \(g(p)\) 大都各不相同, 上面我们给出的只是特殊情况下的一个简单示例.</p>
+</article>
+ 
+      
+
+
+
+  <div class="flex">
+    <div  style="font-style:italic;">
+      <span class="overline"></span>
+      <span style="display:block;">Created in August 4, 2026</span>
+      <span style="display:block;">Last modified in August 4, 2026</span>
+    </div>
+  </div>
+
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/thermodynamical-3rd-law/" class="flex align-center">
+        <span>从绝对零度不可到达原理推导能斯特定理</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#巨配分函数">巨配分函数</a></li>
+    <li><a href="#量子统计">量子统计</a>
+      <ul>
+        <li><a href="#费米-狄拉克分布">费米-狄拉克分布</a></li>
+        <li><a href="#玻色-爱因斯坦分布">玻色-爱因斯坦分布</a></li>
+        <li><a href="#态密度">态密度</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
